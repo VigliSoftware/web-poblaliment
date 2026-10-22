@@ -1,0 +1,24 @@
+<div class="hero-video" aria-hidden="true">
+  <video
+    data-hero-video
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/images/truck-sunset.jpg"
+  >
+    <source src="/HeroVideo.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+for (const video of document.querySelectorAll<HTMLVideoElement>('[data-hero-video]')) {
+  if (!reduceMotion.matches) {
+    void video.play().catch(() => {
+      // The poster remains visible when a browser blocks autoplay.
+    });
+  }
+}
+</script>

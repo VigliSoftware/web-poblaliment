@@ -1,0 +1,29 @@
+<script>
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const media = gsap.matchMedia();
+
+media.add('(prefers-reduced-motion: no-preference)', () => {
+  const targets = gsap.utils.toArray<HTMLElement>('main > section:not(.home-hero), [data-reveal]');
+
+  gsap.set(targets, { autoAlpha: 0, y: 28 });
+
+  ScrollTrigger.batch(targets, {
+    start: 'top 88%',
+    once: true,
+    onEnter: (elements) => {
+      gsap.to(elements, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.75,
+        stagger: 0.08,
+        ease: 'power3.out',
+        clearProps: 'opacity,visibility,transform',
+      });
+    },
+  });
+});
+</script>

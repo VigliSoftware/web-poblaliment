@@ -10,9 +10,9 @@ const { locale } = Astro.props;
 const copy = content[locale];
 ---
 
-<footer class="mt-24 border-t rule">
+<footer class="mt-24 border-t rule bg-[var(--color-paper-deep)]">
   <div
-    class="page-frame flex flex-col gap-5 py-8 text-sm text-[var(--color-ink-soft)] sm:flex-row sm:items-end sm:justify-between"
+    class="page-frame grid gap-8 py-10 text-sm text-[var(--color-ink-soft)] sm:grid-cols-[1fr_auto] sm:items-end"
   >
     <div>
       <a
@@ -21,13 +21,43 @@ const copy = content[locale];
       >
         {copy.footer.statement}
       </a>
-      <p class="mt-2 text-xs">{copy.footer.legal}</p>
+      <p class="mt-2 text-xs">© <span data-current-year></span> Poblaliment</p>
+      <nav
+        class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs"
+        aria-label={locale === 'ca' ? 'Informació legal' : 'Información legal'}
+      >
+        <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#avis-legal`}>
+          {locale === 'ca' ? 'Avís legal' : 'Aviso legal'}
+        </a>
+        <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#privacitat`}>
+          {locale === 'ca' ? 'Política de privacitat' : 'Política de privacidad'}
+        </a>
+        <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#cookies`}>
+          Política de cookies
+        </a>
+      </nav>
     </div>
     <a
-      href={localizedPath(locale, 'contact')}
-      class="font-semibold text-[var(--color-blue)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4"
+      href="https://vigli.dev"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group inline-flex items-baseline gap-1.5 text-[0.68rem] no-underline"
+      aria-label={`${copy.footer.credit} Vigli.dev (${locale === 'ca' ? 's’obre en una pestanya nova' : 'se abre en una pestaña nueva'})`}
     >
-      {copy.nav[3].label}
+      <span class="text-[var(--color-ink-soft)]">{copy.footer.credit}</span>
+      <span
+        class="font-semibold text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-orange)]"
+      >
+        Vigli.dev <span aria-hidden="true">↗</span>
+      </span>
     </a>
   </div>
 </footer>
+
+<script>
+const year = String(new Date().getFullYear());
+
+for (const element of document.querySelectorAll<HTMLElement>('[data-current-year]')) {
+  element.textContent = year;
+}
+</script>

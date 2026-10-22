@@ -1,0 +1,37 @@
+<script>
+import { gsap } from 'gsap';
+
+const media = gsap.matchMedia();
+
+media.add(
+  {
+    reduceMotion: '(prefers-reduced-motion: reduce)',
+    allowMotion: '(prefers-reduced-motion: no-preference)',
+  },
+  (context) => {
+    const { reduceMotion } = context.conditions as { reduceMotion: boolean };
+
+    for (const hero of document.querySelectorAll<HTMLElement>('[data-hero-content]')) {
+      const elements = hero.querySelectorAll<HTMLElement>('[data-hero-animate]');
+
+      if (reduceMotion) {
+        gsap.set(elements, { clearProps: 'all' });
+        continue;
+      }
+
+      gsap.fromTo(
+        elements,
+        { autoAlpha: 0, y: 28 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'opacity,visibility,transform',
+        },
+      );
+    }
+  },
+);
+</script>

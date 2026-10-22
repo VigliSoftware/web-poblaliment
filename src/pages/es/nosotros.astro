@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import anniversaryBeer from '../../../images/Pasted image.png';
 import PageIntro from '../../components/PageIntro.astro';
 import { content } from '../../data/content';
 import Layout from '../../layouts/Layout.astro';
@@ -11,16 +13,63 @@ const copy = content[locale].about;
   <PageIntro
     heading={copy.heading}
     intro={copy.intro}
-    image="/images/about.jpg"
+    image="/images/about-route.jpeg"
     imageAlt={copy.imageAlt}
     imageCaption={copy.imageCaption}
   />
-  <section class="page-frame py-8 sm:py-12">
-    <div class="grid gap-8 border-t rule pt-6 sm:grid-cols-[0.65fr_1.35fr]">
+  <section class="page-frame py-8 sm:py-16" data-reveal>
+    <div class="grid gap-8 border-t rule pt-8 sm:grid-cols-[0.65fr_1.35fr]">
+      <h2 class="display text-4xl sm:text-5xl">Desde abril de 1999.</h2>
+      <div class="max-w-2xl space-y-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
+        <p>
+          Poblaliment S.L. nació en La Pobla de Segur, en el corazón del Pallars Jussà. Más de 25
+          años después, seguimos creciendo junto a los negocios y las personas del territorio.
+        </p>
+        <p>
+          Seleccionamos y distribuimos vinos, bebidas y productos gourmet a bares, restaurantes,
+          campings, hoteles, carnicerías, tiendas especializadas y particulares.
+        </p>
+        <p>
+          Trabajamos con productores y marcas de confianza para ofrecer calidad, continuidad y una
+          respuesta cercana a cada cliente.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section
+    class="anniversary-section border-y rule bg-[var(--color-blue)] text-[var(--color-paper)]"
+    data-reveal
+  >
+    <div class="page-frame grid gap-10 py-16 sm:grid-cols-2 sm:items-center sm:py-24">
+      <div>
+        <p class="supplier-kicker">25.º aniversario</p>
+        <h2 class="display mt-4 text-5xl leading-none sm:text-6xl">
+          Una cerveza creada para celebrar el camino.
+        </h2>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[rgba(245,241,232,0.78)]">
+          Para celebrar los 25 años de Poblaliment creamos PIGAL, una cerveza artesanal propia que
+          resume el origen, el territorio y las relaciones construidas durante todos estos años.
+        </p>
+      </div>
+      <figure class="anniversary-image overflow-hidden">
+        <Image
+          src={anniversaryBeer}
+          alt="Cerveza artesanal PIGAL creada por el 25.º aniversario de Poblaliment"
+          class="anniversary-photo"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="page-frame py-16 sm:py-24" data-reveal>
+    <div class="grid gap-8 sm:grid-cols-[0.65fr_1.35fr]">
       <h2 class="display text-4xl sm:text-5xl">{copy.valuesTitle}</h2>
       <div>
         {copy.values.map((value) => (
-          <article class="grid gap-3 border-b rule py-6 sm:grid-cols-[0.7fr_1.3fr]">
+          <article class="grid gap-3 border-b rule py-6 first:pt-0 sm:grid-cols-[0.7fr_1.3fr]">
             <h3 class="display text-3xl">{value.title}</h3>
             <p class="max-w-xl text-[var(--color-ink-soft)]">{value.body}</p>
           </article>

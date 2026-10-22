@@ -1,5 +1,6 @@
 ---
-import MotionVisual from '../components/MotionVisual';
+import HeroVideo from '../components/HeroVideo.astro';
+import HeroTextAnimation from '../components/HeroTextAnimation.astro';
 import SiteImage from '../components/SiteImage.astro';
 import SupplierCarousel from '../components/SupplierCarousel.astro';
 import { content } from '../data/content';
@@ -11,48 +12,43 @@ const copy = content[locale];
 ---
 
 <Layout locale={locale} title={copy.home.title} description={copy.home.description}>
-  <section class="page-frame home-hero py-12 sm:py-16 lg:py-20">
-    <div class="hero-grid items-end">
+  <section class="home-hero home-hero-video">
+    <HeroVideo />
+    <div class="page-frame hero-content py-12 sm:py-16 lg:py-20" data-hero-content>
       <div class="max-w-3xl">
-        <h1 class="display max-w-3xl text-6xl leading-[0.91] sm:text-8xl">{copy.home.heading}</h1>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-[var(--color-ink-soft)] sm:text-xl">
+        <h1 class="display max-w-3xl text-6xl leading-[0.91] sm:text-8xl" data-hero-animate>
+          {copy.home.heading}
+        </h1>
+        <p
+          class="mt-8 max-w-xl text-lg leading-relaxed text-[rgba(245,241,232,0.86)] sm:text-xl"
+          data-hero-animate
+        >
           {copy.home.intro}
         </p>
-        <div class="mt-10 flex flex-wrap gap-5 text-sm font-semibold">
+        <div class="mt-10 flex flex-wrap gap-5 text-sm font-semibold" data-hero-animate>
           <a
             href={localizedPath(locale, 'about')}
-            class="bg-[var(--color-blue)] px-5 py-3 text-[var(--color-paper)] no-underline transition-transform hover:-translate-y-1"
+            class="bg-[var(--color-orange)] px-5 py-3 text-[var(--color-ink)] no-underline transition-transform hover:-translate-y-1"
           >
             {copy.home.primaryAction}
           </a>
           <a
             href={localizedPath(locale, 'contact')}
-            class="px-1 py-3 text-[var(--color-ink)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4 hover:text-[var(--color-orange)]"
+            class="px-1 py-3 text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4 hover:text-[var(--color-orange)]"
           >
             {copy.home.secondaryAction} <span aria-hidden="true">↗</span>
           </a>
         </div>
         <p
-          class="hero-footnote mt-12 max-w-sm text-sm leading-relaxed text-[var(--color-ink-soft)]"
+          class="hero-footnote mt-12 max-w-sm text-sm leading-relaxed text-[rgba(245,241,232,0.76)]"
+          data-hero-animate
         >
           <span class="hero-footnote-mark" aria-hidden="true"></span>
-          Producte, territori i servei per fer visible allò que arriba cada dia.
+          Distribució local i nacional amb atenció personalitzada.
         </p>
       </div>
-      <div class="hero-media-wrap">
-        <MotionVisual
-          client:load
-          src="/images/truck-sunset.jpg"
-          alt={copy.home.imageAlt}
-          caption={copy.home.imageCaption}
-          width={1080}
-          height={1080}
-          className="hero-image"
-          loading="eager"
-        />
-        <span class="hero-media-index" aria-hidden="true"> 01 / 04 </span>
-      </div>
     </div>
+    <HeroTextAnimation />
   </section>
 
   <section class="signal-band border-y rule bg-[var(--color-paper-deep)]">
@@ -72,18 +68,12 @@ const copy = content[locale];
       class="section-heading flex flex-col gap-5 border-b rule pb-6 sm:flex-row sm:items-end sm:justify-between"
     >
       <h2 class="display max-w-xl text-5xl leading-none sm:text-6xl">Servei que es nota.</h2>
-      <p class="max-w-xs text-sm leading-relaxed text-[var(--color-ink-soft)]">
-        {copy.home.servicesIntro}
-      </p>
     </div>
     <div class="service-list mt-2">
       {copy.home.services.map((service) => (
-        <article class="service-row grid gap-4 border-b rule py-7 sm:grid-cols-[minmax(15rem,0.7fr)_1.3fr_auto] sm:items-center">
+        <article class="service-row grid gap-4 border-b rule py-7 sm:grid-cols-[minmax(15rem,0.7fr)_1.3fr] sm:items-center">
           <h3 class="display text-3xl sm:text-4xl">{service.title}</h3>
           <p class="max-w-xl text-[var(--color-ink-soft)]">{service.body}</p>
-          <span class="service-mark" aria-hidden="true">
-            ↗
-          </span>
         </article>
       ))}
     </div>
@@ -105,9 +95,9 @@ const copy = content[locale];
           </p>
           <a
             href={localizedPath(locale, 'brands')}
-            class="mt-7 inline-flex items-center gap-3 font-semibold text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4"
+            class="mt-7 inline-block whitespace-nowrap font-semibold text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4"
           >
-            Veure totes les marques <span aria-hidden="true">↗</span>
+            <span>Veure totes les marques&nbsp;<span aria-hidden="true">↗</span></span>
           </a>
         </div>
       </div>

@@ -67,7 +67,20 @@ const copy = content[locale].contact;
         {copy.details.map((detail) => (
           <div class="border-b rule py-4">
             <dt class="eyebrow">{detail.label}</dt>
-            <dd class="mt-1 text-[var(--color-ink-soft)]">{detail.value}</dd>
+            <dd class="mt-1 text-[var(--color-ink-soft)]">
+              {detail.href ? (
+                <a
+                  href={detail.href}
+                  target={detail.href.startsWith('http') ? '_blank' : undefined}
+                  rel={detail.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  class="text-[var(--color-blue)] underline decoration-[var(--color-orange)] underline-offset-4"
+                >
+                  {detail.value}
+                </a>
+              ) : (
+                detail.value
+              )}
+            </dd>
           </div>
         ))}
       </dl>

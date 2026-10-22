@@ -26,7 +26,6 @@ export type SiteCopy = {
     imageAlt: string;
     imageCaption: string;
     servicesTitle: string;
-    servicesIntro: string;
     services: Array<{ title: string; body: string }>;
     exploreTitle: string;
     exploreLinks: LinkItem[];
@@ -49,22 +48,22 @@ export type SiteCopy = {
     formNote: string;
     fields: { name: string; email: string; message: string; submit: string };
     detailsTitle: string;
-    details: Array<{ label: string; value: string }>;
+    details: Array<{ label: string; value: string; href?: string }>;
   };
-  footer: { statement: string; legal: string };
+  footer: { statement: string; credit: string };
 };
 
 const sharedNavCa: NavItem[] = [
   { label: 'Inici', page: 'home' },
+  { label: 'Producte', page: 'brands' },
   { label: 'Nosaltres', page: 'about' },
-  { label: 'Les nostres marques', page: 'brands' },
   { label: 'Contacte', page: 'contact' },
 ];
 
 const sharedNavEs: NavItem[] = [
   { label: 'Inicio', page: 'home' },
+  { label: 'Producto', page: 'brands' },
   { label: 'Nosotros', page: 'about' },
-  { label: 'Nuestras marcas', page: 'brands' },
   { label: 'Contacto', page: 'contact' },
 ];
 
@@ -74,31 +73,25 @@ export const content: Record<Locale, SiteCopy> = {
     otherLocaleLabel: 'ES',
     nav: sharedNavCa,
     home: {
-      title: 'Poblaliment | Distribució alimentària a Catalunya',
+      title: 'Distribució alimentària a Lleida i el Pirineu | Poblaliment',
       description:
-        'Poblaliment posa en moviment productes, marques i relacions amb distribució local i nacional a Catalunya.',
-      heading: 'Producte, territori i servei.',
+        'Distribuïm vins, begudes i productes gourmet amb flota pròpia a Lleida, el Prepirineu i el Pirineu. Servei per a restauració, comerç i particulars.',
+      heading: 'Distribuïm confiança.',
       intro:
-        'Aquest és el nostre espai per explicar qui som, què posem en moviment i amb quines marques caminem.',
+        'Distribuïm aliments amb agilitat, proximitat i confiança perquè cada producte arribi on ha d’arribar.',
       primaryAction: 'Coneix-nos',
       secondaryAction: 'Parlem',
       imageAlt: 'Camió de Poblaliment repartint producte al capvespre',
       imageCaption: 'La distribució també forma part del producte.',
       servicesTitle: 'Els nostres serveis',
-      servicesIntro:
-        'Els nostres serveis garanteixen qualitat, confiança i una distribució eficient per als nostres clients.',
       services: [
         {
           title: 'Distribució local i nacional',
-          body: 'Oferim servei de distribució per tot el territori pirinenc i català, garantint puntualitat, cura i proximitat.',
-        },
-        {
-          title: 'Logística i emmagatzematge',
-          body: 'Disposem d’un servei logístic propi i col·laboracions amb operadors especialitzats per assegurar un transport eficient i en les millors condicions de conservació.',
+          body: 'Distribuïm a la província de Lleida, el Prepirineu i el Pirineu amb flota pròpia, rutes adaptades al territori i cura en cada lliurament.',
         },
         {
           title: 'Atenció personalitzada',
-          body: 'Creiem en el tracte directe i la confiança. Ens adaptem a les necessitats de cada client per oferir un servei àgil, transparent i de qualitat.',
+          body: 'Acompanyem bars, restaurants, càmpings, hotels, carnisseries, botigues especialitzades i particulars amb un tracte directe, àgil i de confiança.',
         },
       ],
       exploreTitle: 'Explora Poblaliment',
@@ -119,68 +112,73 @@ export const content: Record<Locale, SiteCopy> = {
       contactAction: 'Anar a contacte',
     },
     about: {
-      title: 'Nosaltres | Poblaliment',
+      title: 'Poblaliment: distribuïdora des de 1999 | La Pobla de Segur',
       description:
-        'Coneix Poblaliment, la seva manera de treballar i la relació entre producte, territori i persones.',
-      heading: 'Una estructura per explicar-nos bé.',
+        'Coneix Poblaliment S.L., distribuïdora nascuda l’abril de 1999 a la Pobla de Segur, amb flota pròpia i servei a Lleida, el Prepirineu i el Pirineu.',
+      heading: '25 anys fent territori.',
       intro:
-        'Poblaliment és una història que es construeix entre producte, territori i persones. Aquesta pàgina serà el lloc on donar-li context.',
-      imageAlt: 'Exterior d’un espai de distribució',
-      imageCaption: 'Un lloc físic, una xarxa que es va fent visible.',
-      valuesTitle: 'El que volem que es noti',
+        'Vam néixer a la Pobla de Segur per acostar productes de qualitat als negocis i les persones del Pirineu.',
+      imageAlt: 'Vehicle de Poblaliment en una carretera de muntanya del Pirineu',
+      imageCaption: 'Rutes pròpies des de la Pobla de Segur, al cor del Pallars Jussà.',
+      valuesTitle: 'La nostra manera de fer',
       values: [
         {
-          title: 'Claredat',
-          body: 'Cada producte, cada relació i cada pas ha de poder entendre’s.',
+          title: 'Producte de qualitat',
+          body: 'Seleccionem vins, begudes i productes gourmet de productors i marques de confiança.',
         },
         {
-          title: 'Proximitat',
-          body: 'El territori no és decoració: és part de la manera de treballar.',
+          title: 'Distribució pròpia',
+          body: 'Cobrim la província de Lleida, el Prepirineu i el Pirineu amb els nostres vehicles i coneixement de cada ruta.',
         },
         {
-          title: 'Criteri',
-          body: 'Aquesta secció recollirà les decisions que defineixen el projecte.',
+          title: 'Servei personalitzat',
+          body: 'Escoltem cada client i adaptem el servei a les necessitats de la restauració, el comerç especialitzat i els particulars.',
         },
       ],
     },
     brands: {
-      title: 'Marques i proveïdors d’alimentació | Poblaliment',
+      title: 'Marques de vins, begudes i alimentació | Poblaliment',
       description:
-        'Explora els proveïdors de Poblaliment per categoria: formatges, conserves, carns, peix, vins, producte congelat, cafè i condiments.',
+        'Consulta les marques i proveïdors de vins, cerveses, formatges, conserves, carns, peix, congelats, cafè i altres productes distribuïts per Poblaliment.',
       heading: 'Marques i proveïdors.',
       intro:
         'Una guia de les marques que formen part del nostre assortiment, ordenades per famílies de producte.',
-      imageAlt: 'Selecció de productes alimentaris',
-      imageCaption: 'Una mostra del llenguatge visual que ja tenim a mà.',
+      imageAlt: 'Llauna i copa de cervesa UBLA Golden Ale',
+      imageCaption: 'Begudes i productes seleccionats de marques de confiança.',
       note: 'Proveïdors agrupats per família de producte',
     },
     contact: {
-      title: 'Contacte | Poblaliment',
+      title: 'Contacte amb Poblaliment | Distribució alimentària a Lleida',
       description:
         'Contacta amb Poblaliment per parlar de distribució alimentària, productes, marques i col·laboracions.',
-      heading: 'Obrim una conversa.',
+      heading: 'Parlem del que necessites.',
       intro:
-        'Aquest formulari és el punt de partida per a una futura connexió. Quan tinguem les dades definitives, aquest espai ja estarà preparat per rebre-les.',
+        'Som a la Pobla de Segur. Escriu-nos o truca’ns per consultar productes, distribució i disponibilitat.',
       imageAlt: 'Vehicle de distribució davant de les muntanyes',
       imageCaption: 'Quan hi ha camí, també hi ha una manera de començar.',
       formTitle: 'Escriu-nos',
-      formNote: 'Formulari de scaffolding · connexió pendent de configurar',
+      formNote: 'Explica’ns què necessites i ens posarem en contacte amb tu.',
       fields: {
         name: 'Nom',
         email: 'Correu electrònic',
         message: 'Missatge',
         submit: 'Enviar missatge',
       },
-      detailsTitle: 'Dades a completar',
+      detailsTitle: 'Contacte directe',
       details: [
-        { label: 'Correu', value: 'pendent de confirmar' },
-        { label: 'Telèfon', value: 'pendent de confirmar' },
-        { label: 'Ubicació', value: 'Poblaliment · Catalunya' },
+        { label: 'Correu', value: 'info@poblaliment.com', href: 'mailto:info@poblaliment.com' },
+        { label: 'Telèfon', value: '973 680 341', href: 'tel:+34973680341' },
+        {
+          label: 'Instagram',
+          value: '@poblaliment',
+          href: 'https://www.instagram.com/poblaliment/',
+        },
+        { label: 'Ubicació', value: 'Tros del Roi, s/n · 25500 La Pobla de Segur' },
       ],
     },
     footer: {
       statement: 'Producte, origen i criteri.',
-      legal: '© Poblaliment · web en construcció',
+      credit: 'Web desenvolupada per:',
     },
   },
   es: {
@@ -188,31 +186,25 @@ export const content: Record<Locale, SiteCopy> = {
     otherLocaleLabel: 'CA',
     nav: sharedNavEs,
     home: {
-      title: 'Poblaliment | Distribución alimentaria en Cataluña',
+      title: 'Distribución alimentaria en Lleida y el Pirineo | Poblaliment',
       description:
-        'Poblaliment pone en movimiento productos, marcas y relaciones con distribución local y nacional en Cataluña.',
-      heading: 'Producto, territorio y servicio.',
+        'Distribuimos vinos, bebidas y productos gourmet con flota propia en Lleida, el Prepirineo y el Pirineo. Servicio para hostelería, comercio y particulares.',
+      heading: 'Distribuimos confianza.',
       intro:
-        'Este es nuestro espacio para explicar quiénes somos, qué ponemos en movimiento y con qué marcas caminamos.',
+        'Distribuimos alimentos con agilidad, cercanía y confianza para que cada producto llegue donde tiene que llegar.',
       primaryAction: 'Conócenos',
       secondaryAction: 'Hablemos',
       imageAlt: 'Camión de Poblaliment repartiendo producto al atardecer',
       imageCaption: 'La distribución también forma parte del producto.',
       servicesTitle: 'Nuestros servicios',
-      servicesIntro:
-        'Nuestros servicios garantizan calidad, confianza y una distribución eficiente para nuestros clientes.',
       services: [
         {
           title: 'Distribución local y nacional',
-          body: 'Ofrecemos servicio de distribución por todo el territorio pirenaico y catalán, garantizando puntualidad, cuidado y proximidad.',
-        },
-        {
-          title: 'Logística y almacenamiento',
-          body: 'Disponemos de un servicio logístico propio y colaboraciones con operadores especializados para asegurar un transporte eficiente y en las mejores condiciones de conservación.',
+          body: 'Distribuimos en la provincia de Lleida, el Prepirineo y el Pirineo con flota propia, rutas adaptadas al territorio y cuidado en cada entrega.',
         },
         {
           title: 'Atención personalizada',
-          body: 'Creemos en el trato directo y la confianza. Nos adaptamos a las necesidades de cada cliente para ofrecer un servicio ágil, transparente y de calidad.',
+          body: 'Acompañamos a bares, restaurantes, campings, hoteles, carnicerías, tiendas especializadas y particulares con un trato directo, ágil y de confianza.',
         },
       ],
       exploreTitle: 'Explora Poblaliment',
@@ -233,68 +225,73 @@ export const content: Record<Locale, SiteCopy> = {
       contactAction: 'Ir a contacto',
     },
     about: {
-      title: 'Nosotros | Poblaliment',
+      title: 'Poblaliment: distribuidora desde 1999 | La Pobla de Segur',
       description:
-        'Conoce Poblaliment, su manera de trabajar y la relación entre producto, territorio y personas.',
-      heading: 'Una estructura para explicarnos bien.',
+        'Conoce Poblaliment S.L., distribuidora nacida en abril de 1999 en La Pobla de Segur, con flota propia y servicio en Lleida, el Prepirineo y el Pirineo.',
+      heading: '25 años haciendo territorio.',
       intro:
-        'Poblaliment es una historia que se construye entre producto, territorio y personas. Esta página será el lugar donde darle contexto.',
-      imageAlt: 'Exterior de un espacio de distribución',
-      imageCaption: 'Un lugar físico, una red que se va haciendo visible.',
-      valuesTitle: 'Lo que queremos que se note',
+        'Nacimos en La Pobla de Segur para acercar productos de calidad a los negocios y las personas del Pirineo.',
+      imageAlt: 'Vehículo de Poblaliment en una carretera de montaña del Pirineo',
+      imageCaption: 'Rutas propias desde La Pobla de Segur, en el corazón del Pallars Jussà.',
+      valuesTitle: 'Nuestra manera de trabajar',
       values: [
         {
-          title: 'Claridad',
-          body: 'Cada producto, cada relación y cada paso debe poder entenderse.',
+          title: 'Producto de calidad',
+          body: 'Seleccionamos vinos, bebidas y productos gourmet de productores y marcas de confianza.',
         },
         {
-          title: 'Proximidad',
-          body: 'El territorio no es decoración: es parte de la forma de trabajar.',
+          title: 'Distribución propia',
+          body: 'Cubrimos la provincia de Lleida, el Prepirineo y el Pirineo con nuestros vehículos y el conocimiento de cada ruta.',
         },
         {
-          title: 'Criterio',
-          body: 'Esta sección recogerá las decisiones que definen el proyecto.',
+          title: 'Servicio personalizado',
+          body: 'Escuchamos a cada cliente y adaptamos el servicio a las necesidades de la restauración, el comercio especializado y los particulares.',
         },
       ],
     },
     brands: {
-      title: 'Marcas y proveedores de alimentación | Poblaliment',
+      title: 'Marcas de vinos, bebidas y alimentación | Poblaliment',
       description:
-        'Explora los proveedores de Poblaliment por categoría: quesos, conservas, carnes, pescado, vinos, congelados, café y condimentos.',
+        'Consulta las marcas y proveedores de vinos, cervezas, quesos, conservas, carnes, pescado, congelados, café y otros productos distribuidos por Poblaliment.',
       heading: 'Marcas y proveedores.',
       intro:
         'Una guía de las marcas que forman parte de nuestro surtido, ordenadas por familias de producto.',
-      imageAlt: 'Selección de productos alimentarios',
-      imageCaption: 'Una muestra del lenguaje visual que ya tenemos a mano.',
+      imageAlt: 'Lata y vaso de cerveza UBLA Golden Ale',
+      imageCaption: 'Bebidas y productos seleccionados de marcas de confianza.',
       note: 'Proveedores agrupados por familia de producto',
     },
     contact: {
-      title: 'Contacto | Poblaliment',
+      title: 'Contacto con Poblaliment | Distribución alimentaria en Lleida',
       description:
         'Contacta con Poblaliment para hablar de distribución alimentaria, productos, marcas y colaboraciones.',
-      heading: 'Abrimos una conversación.',
+      heading: 'Hablemos de lo que necesitas.',
       intro:
-        'Este formulario es el punto de partida para una futura conexión. Cuando tengamos los datos definitivos, este espacio ya estará preparado para recibirlos.',
+        'Estamos en La Pobla de Segur. Escríbenos o llámanos para consultar productos, distribución y disponibilidad.',
       imageAlt: 'Vehículo de distribución frente a las montañas',
       imageCaption: 'Cuando hay camino, también hay una forma de empezar.',
       formTitle: 'Escríbenos',
-      formNote: 'Formulario de scaffolding · conexión pendiente de configurar',
+      formNote: 'Cuéntanos qué necesitas y nos pondremos en contacto contigo.',
       fields: {
         name: 'Nombre',
         email: 'Correo electrónico',
         message: 'Mensaje',
         submit: 'Enviar mensaje',
       },
-      detailsTitle: 'Datos por completar',
+      detailsTitle: 'Contacto directo',
       details: [
-        { label: 'Correo', value: 'pendiente de confirmar' },
-        { label: 'Teléfono', value: 'pendiente de confirmar' },
-        { label: 'Ubicación', value: 'Poblaliment · Cataluña' },
+        { label: 'Correo', value: 'info@poblaliment.com', href: 'mailto:info@poblaliment.com' },
+        { label: 'Teléfono', value: '973 680 341', href: 'tel:+34973680341' },
+        {
+          label: 'Instagram',
+          value: '@poblaliment',
+          href: 'https://www.instagram.com/poblaliment/',
+        },
+        { label: 'Ubicación', value: 'Tros del Roi, s/n · 25500 La Pobla de Segur' },
       ],
     },
     footer: {
       statement: 'Producto, origen y criterio.',
-      legal: '© Poblaliment · web en construcción',
+      credit: 'Web desarrollada por:',
     },
   },
 };

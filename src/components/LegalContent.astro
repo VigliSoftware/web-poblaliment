@@ -1,0 +1,96 @@
+---
+import type { Locale } from '../lib/i18n';
+
+const { locale } = Astro.props as { locale: Locale };
+const es = locale === 'es';
+---
+
+<header class="page-frame py-16 sm:py-24">
+  <h1 class="display max-w-4xl text-5xl leading-[0.96] sm:text-7xl">
+    {es ? 'Información legal y privacidad.' : 'Informació legal i privacitat.'}
+  </h1>
+  <p class="mt-7 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
+    {es
+      ? 'Información sobre el titular del sitio web, el tratamiento de datos personales y el uso de cookies.'
+      : 'Informació sobre el titular del lloc web, el tractament de dades personals i l’ús de cookies.'}
+  </p>
+</header>
+
+<div class="page-frame legal-layout pb-16 sm:pb-24">
+  <nav class="legal-index" aria-label={es ? 'Índice legal' : 'Índex legal'}>
+    <a href="#avis-legal">{es ? 'Aviso legal' : 'Avís legal'}</a>
+    <a href="#privacitat">{es ? 'Política de privacidad' : 'Política de privacitat'}</a>
+    <a href="#cookies">Política de cookies</a>
+  </nav>
+
+  <div class="legal-content">
+    <section id="avis-legal" data-reveal>
+      <h2 class="display">{es ? 'Aviso legal' : 'Avís legal'}</h2>
+      <p>
+        {es
+          ? 'Este sitio web es titularidad de POBLALIMENT, S.L., con NIF B25433939 y domicilio en Tros del Roi, s/n, 25500 La Pobla de Segur (Lleida).'
+          : 'Aquest lloc web és titularitat de POBLALIMENT, S.L., amb NIF B25433939 i domicili a Tros del Roi, s/n, 25500 La Pobla de Segur (Lleida).'}
+      </p>
+      <p>
+        {es ? 'Contacto: ' : 'Contacte: '}<a href="mailto:info@poblaliment.com"
+          >info@poblaliment.com</a
+        >
+        {es ? ' y ' : ' i '}<a href="tel:+34973680341">973 680 341</a>.
+      </p>
+      <p>
+        {es
+          ? 'El acceso y uso del sitio implica la aceptación de estas condiciones. Los contenidos son informativos y pueden actualizarse sin previo aviso. POBLALIMENT, S.L. no responde del contenido o disponibilidad de sitios externos enlazados desde esta web.'
+          : 'L’accés i ús del lloc implica l’acceptació d’aquestes condicions. Els continguts són informatius i es poden actualitzar sense avís previ. POBLALIMENT, S.L. no respon del contingut o disponibilitat dels llocs externs enllaçats des d’aquest web.'}
+      </p>
+      <p>
+        {es
+          ? 'Los textos, imágenes, marcas y demás contenidos están protegidos por la normativa de propiedad intelectual e industrial. No se permite su explotación sin autorización, salvo los usos legalmente permitidos.'
+          : 'Els textos, imatges, marques i altres continguts estan protegits per la normativa de propietat intel·lectual i industrial. No se’n permet l’explotació sense autorització, excepte els usos legalment permesos.'}
+      </p>
+    </section>
+
+    <section id="privacitat" data-reveal>
+      <h2 class="display">{es ? 'Política de privacidad' : 'Política de privacitat'}</h2>
+      <p>
+        {es
+          ? 'POBLALIMENT, S.L. es responsable de los datos personales que facilites al contactar por correo electrónico, teléfono o formulario.'
+          : 'POBLALIMENT, S.L. és responsable de les dades personals que facilitis en contactar per correu electrònic, telèfon o formulari.'}
+      </p>
+      <h3>{es ? 'Finalidad y base jurídica' : 'Finalitat i base jurídica'}</h3>
+      <p>
+        {es
+          ? 'Los datos se utilizan para atender consultas, preparar propuestas y gestionar relaciones comerciales. La base jurídica es el consentimiento, la aplicación de medidas precontractuales o la ejecución de una relación contractual.'
+          : 'Les dades s’utilitzen per atendre consultes, preparar propostes i gestionar relacions comercials. La base jurídica és el consentiment, l’aplicació de mesures precontractuals o l’execució d’una relació contractual.'}
+      </p>
+      <h3>{es ? 'Conservación y destinatarios' : 'Conservació i destinataris'}</h3>
+      <p>
+        {es
+          ? 'Los datos se conservarán durante el tiempo necesario para atender la solicitud y cumplir las obligaciones legales. No se cederán salvo obligación legal o a proveedores necesarios que actúen por cuenta de POBLALIMENT, S.L.'
+          : 'Les dades es conservaran durant el temps necessari per atendre la sol·licitud i complir les obligacions legals. No se cediran excepte per obligació legal o a proveïdors necessaris que actuïn per compte de POBLALIMENT, S.L.'}
+      </p>
+      <h3>{es ? 'Tus derechos' : 'Els teus drets'}</h3>
+      <p>
+        {es
+          ? 'Puedes solicitar el acceso, rectificación, supresión, oposición, limitación o portabilidad escribiendo a info@poblaliment.com. También puedes reclamar ante la Agencia Española de Protección de Datos.'
+          : 'Pots sol·licitar l’accés, rectificació, supressió, oposició, limitació o portabilitat escrivint a info@poblaliment.com. També pots reclamar davant l’Agència Espanyola de Protecció de Dades.'}
+      </p>
+    </section>
+
+    <section id="cookies" data-reveal>
+      <h2 class="display">Política de cookies</h2>
+      <p>
+        {es
+          ? 'En su configuración actual, este sitio no utiliza cookies analíticas, publicitarias ni de seguimiento. Únicamente puede emplear almacenamiento técnico imprescindible para el funcionamiento y la seguridad del servicio.'
+          : 'En la configuració actual, aquest lloc no utilitza cookies analítiques, publicitàries ni de seguiment. Únicament pot emprar emmagatzematge tècnic imprescindible per al funcionament i la seguretat del servei.'}
+      </p>
+      <p>
+        {es
+          ? 'Los enlaces a servicios externos quedan sujetos a sus propias políticas al visitarlos. Si se incorporan herramientas que requieran consentimiento, se ofrecerán opciones equivalentes para aceptar o rechazar antes de instalarlas.'
+          : 'Els enllaços a serveis externs queden subjectes a les seves polítiques en visitar-los. Si s’incorporen eines que requereixin consentiment, s’oferiran opcions equivalents per acceptar o rebutjar abans d’instal·lar-les.'}
+      </p>
+      <p>
+        {es ? 'Última actualización: octubre de 2026.' : 'Última actualització: octubre de 2026.'}
+      </p>
+    </section>
+  </div>
+</div>

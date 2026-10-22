@@ -7,13 +7,17 @@ import Layout from '../../layouts/Layout.astro';
 
 const locale = 'es';
 const copy = content[locale].brands;
+const drinkCategories = supplierCategories.filter((category) =>
+  ['Celler', 'Cerveses'].includes(category),
+);
+const foodCategories = supplierCategories.filter((category) => !drinkCategories.includes(category));
 ---
 
 <Layout locale={locale} title={copy.title} description={copy.description}>
   <PageIntro
     heading={copy.heading}
     intro={copy.intro}
-    image="/images/products.jpg"
+    image="/images/products-ubla.jpeg"
     imageAlt={copy.imageAlt}
     imageCaption={copy.imageCaption}
     compact
@@ -27,49 +31,47 @@ const copy = content[locale].brands;
         </a>
       ))}
     </nav>
-    <section class="supplier-group" id="principals">
-      <h2 class="display supplier-group-title">Marcas principales</h2>
-      <div class="supplier-directory">
-        {suppliers
-          .filter((supplier) => supplier.principal)
-          .map((supplier) => (
-            <article class="supplier-directory-row">
-              <SupplierMark supplier={supplier} />
-              <h3 class="display">{supplier.name}</h3>
-              {supplier.website ? (
-                <a href={supplier.website} target="_blank" rel="noopener noreferrer">
-                  Visitar web <span aria-hidden="true">↗</span>
-                </a>
-              ) : (
-                <span>Web pendiente de confirmar</span>
-              )}
-            </article>
-          ))}
-      </div>
-    </section>
-    {supplierCategories.map((category, index) => (
-      <section class="supplier-group" id={`categoria-${index}`}>
-        <h2 class="display supplier-group-title">
-          {suppliers.find((supplier) => supplier.category === category)?.categoryEs}
-        </h2>
-        <div class="supplier-directory">
-          {suppliers
-            .filter((supplier) => supplier.category === category)
-            .map((supplier) => (
-              <article class="supplier-directory-row">
-                <SupplierMark supplier={supplier} />
-                <h3 class="display">{supplier.name}</h3>
-                {supplier.website ? (
-                  <a href={supplier.website} target="_blank" rel="noopener noreferrer">
-                    Visitar web <span aria-hidden="true">↗</span>
-                  </a>
-                ) : (
-                  <span>Web pendiente de confirmar</span>
-                )}
-              </article>
-            ))}
+    <div class="supplier-columns">
+      {[
+        { title: 'Vinos y bebidas', categories: drinkCategories },
+        { title: 'Alimentación', categories: foodCategories },
+      ].map((group) => (
+        <div data-reveal>
+          <h2 class="display supplier-column-title">{group.title}</h2>
+          {group.categories.map((category) => {
+            const index = supplierCategories.indexOf(category);
+            return (
+              <section class="supplier-group" id={`categoria-${index}`}>
+                <h3 class="display supplier-group-title">
+                  {suppliers.find((supplier) => supplier.category === category)?.categoryEs}
+                </h3>
+                <div class="supplier-directory">
+                  {suppliers
+                    .filter((supplier) => supplier.category === category)
+                    .map((supplier) => (
+                      <article class="supplier-directory-row">
+                        <SupplierMark supplier={supplier} />
+                        <h4 class="display">{supplier.name}</h4>
+                        {supplier.website ? (
+                          <a
+                            href={supplier.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Visitar la web de ${supplier.name} (se abre en una pestaña nueva)`}
+                          >
+                            Visitar web <span aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          <span>Web pendiente de confirmar</span>
+                        )}
+                      </article>
+                    ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
-      </section>
-    ))}
+      ))}
+    </div>
   </section>
 </Layout>

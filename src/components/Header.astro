@@ -40,7 +40,7 @@ const activePage =
         <span
           class="brand-context hidden text-[0.62rem] font-semibold tracking-[0.12em] text-[var(--color-ink-soft)] lg:block"
         >
-          DISTRIBUCIÓ ALIMENTÀRIA
+          {locale === 'ca' ? 'DISTRIBUCIÓ ALIMENTÀRIA' : 'DISTRIBUCIÓN ALIMENTARIA'}
         </span>
       </span>
     </a>
@@ -65,12 +65,18 @@ const activePage =
       ))}
     </nav>
 
-    <nav class="flex items-center gap-2 text-xs font-bold tracking-[0.14em]" aria-label="Idioma">
+    <nav
+      class="flex items-center gap-2 text-xs font-bold tracking-[0.14em]"
+      aria-label={locale === 'ca' ? 'Selector d’idioma' : 'Selector de idioma'}
+    >
       <span class="text-[var(--color-green)]">{copy.localeLabel}</span>
       <span class="text-[var(--color-ink-soft)]">/</span>
       <a
         class="text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-orange)]"
         href={localizedPath(otherLocale, activePage)}
+        aria-label={locale === 'ca'
+          ? 'Veure aquesta pàgina en castellà'
+          : 'Ver esta página en catalán'}
       >
         {copy.otherLocaleLabel}
       </a>

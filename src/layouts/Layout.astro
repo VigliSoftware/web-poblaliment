@@ -1,8 +1,10 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SiteAnimations from '../components/SiteAnimations.astro';
 import '../styles/global.css';
 import { getPageFromPath, localizedPath, type Locale, type PageKey } from '../lib/i18n';
+import { imageDimensions } from '../lib/images';
 
 interface Props {
   locale: Locale;
@@ -20,37 +22,121 @@ const alternateUrls = {
   ca: new URL(localizedPath('ca', page), `${siteOrigin}/`).href,
   es: new URL(localizedPath('es', page), `${siteOrigin}/`).href,
 };
+const defaultUrl = new URL(localizedPath('ca', page), `${siteOrigin}/`).href;
 const socialImagePath =
   page === 'about'
-    ? '/images/about.jpg'
+    ? '/images/about-route.jpeg'
     : page === 'brands'
-      ? '/images/products.jpg'
+      ? '/images/products-ubla.jpeg'
       : page === 'contact'
         ? '/images/contact.jpg'
         : '/images/truck-sunset.jpg';
 const socialImageUrl = new URL(socialImagePath, `${siteOrigin}/`).href;
+const socialImage = imageDimensions[socialImagePath];
+const socialImageAlt =
+  locale === 'ca'
+    ? page === 'about'
+      ? 'Vehicle de Poblaliment en una ruta de muntanya del Pirineu'
+      : page === 'brands'
+        ? 'Cervesa UBLA Golden Ale distribuïda per Poblaliment'
+        : page === 'contact'
+          ? 'Vehicle de distribució de Poblaliment al Pirineu'
+          : 'Camió de Poblaliment en ruta al territori'
+    : page === 'about'
+      ? 'Vehículo de Poblaliment en una ruta de montaña del Pirineo'
+      : page === 'brands'
+        ? 'Cerveza UBLA Golden Ale distribuida por Poblaliment'
+        : page === 'contact'
+          ? 'Vehículo de distribución de Poblaliment en el Pirineo'
+          : 'Camión de Poblaliment en ruta por el territorio';
 const logoUrl = new URL('/images/logo.jpg', `${siteOrigin}/`).href;
 const organizationId = `${siteOrigin}/#organization`;
 const websiteId = `${siteOrigin}/#website`;
+const breadcrumbId = `${canonicalUrl}#breadcrumb`;
+const pageNames: Record<Locale, Record<PageKey, string>> = {
+  ca: {
+    home: 'Inici',
+    about: 'Nosaltres',
+    brands: 'Producte',
+    contact: 'Contacte',
+    legal: 'Informació legal',
+  },
+  es: {
+    home: 'Inicio',
+    about: 'Nosotros',
+    brands: 'Producto',
+    contact: 'Contacto',
+    legal: 'Información legal',
+  },
+};
+const pageTypes: Record<PageKey, string> = {
+  home: 'WebPage',
+  about: 'AboutPage',
+  brands: 'CollectionPage',
+  contact: 'ContactPage',
+  legal: 'WebPage',
+};
+const breadcrumb =
+  page === 'home'
+    ? undefined
+    : {
+        '@type': 'BreadcrumbList',
+        '@id': breadcrumbId,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: pageNames[locale].home,
+            item: new URL(localizedPath(locale, 'home'), `${siteOrigin}/`).href,
+          },
+          { '@type': 'ListItem', position: 2, name: pageNames[locale][page], item: canonicalUrl },
+        ],
+      };
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      '@type': ['Organization', 'LocalBusiness'],
       '@id': organizationId,
       name: 'Poblaliment',
+      legalName: 'POBLALIMENT, S.L.',
       url: siteOrigin,
-      logo: logoUrl,
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${siteOrigin}/#logo`,
+        url: logoUrl,
+        contentUrl: logoUrl,
+      },
+      image: socialImageUrl,
+      taxID: 'B25433939',
+      email: 'info@poblaliment.com',
+      telephone: '+34973680341',
+      foundingDate: '1999-04',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Tros del Roi, s/n',
+        postalCode: '25500',
+        addressLocality: 'La Pobla de Segur',
+        addressRegion: 'Lleida',
+        addressCountry: 'ES',
+      },
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Província de Lleida' },
+        { '@type': 'Place', name: 'Prepirineu' },
+        { '@type': 'Place', name: 'Pirineu' },
+      ],
+      sameAs: ['https://www.instagram.com/poblaliment/'],
     },
     {
       '@type': 'WebSite',
       '@id': websiteId,
       name: 'Poblaliment',
       url: siteOrigin,
-      inLanguage: locale,
+      inLanguage: ['ca', 'es'],
+      publisher: { '@id': organizationId },
     },
     {
-      '@type': 'WebPage',
+      '@type': pageTypes[page],
       '@id': `${canonicalUrl}#webpage`,
       url: canonicalUrl,
       name: title,
@@ -58,7 +144,15 @@ const structuredData = {
       inLanguage: locale,
       isPartOf: { '@id': websiteId },
       about: { '@id': organizationId },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: socialImageUrl,
+        width: socialImage.width,
+        height: socialImage.height,
+      },
+      ...(breadcrumb ? { breadcrumb: { '@id': breadcrumbId } } : {}),
     },
+    ...(breadcrumb ? [breadcrumb] : []),
   ],
 };
 ---
@@ -67,36 +161,45 @@ const structuredData = {
 <html lang={locale}>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content={description}>
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'}>
     <meta name="theme-color" content="#f5f1e8">
     {!noindex && <link rel="canonical" href={canonicalUrl} />}
     {!noindex && <link rel="alternate" hreflang="ca" href={alternateUrls.ca} />}
     {!noindex && <link rel="alternate" hreflang="es" href={alternateUrls.es} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={defaultUrl} />}
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Poblaliment">
     <meta property="og:locale" content={locale === 'ca' ? 'ca_ES' : 'es_ES'}>
+    <meta property="og:locale:alternate" content={locale === 'ca' ? 'es_ES' : 'ca_ES'}>
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
     <meta property="og:url" content={canonicalUrl}>
     <meta property="og:image" content={socialImageUrl}>
-    <meta property="og:image:alt" content="Vehicle de distribució de Poblaliment al territori">
+    <meta property="og:image:alt" content={socialImageAlt}>
+    <meta property="og:image:width" content={String(socialImage.width)}>
+    <meta property="og:image:height" content={String(socialImage.height)}>
+    <meta property="og:image:type" content="image/jpeg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content={socialImageUrl}>
-    <meta name="twitter:image:alt" content="Vehicle de distribució de Poblaliment al territori">
+    <meta name="twitter:image:alt" content={socialImageAlt}>
     <link rel="icon" href="/images/logo.jpg">
     <link rel="sitemap" href="/sitemap-index.xml">
     <title>{title}</title>
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
+    <a class="skip-link" href="#main-content">
+      {locale === 'ca' ? 'Salta al contingut principal' : 'Saltar al contenido principal'}
+    </a>
     <Header locale={locale} />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <Footer locale={locale} />
+    <SiteAnimations />
   </body>
 </html>
