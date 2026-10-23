@@ -1,13 +1,21 @@
 # Poblaliment web
 
-Scaffolding estàtic amb Astro, React, Tailwind CSS i Motion.
+Web amb Astro, React, Tailwind CSS i Motion, renderitzada sota demanda a Cloudflare Workers.
+Els textos, els proveïdors i els logos s’editen des de `/admin/` i es desen a Neon.
 
 ## Desenvolupament
 
 ```bash
 pnpm install
+cp .env.example .env        # omple-hi les credencials
+cp .env .dev.vars           # Wrangler llegeix .dev.vars en local
+pnpm db:setup               # crea les taules i carrega el catàleg inicial
+pnpm admin:create <usuari> <contrasenya>
 pnpm dev
 ```
+
+Sense `DATABASE_URL`, la web pública funciona igualment amb els textos i proveïdors de
+`src/data/content.ts` i `src/data/suppliers.ts`, però l’admin no.
 
 Comprovacions locals:
 
@@ -17,13 +25,28 @@ pnpm run build
 pnpm run format
 pnpm run format:check
 pnpm run lint
-pnpm test
+PUBLIC_SITE_URL=https://www.example.com pnpm test
 ```
+
+`pnpm test` comprova les pàgines a través d’`astro preview`. Si hi ha `.dev.vars`, les pàgines
+mostren els textos desats a la base de dades.
 
 ## Desplegament a Cloudflare
 
-El projecte publica el directori estàtic `dist/` a Cloudflare Workers Static Assets amb Wrangler.
-No necessita l'adapter `@astrojs/cloudflare` perquè totes les pàgines es generen durant el build.
+El projecte fa servir l’adapter `@astrojs/cloudflare`: les pàgines es renderitzen al Worker i els
+fitxers de `public/` es serveixen com a Static Assets. Cada isolate del Worker guarda les dades
+30 segons, així que els canvis de l’admin es veuen a la web en menys d’un minut.
+
+Abans del primer desplegament, desa els secrets del Worker (no van a `wrangler.jsonc`):
+
+```bash
+npx wrangler secret put DATABASE_URL
+npx wrangler secret put SESSION_SECRET        # mínim 32 caràcters: openssl rand -base64 32
+npx wrangler secret put S3_ACCESS_KEY_ID
+npx wrangler secret put S3_SECRET_ACCESS_KEY
+```
+
+`S3_ENDPOINT`, `S3_REGION` i `S3_BUCKET` són a `vars` de `wrangler.jsonc`.
 
 Per connectar el repositori perquè Cloudflare desplegui cada push a `main`:
 
@@ -61,4 +84,18 @@ Castellà viu sota `/es/`:
 - `/es/bodega/`
 - `/es/contacto/`
 
-Els textos i les rutes d’idioma estan separats a `src/data/content.ts` i `src/lib/i18n.ts`, perquè afegir una tercera llengua no obligui a reescriure els components.
+## Administració
+
+- `/admin/proveidors/` — afegir, editar i eliminar proveïdors, canviar-los de categoria i pujar-ne el
+  logo (PNG, JPG, WebP o SVG fins a 1 MB). Sense logo propi es mostra la icona del seu web.
+- `/admin/categories/` — noms en català i castellà, ordre i a quina pàgina es mostren (Aliments,
+  Celler o el bloc de cervesa del Celler).
+- `/admin/inici/` — quines marques surten a la portada i en quin ordre.
+- `/admin/textos/` — tots els textos de la web en els dos idiomes. Un camp buit recupera el text
+  original.
+
+Els logos es desen al bucket privat de Neon Object Storage i el Worker els serveix a
+`/media/logo/?k=…`. Els usuaris de l’admin es creen o se’n canvia la contrasenya amb
+`pnpm admin:create`.
+
+Els textos per defecte i les rutes d’idioma estan separats a `src/data/content.ts` i `src/lib/i18n.ts`, perquè afegir una tercera llengua no obligui a reescriure els components.

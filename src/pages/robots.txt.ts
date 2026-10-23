@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+export const prerender = true;
 
 export const GET: APIRoute = ({ site }) => {
   const siteUrl = new URL('/sitemap-index.xml', site ?? 'http://localhost:4321').href;

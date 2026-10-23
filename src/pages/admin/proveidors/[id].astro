@@ -1,0 +1,202 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import {
+  type AdminSupplier,
+  errorMessage,
+  FormError,
+  hasOwnLogo,
+  integer,
+  listCategories,
+  logoSrc,
+  published,
+  removeLogoObject,
+  sectionNames,
+  text,
+  uploadLogo,
+  validateLogo,
+  websiteOrNull,
+} from '../../../lib/admin';
+import { requireSql } from '../../../lib/db';
+
+const sql = requireSql();
+const isNew = Astro.params.id === 'nou';
+const id = Number(Astro.params.id);
+if (!isNew && !Number.isInteger(id)) return Astro.redirect('/admin/proveidors/');
+
+const categories = await listCategories();
+let supplier: AdminSupplier | undefined;
+
+if (!isNew) {
+  [supplier] = (await sql`SELECT * FROM suppliers WHERE id = ${id}`) as AdminSupplier[];
+  if (!supplier) return Astro.redirect('/admin/proveidors/');
+}
+
+let error: string | null = null;
+let values = {
+  name: supplier?.name ?? '',
+  categoryId: supplier?.category_id ?? categories[0]?.id ?? 0,
+  website: supplier?.website ?? '',
+  featured: supplier?.featured ?? false,
+  sortOrder: supplier?.sort_order ?? 1000,
+};
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+
+  if (form.get('action') === 'delete' && supplier) {
+    await sql`DELETE FROM suppliers WHERE id = ${supplier.id}`;
+    await removeLogoObject(supplier.logo_key);
+    published();
+    return Astro.redirect(
+      `/admin/proveidors/?ok=${encodeURIComponent(`${supplier.name} eliminat.`)}`,
+    );
+  }
+
+  values = {
+    name: text(form, 'name'),
+    categoryId: integer(form, 'category_id'),
+    website: text(form, 'website'),
+    featured: form.has('featured'),
+    sortOrder: integer(form, 'sort_order', 1000),
+  };
+
+  try {
+    if (!values.name) throw new FormError('El nom és obligatori.');
+    if (!categories.some((category) => category.id === values.categoryId)) {
+      throw new FormError('Tria una categoria.');
+    }
+    const website = websiteOrNull(values.website);
+    const logo = form.get('logo');
+    const newLogo = logo instanceof File && logo.size > 0 ? logo : undefined;
+    if (newLogo) validateLogo(newLogo);
+
+    let supplierId = supplier?.id;
+    if (supplier) {
+      await sql`
+        UPDATE suppliers SET name = ${values.name}, category_id = ${values.categoryId},
+          website = ${website}, sort_order = ${values.sortOrder},
+          featured_order = CASE WHEN ${values.featured} AND NOT featured
+            THEN (SELECT coalesce(max(featured_order), 0) + 10 FROM suppliers) ELSE featured_order END,
+          featured = ${values.featured}, updated_at = now()
+        WHERE id = ${supplier.id}`;
+    } else {
+      const [row] = (await sql`
+        INSERT INTO suppliers (name, category_id, website, featured, featured_order, sort_order)
+        VALUES (${values.name}, ${values.categoryId}, ${website}, ${values.featured},
+          (SELECT coalesce(max(featured_order), 0) + 10 FROM suppliers), ${values.sortOrder})
+        RETURNING id`) as [{ id: number }];
+      supplierId = row.id;
+    }
+
+    if (supplierId && (newLogo || form.has('remove_logo'))) {
+      const key = newLogo ? await uploadLogo(newLogo, supplierId) : null;
+      await sql`UPDATE suppliers SET logo_key = ${key}, logo_url = NULL WHERE id = ${supplierId}`;
+      await removeLogoObject(supplier?.logo_key ?? null);
+    }
+
+    published();
+    return Astro.redirect(`/admin/proveidors/?ok=${encodeURIComponent(`${values.name} desat.`)}`);
+  } catch (caught) {
+    if (!(caught instanceof FormError)) console.error(caught);
+    error = errorMessage(caught);
+  }
+}
+
+const currentLogo = supplier ? logoSrc(supplier) : undefined;
+const ownLogo = supplier ? hasOwnLogo(supplier) : false;
+---
+
+<AdminLayout
+  title={isNew ? 'Nou proveïdor' : (supplier?.name ?? '')}
+  active="suppliers"
+  error={error}
+>
+  <p><a href="/admin/proveidors/">← Tots els proveïdors</a></p>
+
+  <form method="post" enctype="multipart/form-data" class="admin-card mt-6 max-w-2xl space-y-6">
+    <label>
+      <span class="eyebrow">Nom</span>
+      <input class="admin-input" name="name" required value={values.name}>
+    </label>
+
+    <label>
+      <span class="eyebrow">Categoria</span>
+      <select class="admin-input" name="category_id" required>
+        {categories.map((category) => (
+          <option value={category.id} selected={category.id === values.categoryId}>
+            {category.name_ca} · {category.name_es} ({sectionNames[category.section]})
+          </option>
+        ))}
+      </select>
+    </label>
+
+    <label>
+      <span class="eyebrow">Web</span>
+      <input
+        class="admin-input"
+        name="website"
+        type="url"
+        placeholder="https://"
+        value={values.website}
+      >
+    </label>
+
+    <div>
+      <span class="eyebrow">Logo</span>
+      <div class="mt-2 flex flex-wrap items-center gap-4">
+        <span class="admin-logo h-16! w-16!">
+          {currentLogo ? <img src={currentLogo} alt="" /> : <span>—</span>}
+        </span>
+        <div class="space-y-2 text-sm">
+          <input name="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <p class="text-[var(--color-ink-soft)]">
+            PNG, JPG, WebP o SVG, fins a 1 MB. Millor quadrat i amb fons transparent o blanc.
+          </p>
+          {ownLogo && (
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="remove_logo"> Treure el logo i fer servir la icona de la
+              web
+            </label>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <label class="flex! items-center gap-2">
+      <input type="checkbox" name="featured" checked={values.featured}>
+      <span>Mostrar a les marques de la pàgina d’inici</span>
+    </label>
+
+    <label>
+      <span class="eyebrow">Ordre dins la categoria</span>
+      <input
+        class="admin-input max-w-40"
+        name="sort_order"
+        type="number"
+        step="1"
+        value={values.sortOrder}
+      >
+      <span class="mt-1 block text-sm text-[var(--color-ink-soft)]">
+        Els números més baixos surten primer.
+      </span>
+    </label>
+
+    <div class="flex flex-wrap gap-3 border-t rule pt-6">
+      <button class="admin-button" type="submit">Desar</button>
+      <a class="admin-button admin-button--ghost" href="/admin/proveidors/">Cancel·lar</a>
+    </div>
+  </form>
+
+  {supplier && (
+    <form
+      method="post"
+      class="mt-8"
+      onsubmit="return confirm('Segur que vols eliminar aquest proveïdor?')"
+    >
+      <input type="hidden" name="action" value="delete">
+      <button class="admin-button admin-button--danger" type="submit">
+        Eliminar proveïdor
+      </button>
+    </form>
+  )}
+</AdminLayout>

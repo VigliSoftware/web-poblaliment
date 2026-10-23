@@ -1,0 +1,128 @@
+---
+import { content as defaultContent, type SiteCopy } from '../../data/content';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { published } from '../../lib/admin';
+import {
+  editorSections,
+  fieldLabel,
+  getAtPath,
+  listTextFields,
+  mergeCopy,
+  safeHref,
+  sectionLabel,
+  setAtPath,
+} from '../../lib/content-fields';
+import { requireSql } from '../../lib/db';
+import { locales, type Locale } from '../../lib/i18n';
+
+const sql = requireSql();
+const requested = Astro.url.searchParams.get('seccio') as keyof SiteCopy | null;
+const section = requested && editorSections.includes(requested) ? requested : 'home';
+const fields = listTextFields(defaultContent.ca[section], section);
+
+async function loadCopy(): Promise<Record<Locale, SiteCopy>> {
+  const rows = (await sql`SELECT locale, data FROM site_content`) as Array<{
+    locale: Locale;
+    data: unknown;
+  }>;
+  const stored = Object.fromEntries(rows.map((row) => [row.locale, row.data]));
+  return {
+    ca: mergeCopy(defaultContent.ca, stored.ca),
+    es: mergeCopy(defaultContent.es, stored.es),
+  };
+}
+
+let copy = await loadCopy();
+let notice: string | null = null;
+let error: string | null = null;
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const invalid: string[] = [];
+
+  for (const locale of locales) {
+    for (const field of fields) {
+      const value = String(form.get(`${locale}|${field.path}`) ?? '').trim();
+      // An empty field falls back to the original text.
+      const next = value || String(getAtPath(defaultContent[locale], field.path));
+      if (field.path.endsWith('.href') && !safeHref(next)) {
+        invalid.push(`${fieldLabel(field.path)} (${locale.toUpperCase()})`);
+        continue;
+      }
+      setAtPath(copy[locale] as never, field.path, next);
+    }
+  }
+
+  if (invalid.length > 0) {
+    error = `Enllaç no vàlid a: ${invalid.join(', ')}. Ha de començar per https://, mailto: o tel:.`;
+  } else {
+    await sql.transaction(
+      locales.map(
+        (locale) => sql`
+          INSERT INTO site_content (locale, data, updated_at)
+          VALUES (${locale}, ${JSON.stringify(copy[locale])}::jsonb, now())
+          ON CONFLICT (locale) DO UPDATE SET data = EXCLUDED.data, updated_at = now()`,
+      ),
+    );
+    published();
+    copy = await loadCopy();
+    notice = `Textos de «${sectionLabel(section)}» desats.`;
+  }
+}
+---
+
+<AdminLayout title="Textos" active="texts" notice={notice} error={error}>
+  <nav class="flex flex-wrap gap-2" aria-label="Seccions">
+    {editorSections.map((key) => (
+      <a
+        href={`?seccio=${key}`}
+        class:list={['admin-button', key !== section && 'admin-button--ghost']}
+        aria-current={key === section ? 'page' : undefined}
+      >
+        {sectionLabel(key)}
+      </a>
+    ))}
+  </nav>
+
+  <p class="mt-6 max-w-2xl text-sm text-[var(--color-ink-soft)]">
+    Si deixes un camp buit, es recupera el text original. Els «Títol» i «Descripció per a Google»
+    són els que apareixen a la pestanya del navegador i als resultats de cerca.
+  </p>
+
+  <form method="post" class="mt-6">
+    <div class="hidden gap-6 border-b rule pb-2 sm:grid sm:grid-cols-2">
+      <span class="eyebrow">Català</span>
+      <span class="eyebrow">Castellano</span>
+    </div>
+    {fields.map((field) => (
+      <fieldset class="border-b rule py-5">
+        <legend class="text-sm font-semibold">{fieldLabel(field.path)}</legend>
+        <div class="mt-2 grid gap-3 sm:grid-cols-2 sm:gap-6">
+          {locales.map((locale) => {
+            const name = `${locale}|${field.path}`;
+            const value = String(getAtPath(copy[locale], field.path) ?? '');
+            return field.long ? (
+              <textarea
+                class="admin-input mt-0!"
+                name={name}
+                rows="4"
+                aria-label={`${fieldLabel(field.path)} (${locale})`}
+                set:text={value}
+              />
+            ) : (
+              <input
+                class="admin-input mt-0!"
+                name={name}
+                value={value}
+                aria-label={`${fieldLabel(field.path)} (${locale})`}
+              >
+            );
+          })}
+        </div>
+      </fieldset>
+    ))}
+    <div class="sticky bottom-0 border-t rule bg-[var(--color-paper)] py-4">
+      <button class="admin-button" type="submit">Desar textos</button>
+    </div>
+  </form>
+</AdminLayout>

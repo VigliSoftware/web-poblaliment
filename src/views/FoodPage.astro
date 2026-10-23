@@ -1,0 +1,58 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import CellarScrollCue from '../components/CellarScrollCue.astro';
+import SupplierRail from '../components/SupplierRail.astro';
+import Layout from '../layouts/Layout.astro';
+import type { Locale } from '../lib/i18n';
+import { categoryName } from '../lib/site-data';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { content, categories, suppliers } = Astro.locals.site;
+const copy = content[locale].food;
+const families = categories
+  .filter((category) => category.section === 'food')
+  .map((category) => ({
+    name: categoryName(category, locale),
+    suppliers: suppliers.filter((supplier) => supplier.categoryId === category.id),
+  }))
+  .filter((family) => family.suppliers.length > 0);
+---
+
+<Layout locale={locale} page="food" title={copy.title} description={copy.description}>
+  <div class="food-hero-stage">
+    <PageIntro
+      heading={copy.heading}
+      intro={copy.intro}
+      image="/images/products-selection.jpeg"
+      imageAlt={copy.imageAlt}
+      imageCaption={copy.imageCaption}
+      compact
+    />
+
+    <div class="food-scroll-cue-spacing">
+      <CellarScrollCue target="food-filter" label={copy.scrollCue} />
+    </div>
+  </div>
+
+  <section class="page-frame food-directory pb-12 sm:pb-24">
+    <nav id="food-filter" class="food-category-nav" aria-label={copy.filterLabel}>
+      {families.map((family, index) => <a href={`#familia-${index}`}>{family.name}</a>)}
+    </nav>
+
+    {families.map((family, index) => (
+      <section class="food-category" id={`familia-${index}`} data-reveal>
+        <div class="food-category-heading">
+          <h2 class="display">{family.name}</h2>
+          <span>
+            {family.suppliers.length} {copy.supplierCount}
+          </span>
+        </div>
+        <SupplierRail locale={locale} label={family.name} suppliers={family.suppliers} />
+      </section>
+    ))}
+  </section>
+</Layout>

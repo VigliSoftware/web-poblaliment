@@ -14,12 +14,17 @@
     "deploy:cloudflare": "wrangler deploy",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "lint": "biome lint ."
+    "lint": "biome lint .",
+    "db:setup": "node --env-file=.env scripts/db-setup.ts",
+    "admin:create": "node --env-file=.env scripts/create-admin.ts"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.4.2",
     "@astrojs/react": "^7.1.1",
     "@astrojs/sitemap": "^3.7.4",
+    "@neondatabase/serverless": "^1.2.0",
     "astro": "^7.4.2",
+    "aws4fetch": "^1.0.20",
     "gsap": "^3.15.0",
     "motion": "^14.5.0",
     "react": "^19.3.1",

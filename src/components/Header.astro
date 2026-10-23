@@ -1,5 +1,4 @@
 ---
-import { content } from '../data/content';
 import { localizedPath, type Locale } from '../lib/i18n';
 import SiteImage from './SiteImage.astro';
 
@@ -8,7 +7,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const copy = content[locale];
+const copy = Astro.locals.site.content[locale];
 const otherLocale = locale === 'ca' ? 'es' : 'ca';
 const currentPath = Astro.url.pathname;
 const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/$/, '') : path);

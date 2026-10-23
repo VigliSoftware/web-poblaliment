@@ -1,0 +1,67 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { listCategories, listSuppliers, logoSrc, sectionNames } from '../../../lib/admin';
+
+const [categories, suppliers] = await Promise.all([listCategories(), listSuppliers()]);
+const groups = categories.map((category) => ({
+  category,
+  suppliers: suppliers.filter((supplier) => supplier.category_id === category.id),
+}));
+const notice = Astro.url.searchParams.get('ok');
+---
+
+<AdminLayout title="Proveïdors" active="suppliers" notice={notice}>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <p class="max-w-xl text-[var(--color-ink-soft)]">
+      Si un proveïdor no té logo propi, la web mostra la icona del seu lloc web.
+    </p>
+    <a class="admin-button" href="/admin/proveidors/nou/">+ Nou proveïdor</a>
+  </div>
+
+  {groups.map(({ category, suppliers: rows }) => (
+    <section class="mt-10">
+      <div class="flex flex-wrap items-baseline justify-between gap-2 border-b rule pb-2">
+        <h2 class="display text-2xl">{category.name_ca}</h2>
+        <span class="eyebrow">
+          {sectionNames[category.section]} · {rows.length}
+        </span>
+      </div>
+      {rows.length === 0 ? (
+        <p class="py-4 text-sm text-[var(--color-ink-soft)]">Cap proveïdor en aquesta categoria.</p>
+      ) : (
+        <div class="admin-scroll">
+          <table class="admin-table">
+            <tbody>
+              {rows.map((supplier) => {
+                const logo = logoSrc(supplier);
+                return (
+                  <tr>
+                    <td class="w-14">
+                      <span class="admin-logo">
+                        {logo ? <img src={logo} alt="" loading="lazy" /> : <span>—</span>}
+                      </span>
+                    </td>
+                    <td>
+                      <a href={`/admin/proveidors/${supplier.id}/`} class="font-semibold">
+                        {supplier.name}
+                      </a>
+                      {supplier.featured && (
+                        <span class="ml-2 text-xs text-[var(--color-green)]">● A l’inici</span>
+                      )}
+                    </td>
+                    <td class="w-1/3 text-[var(--color-ink-soft)]">
+                      {supplier.website ? new URL(supplier.website).hostname : 'Sense web'}
+                    </td>
+                    <td class="w-20 text-right">
+                      <a href={`/admin/proveidors/${supplier.id}/`}>Editar</a>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  ))}
+</AdminLayout>

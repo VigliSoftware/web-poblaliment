@@ -1,0 +1,151 @@
+---
+import type { SupplierCategory } from '../../data/suppliers';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import {
+  errorMessage,
+  FormError,
+  integer,
+  listCategories,
+  published,
+  sectionNames,
+  text,
+} from '../../lib/admin';
+import { requireSql } from '../../lib/db';
+
+const sql = requireSql();
+const sections = Object.keys(sectionNames) as SupplierCategory['section'][];
+let error: string | null = null;
+let notice = Astro.url.searchParams.get('ok');
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = form.get('action');
+
+  try {
+    if (action === 'delete') {
+      const id = integer(form, 'id');
+      const [{ count }] = (await sql`
+        SELECT count(*)::int AS count FROM suppliers WHERE category_id = ${id}`) as [
+        { count: number },
+      ];
+      if (count > 0) {
+        throw new FormError('Abans d’eliminar la categoria, mou-ne els proveïdors a una altra.');
+      }
+      await sql`DELETE FROM categories WHERE id = ${id}`;
+      notice = 'Categoria eliminada.';
+    } else {
+      const nameCa = text(form, 'name_ca');
+      const nameEs = text(form, 'name_es');
+      const section = text(form, 'section') as SupplierCategory['section'];
+      const sortOrder = integer(form, 'sort_order', 1000);
+      if (!nameCa || !nameEs) throw new FormError('Cal el nom en català i en castellà.');
+      if (!sections.includes(section)) throw new FormError('Tria on es mostra la categoria.');
+
+      if (action === 'create') {
+        await sql`
+          INSERT INTO categories (name_ca, name_es, section, sort_order)
+          VALUES (${nameCa}, ${nameEs}, ${section}, ${sortOrder})`;
+        notice = `Categoria ${nameCa} creada.`;
+      } else {
+        await sql`
+          UPDATE categories SET name_ca = ${nameCa}, name_es = ${nameEs}, section = ${section},
+            sort_order = ${sortOrder}
+          WHERE id = ${integer(form, 'id')}`;
+        notice = `Categoria ${nameCa} desada.`;
+      }
+    }
+    published();
+  } catch (caught) {
+    if (!(caught instanceof FormError)) console.error(caught);
+    error = errorMessage(caught);
+    notice = null;
+  }
+}
+
+const categories = await listCategories();
+---
+
+<AdminLayout title="Categories" active="categories" notice={notice} error={error}>
+  <p class="max-w-2xl text-[var(--color-ink-soft)]">
+    «Aliments» i «Celler» indiquen a quina pàgina es llisten els proveïdors. «Cervesa» és el bloc
+    destacat del final de la pàgina del Celler. L’ordre també és el de les pestanyes d’Aliments.
+  </p>
+
+  <div class="mt-8 space-y-3">
+    {categories.map((category) => (
+      <form
+        method="post"
+        class="admin-card grid items-end gap-3 sm:grid-cols-[1fr_1fr_1fr_6rem_auto]"
+      >
+        <input type="hidden" name="id" value={category.id}>
+        <label>
+          <span class="eyebrow">Català</span>
+          <input class="admin-input" name="name_ca" required value={category.name_ca}>
+        </label>
+        <label>
+          <span class="eyebrow">Castellano</span>
+          <input class="admin-input" name="name_es" required value={category.name_es}>
+        </label>
+        <label>
+          <span class="eyebrow">Es mostra a</span>
+          <select class="admin-input" name="section">
+            {sections.map((section) => (
+              <option value={section} selected={section === category.section}>
+                {sectionNames[section]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span class="eyebrow">Ordre</span>
+          <input class="admin-input" name="sort_order" type="number" value={category.sort_order}>
+        </label>
+        <div class="flex items-center gap-3">
+          <button class="admin-button" type="submit" name="action" value="update">
+            Desar
+          </button>
+          {category.supplier_count === 0 ? (
+            <button class="admin-link" type="submit" name="action" value="delete">
+              Eliminar
+            </button>
+          ) : (
+            <span class="text-xs text-[var(--color-ink-soft)]">
+              {category.supplier_count} prov.
+            </span>
+          )}
+        </div>
+      </form>
+    ))}
+  </div>
+
+  <h2 class="display mt-12 text-3xl">Nova categoria</h2>
+  <form
+    method="post"
+    class="admin-card mt-4 grid items-end gap-3 sm:grid-cols-[1fr_1fr_1fr_6rem_auto]"
+  >
+    <label>
+      <span class="eyebrow">Català</span>
+      <input class="admin-input" name="name_ca" required>
+    </label>
+    <label>
+      <span class="eyebrow">Castellano</span>
+      <input class="admin-input" name="name_es" required>
+    </label>
+    <label>
+      <span class="eyebrow">Es mostra a</span>
+      <select class="admin-input" name="section">
+        {sections.map((section) => <option value={section}>{sectionNames[section]}</option>)}
+      </select>
+    </label>
+    <label>
+      <span class="eyebrow">Ordre</span>
+      <input
+        class="admin-input"
+        name="sort_order"
+        type="number"
+        value={(categories.at(-1)?.sort_order ?? 0) + 10}
+      >
+    </label>
+    <button class="admin-button" type="submit" name="action" value="create">Afegir</button>
+  </form>
+</AdminLayout>

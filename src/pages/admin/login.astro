@@ -1,0 +1,54 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { startSession } from '../../lib/auth';
+import { getSql } from '../../lib/db';
+import { verifyPassword } from '../../lib/password';
+
+if (Astro.locals.adminUser) return Astro.redirect('/admin/');
+
+let error: string | null = null;
+let username = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  username = String(form.get('username') ?? '').trim();
+  const password = String(form.get('password') ?? '');
+  const sql = getSql();
+
+  if (!sql) {
+    error = 'La base de dades no està configurada.';
+  } else {
+    const [user] = (await sql`
+      SELECT username, password_hash FROM admin_users WHERE username = ${username}`) as Array<{
+      username: string;
+      password_hash: string;
+    }>;
+
+    if (user && (await verifyPassword(password, user.password_hash))) {
+      await startSession(Astro.cookies, user.username);
+      return Astro.redirect('/admin/');
+    }
+    error = 'Usuari o contrasenya incorrectes.';
+  }
+}
+---
+
+<AdminLayout title="Accés" error={error}>
+  <form method="post" class="admin-card max-w-sm space-y-5">
+    <label>
+      <span class="eyebrow">Usuari</span>
+      <input class="admin-input" name="username" autocomplete="username" required value={username}>
+    </label>
+    <label>
+      <span class="eyebrow">Contrasenya</span>
+      <input
+        class="admin-input"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
+    </label>
+    <button class="admin-button" type="submit">Entrar</button>
+  </form>
+</AdminLayout>

@@ -1,7 +1,6 @@
 import type { Locale, PageKey } from '../lib/i18n';
 
 type NavItem = { label: string; page: PageKey };
-type LinkItem = { label: string; detail: string; page: PageKey };
 
 export type PageCopy = {
   title: string;
@@ -12,6 +11,8 @@ export type PageCopy = {
   imageCaption: string;
 };
 
+// Default copy for both locales. The admin panel stores edited copy in the database and
+// merges it over these values, so every key here is also the schema of what can be edited.
 export type SiteCopy = {
   localeLabel: string;
   otherLocaleLabel: string;
@@ -23,31 +24,59 @@ export type SiteCopy = {
     intro: string;
     primaryAction: string;
     secondaryAction: string;
-    imageAlt: string;
-    imageCaption: string;
+    heroNote: string;
+    signalTitle: string;
+    signalBody: string;
     servicesTitle: string;
     services: Array<{ title: string; body: string }>;
-    exploreTitle: string;
-    exploreLinks: LinkItem[];
+    suppliersKicker: string;
+    suppliersTitle: string;
+    suppliersBody: string;
+    foodLink: string;
+    cellarLink: string;
+    featuredLabel: string;
     galleryTitle: string;
     galleryNote: string;
+    galleryCaption: string;
     gallery: Array<{ src: string; alt: string }>;
     contactTitle: string;
     contactBody: string;
     contactAction: string;
   };
   about: PageCopy & {
+    historyTitle: string;
+    historyParagraphs: string[];
+    anniversaryKicker: string;
+    anniversaryTitle: string;
+    anniversaryBody: string;
+    anniversaryImageAlt: string;
     valuesTitle: string;
     values: Array<{ title: string; body: string }>;
   };
-  food: PageCopy;
-  cellar: PageCopy;
-  contact: PageCopy & {
+  food: PageCopy & {
+    scrollCue: string;
+    filterLabel: string;
+    supplierCount: string;
+  };
+  cellar: PageCopy & {
+    scrollCue: string;
+    winesTitle: string;
+    winesBody: string;
+    visitLabel: string;
+    beerImageAlt: string;
+    beerTitle: string;
+    beerBody: string;
+    beerLink: string;
+  };
+  contact: {
+    title: string;
+    description: string;
     formTitle: string;
     formNote: string;
     fields: { name: string; email: string; message: string; submit: string };
     detailsTitle: string;
     details: Array<{ label: string; value: string; href?: string }>;
+    mapTitle: string;
   };
   footer: { statement: string; credit: string };
 };
@@ -82,9 +111,11 @@ export const content: Record<Locale, SiteCopy> = {
         'Distribuïm aliments amb agilitat, proximitat i confiança perquè cada producte arribi on ha d’arribar.',
       primaryAction: 'Coneix-nos',
       secondaryAction: 'Parlem',
-      imageAlt: 'Camió de Poblaliment repartint producte al capvespre',
-      imageCaption: 'La distribució també forma part del producte.',
-      servicesTitle: 'Els nostres serveis',
+      heroNote: 'Distribució local i nacional amb atenció personalitzada.',
+      signalTitle: 'Una distribució que es fa visible.',
+      signalBody:
+        'Posem en moviment productes, marques i relacions perquè arribin amb criteri, proximitat i una manera clara de fer.',
+      servicesTitle: 'Servei que es nota.',
       services: [
         {
           title: 'Distribució local i nacional',
@@ -95,15 +126,16 @@ export const content: Record<Locale, SiteCopy> = {
           body: 'Acompanyem bars, restaurants, càmpings, hotels, carnisseries, botigues especialitzades i particulars amb un tracte directe, àgil i de confiança.',
         },
       ],
-      exploreTitle: 'Explora Poblaliment',
-      exploreLinks: [
-        { label: 'Nosaltres', detail: 'La base del projecte', page: 'about' },
-        { label: 'Aliments', detail: 'Proveïdors per família de producte', page: 'food' },
-        { label: 'Celler', detail: 'Vins, escumosos i cervesa', page: 'cellar' },
-        { label: 'Contacte', detail: 'Obrim una conversa', page: 'contact' },
-      ],
-      galleryTitle: 'Una mirada al nostre dia a dia',
-      galleryNote: 'Imatges de suport · galeria preparada per ampliar',
+      suppliersKicker: 'Producte i origen',
+      suppliersTitle: 'Marques que donen forma al recorregut.',
+      suppliersBody:
+        'Una selecció de marques i proveïdors que expliquen el nostre catàleg des del producte real.',
+      foodLink: 'Consultar Aliments',
+      cellarLink: 'Consultar Celler',
+      featuredLabel: 'Marca principal',
+      galleryTitle: 'Una mirada al dia a dia.',
+      galleryNote: 'La distribució també forma part del producte.',
+      galleryCaption: 'El camí també explica com treballem.',
       gallery: [
         { src: '/images/truck-sunset.jpg', alt: 'Camió de Poblaliment en ruta al capvespre' },
         {
@@ -125,6 +157,17 @@ export const content: Record<Locale, SiteCopy> = {
         'Vam néixer a la Pobla de Segur per acostar productes de qualitat als negocis i les persones del Pirineu.',
       imageAlt: 'Vehicle de Poblaliment en una carretera de muntanya del Pirineu',
       imageCaption: 'Rutes pròpies des de la Pobla de Segur, al cor del Pallars Jussà.',
+      historyTitle: 'Des de l’abril de 1999.',
+      historyParagraphs: [
+        'Poblaliment S.L. va néixer a la Pobla de Segur, al cor del Pallars Jussà. Més de 25 anys després, continuem creixent al costat dels negocis i les persones del territori.',
+        'Seleccionem i distribuïm vins, begudes i productes gourmet a bars, restaurants, càmpings, hotels, carnisseries, botigues especialitzades i particulars.',
+        'Treballem amb productors i marques de confiança per oferir qualitat, continuïtat i una resposta propera a cada client.',
+      ],
+      anniversaryKicker: '25è aniversari',
+      anniversaryTitle: 'Una cervesa feta per celebrar el camí.',
+      anniversaryBody:
+        'Per celebrar els 25 anys de Poblaliment vam crear PIGAL, una cervesa artesanal pròpia que resumeix l’origen, el territori i les relacions construïdes durant tots aquests anys.',
+      anniversaryImageAlt: 'Llaunes i gots de cervesa artesanal PIGAL sobre una barra',
       valuesTitle: 'La nostra manera de fer',
       values: [
         {
@@ -150,6 +193,9 @@ export const content: Record<Locale, SiteCopy> = {
         'Un assortiment ampli, ordenat per famílies, per trobar amb agilitat els productes que necessita cada negoci.',
       imageAlt: 'Selecció de productes d’alimentació distribuïts per Poblaliment',
       imageCaption: 'Proveïdors de confiança per a restauració, comerç i particulars.',
+      scrollCue: 'Descobreix els aliments',
+      filterLabel: 'Famílies d’aliments',
+      supplierCount: 'proveïdors',
     },
     cellar: {
       title: 'Celler, vins i cervesa | Poblaliment',
@@ -160,16 +206,21 @@ export const content: Record<Locale, SiteCopy> = {
         'Una selecció més concentrada de vins, escumosos i cervesa, presentada perquè cada productor tingui el seu espai.',
       imageAlt: 'Ampolles de vi del celler Sumarroca entre vinyes',
       imageCaption: 'Cellers escollits per origen, qualitat i continuïtat.',
+      scrollCue: 'Descobreix la selecció',
+      winesTitle: 'Vins i escumosos',
+      winesBody:
+        'Una selecció de cellers amb identitat pròpia, pensada per donar visibilitat a cada origen.',
+      visitLabel: 'Visita el celler',
+      beerImageAlt: 'Cerveses Moritz al cor del Pirineu',
+      beerTitle: 'La nostra cervesa.',
+      beerBody:
+        'Una marca de cervesa amb caràcter propi dins la selecció de Poblaliment, distribuïda amb la mateixa proximitat i continuïtat que defineix les nostres rutes.',
+      beerLink: 'Conèixer Moritz',
     },
     contact: {
       title: 'Contacte amb Poblaliment | Distribució alimentària a Lleida',
       description:
         'Contacta amb Poblaliment per parlar de distribució alimentària, productes, marques i col·laboracions.',
-      heading: 'Parlem del que necessites.',
-      intro:
-        'Som a la Pobla de Segur. Escriu-nos o truca’ns per consultar productes, distribució i disponibilitat.',
-      imageAlt: 'Vehicle de distribució davant de les muntanyes',
-      imageCaption: 'Quan hi ha camí, també hi ha una manera de començar.',
       formTitle: 'Escriu-nos',
       formNote: 'Explica’ns què necessites i ens posarem en contacte amb tu.',
       fields: {
@@ -189,6 +240,7 @@ export const content: Record<Locale, SiteCopy> = {
         },
         { label: 'Ubicació', value: 'Tros del Roi, s/n · 25500 La Pobla de Segur' },
       ],
+      mapTitle: 'Mapa de la ubicació de Poblaliment a la Pobla de Segur',
     },
     footer: {
       statement: 'Producte, origen i criteri.',
@@ -208,9 +260,11 @@ export const content: Record<Locale, SiteCopy> = {
         'Distribuimos alimentos con agilidad, cercanía y confianza para que cada producto llegue donde tiene que llegar.',
       primaryAction: 'Conócenos',
       secondaryAction: 'Hablemos',
-      imageAlt: 'Camión de Poblaliment repartiendo producto al atardecer',
-      imageCaption: 'La distribución también forma parte del producto.',
-      servicesTitle: 'Nuestros servicios',
+      heroNote: 'Distribución local y nacional con atención personalizada.',
+      signalTitle: 'Una distribución que se hace visible.',
+      signalBody:
+        'Ponemos en movimiento productos, marcas y relaciones para que lleguen con criterio, proximidad y una manera clara de hacer.',
+      servicesTitle: 'Servicio que se nota.',
       services: [
         {
           title: 'Distribución local y nacional',
@@ -221,15 +275,16 @@ export const content: Record<Locale, SiteCopy> = {
           body: 'Acompañamos a bares, restaurantes, campings, hoteles, carnicerías, tiendas especializadas y particulares con un trato directo, ágil y de confianza.',
         },
       ],
-      exploreTitle: 'Explora Poblaliment',
-      exploreLinks: [
-        { label: 'Nosotros', detail: 'La base del proyecto', page: 'about' },
-        { label: 'Alimentos', detail: 'Proveedores por familia de producto', page: 'food' },
-        { label: 'Bodega', detail: 'Vinos, espumosos y cerveza', page: 'cellar' },
-        { label: 'Contacto', detail: 'Abrimos una conversación', page: 'contact' },
-      ],
-      galleryTitle: 'Una mirada a nuestro día a día',
-      galleryNote: 'Imágenes de apoyo · galería preparada para ampliar',
+      suppliersKicker: 'Producto y origen',
+      suppliersTitle: 'Marcas que dan forma al recorrido.',
+      suppliersBody:
+        'Una selección de marcas y proveedores que explican nuestro catálogo desde el producto real.',
+      foodLink: 'Consultar Alimentos',
+      cellarLink: 'Consultar Bodega',
+      featuredLabel: 'Marca principal',
+      galleryTitle: 'Una mirada al día a día.',
+      galleryNote: 'La distribución también forma parte del producto.',
+      galleryCaption: 'El camino también explica cómo trabajamos.',
       gallery: [
         { src: '/images/truck-sunset.jpg', alt: 'Camión de Poblaliment en ruta al atardecer' },
         {
@@ -251,6 +306,17 @@ export const content: Record<Locale, SiteCopy> = {
         'Nacimos en La Pobla de Segur para acercar productos de calidad a los negocios y las personas del Pirineo.',
       imageAlt: 'Vehículo de Poblaliment en una carretera de montaña del Pirineo',
       imageCaption: 'Rutas propias desde La Pobla de Segur, en el corazón del Pallars Jussà.',
+      historyTitle: 'Desde abril de 1999.',
+      historyParagraphs: [
+        'Poblaliment S.L. nació en La Pobla de Segur, en el corazón del Pallars Jussà. Más de 25 años después, seguimos creciendo junto a los negocios y las personas del territorio.',
+        'Seleccionamos y distribuimos vinos, bebidas y productos gourmet a bares, restaurantes, campings, hoteles, carnicerías, tiendas especializadas y particulares.',
+        'Trabajamos con productores y marcas de confianza para ofrecer calidad, continuidad y una respuesta cercana a cada cliente.',
+      ],
+      anniversaryKicker: '25.º aniversario',
+      anniversaryTitle: 'Una cerveza creada para celebrar el camino.',
+      anniversaryBody:
+        'Para celebrar los 25 años de Poblaliment creamos PIGAL, una cerveza artesanal propia que resume el origen, el territorio y las relaciones construidas durante todos estos años.',
+      anniversaryImageAlt: 'Latas y vasos de cerveza artesanal PIGAL sobre una barra',
       valuesTitle: 'Nuestra manera de trabajar',
       values: [
         {
@@ -276,6 +342,9 @@ export const content: Record<Locale, SiteCopy> = {
         'Un surtido amplio, ordenado por familias, para encontrar con agilidad los productos que necesita cada negocio.',
       imageAlt: 'Selección de productos de alimentación distribuidos por Poblaliment',
       imageCaption: 'Proveedores de confianza para hostelería, comercio y particulares.',
+      scrollCue: 'Descubre los alimentos',
+      filterLabel: 'Familias de alimentos',
+      supplierCount: 'proveedores',
     },
     cellar: {
       title: 'Bodega, vinos y cerveza | Poblaliment',
@@ -286,16 +355,21 @@ export const content: Record<Locale, SiteCopy> = {
         'Una selección más concentrada de vinos, espumosos y cerveza, presentada para que cada productor tenga su espacio.',
       imageAlt: 'Botellas de vino de la bodega Sumarroca entre viñedos',
       imageCaption: 'Bodegas escogidas por origen, calidad y continuidad.',
+      scrollCue: 'Descubre la selección',
+      winesTitle: 'Vinos y espumosos',
+      winesBody:
+        'Una selección de bodegas con identidad propia, pensada para dar visibilidad a cada origen.',
+      visitLabel: 'Visitar la bodega',
+      beerImageAlt: 'Cervezas Moritz en el corazón del Pirineo',
+      beerTitle: 'Nuestra cerveza.',
+      beerBody:
+        'Una marca de cerveza con carácter propio dentro de la selección de Poblaliment, distribuida con la misma cercanía y continuidad que define nuestras rutas.',
+      beerLink: 'Conocer Moritz',
     },
     contact: {
       title: 'Contacto con Poblaliment | Distribución alimentaria en Lleida',
       description:
         'Contacta con Poblaliment para hablar de distribución alimentaria, productos, marcas y colaboraciones.',
-      heading: 'Hablemos de lo que necesitas.',
-      intro:
-        'Estamos en La Pobla de Segur. Escríbenos o llámanos para consultar productos, distribución y disponibilidad.',
-      imageAlt: 'Vehículo de distribución frente a las montañas',
-      imageCaption: 'Cuando hay camino, también hay una forma de empezar.',
       formTitle: 'Escríbenos',
       formNote: 'Cuéntanos qué necesitas y nos pondremos en contacto contigo.',
       fields: {
@@ -315,6 +389,7 @@ export const content: Record<Locale, SiteCopy> = {
         },
         { label: 'Ubicación', value: 'Tros del Roi, s/n · 25500 La Pobla de Segur' },
       ],
+      mapTitle: 'Mapa de la ubicación de Poblaliment en La Pobla de Segur',
     },
     footer: {
       statement: 'Producto, origen y criterio.',

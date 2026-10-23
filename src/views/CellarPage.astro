@@ -1,0 +1,98 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import CellarScrollCue from '../components/CellarScrollCue.astro';
+import SiteImage from '../components/SiteImage.astro';
+import SupplierMark from '../components/SupplierMark.astro';
+import Layout from '../layouts/Layout.astro';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { content, categories, suppliers } = Astro.locals.site;
+const copy = content[locale].cellar;
+const inSection = (section: string) =>
+  suppliers.filter(
+    (supplier) =>
+      categories.find((category) => category.id === supplier.categoryId)?.section === section,
+  );
+const wineries = inSection('cellar');
+const beer = inSection('beer')[0];
+const moritzWordmark =
+  'https://moritz.com/static/version1792476927/frontend/Hiberus/moritz/ca_ES/images/logo.svg';
+---
+
+<Layout locale={locale} page="cellar" title={copy.title} description={copy.description}>
+  <div class="cellar-hero-stage">
+    <PageIntro
+      heading={copy.heading}
+      intro={copy.intro}
+      image="/images/sumarroca.jpg"
+      imageAlt={copy.imageAlt}
+      imageCaption={copy.imageCaption}
+      compact
+    />
+
+    <div class="cellar-scroll-cue-spacing">
+      <CellarScrollCue label={copy.scrollCue} />
+    </div>
+  </div>
+
+  <section id="cellar-selection" class="page-frame cellar-directory py-12 sm:py-24" data-reveal>
+    <div class="cellar-heading">
+      <h2 class="display" data-cellar-heading>{copy.winesTitle}</h2>
+      <p data-cellar-copy>{copy.winesBody}</p>
+    </div>
+    <div class="cellar-suppliers">
+      {wineries.map((supplier) => (
+        <article class="cellar-supplier">
+          <SupplierMark supplier={supplier} />
+          <h3 class="display">{supplier.name}</h3>
+          {supplier.website && (
+            <a href={supplier.website} target="_blank" rel="noopener noreferrer">
+              {copy.visitLabel} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {beer && (
+    <section class="beer-feature border-y rule" data-reveal>
+      <div class="page-frame beer-feature-grid">
+        <figure>
+          <SiteImage
+            src="/images/moritz-pirineus.jpg"
+            alt={copy.beerImageAlt}
+            sizes="(min-width: 801px) 58vw, 100vw"
+          />
+        </figure>
+        <div class="beer-feature-copy">
+          {beer.name === 'Moritz' ? (
+            <img
+              class="beer-brand-logo"
+              src={moritzWordmark}
+              alt="Moritz"
+              width="544"
+              height="149"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <p class="display text-4xl">{beer.name}</p>
+          )}
+          <h2 class="display">{copy.beerTitle}</h2>
+          <p>{copy.beerBody}</p>
+          {beer.website && (
+            <a href={beer.website} target="_blank" rel="noopener noreferrer">
+              {copy.beerLink} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>

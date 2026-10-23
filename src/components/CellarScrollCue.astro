@@ -1,17 +1,10 @@
 ---
-import type { Locale } from '../lib/i18n';
-
 interface Props {
-  locale: Locale;
   target?: string;
-  label?: string;
+  label: string;
 }
 
-const {
-  locale,
-  target = 'cellar-selection',
-  label = locale === 'ca' ? 'Descobreix la selecció' : 'Descubre la selección',
-} = Astro.props;
+const { target = 'cellar-selection', label } = Astro.props;
 ---
 
 <a class="cellar-scroll-cue" href={`#${target}`}>

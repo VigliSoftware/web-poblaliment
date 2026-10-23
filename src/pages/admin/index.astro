@@ -1,0 +1,47 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { listCategories } from '../../lib/admin';
+import { requireSql } from '../../lib/db';
+
+const categories = await listCategories();
+const [{ featured }] = (await requireSql()`
+  SELECT count(*)::int AS featured FROM suppliers WHERE featured`) as [{ featured: number }];
+const supplierCount = categories.reduce((total, category) => total + category.supplier_count, 0);
+
+const cards = [
+  {
+    href: '/admin/proveidors/',
+    title: 'Proveïdors',
+    detail: `${supplierCount} proveïdors. Afegeix-ne, canvia’ls de categoria o puja’n el logo.`,
+  },
+  {
+    href: '/admin/categories/',
+    title: 'Categories',
+    detail: `${categories.length} categories. Noms en català i castellà i on es mostren.`,
+  },
+  {
+    href: '/admin/inici/',
+    title: 'Marques d’inici',
+    detail: `${featured} marques destacades a la portada.`,
+  },
+  {
+    href: '/admin/textos/',
+    title: 'Textos',
+    detail: 'Tots els textos de la web, en català i castellà.',
+  },
+];
+---
+
+<AdminLayout title={`Hola, ${Astro.locals.adminUser}`}>
+  <p class="max-w-2xl text-[var(--color-ink-soft)]">
+    Els canvis es publiquen a la web en menys d’un minut.
+  </p>
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    {cards.map((card) => (
+      <a href={card.href} class="admin-card block no-underline hover:border-[var(--color-orange)]">
+        <h2 class="display text-3xl">{card.title}</h2>
+        <p class="mt-2 text-sm text-[var(--color-ink-soft)]">{card.detail}</p>
+      </a>
+    ))}
+  </div>
+</AdminLayout>

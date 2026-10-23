@@ -1,5 +1,4 @@
 ---
-import { content } from '../data/content';
 import { localizedPath, type Locale } from '../lib/i18n';
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const copy = content[locale];
+const copy = Astro.locals.site.content[locale];
 ---
 
 <footer class="mt-24 border-t rule bg-[var(--color-paper-deep)]">

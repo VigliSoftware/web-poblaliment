@@ -1,8 +1,52 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const dist = resolve('dist');
+// Pages render on demand, so they are checked through `astro preview` (workerd). Static
+// output (404, robots.txt, sitemap) is read from dist/client. Preview reads .dev.vars, so
+// with a database configured the pages show the copy stored there.
+const dist = resolve('dist/client');
+const port = 4411;
+// Astro runs preview as a background server; stop it however the checks end.
+/** @param {string[]} args */
+const astro = (...args) =>
+  spawnSync('pnpm', ['exec', 'astro', 'preview', ...args], { stdio: 'ignore' });
+astro('stop');
+astro('--background', '--port', String(port));
+process.on('exit', () => astro('stop'));
+
+async function waitForPreview() {
+  for (let attempt = 0; attempt < 60; attempt += 1) {
+    try {
+      await fetch(`http://localhost:${port}/`);
+      return;
+    } catch {
+      await new Promise((done) => setTimeout(done, 500));
+    }
+  }
+  throw new Error('astro preview did not start');
+}
+
+/** @param {string} file */
+const toPath = (file) => `/${file.replace(/index\.html$/, '')}`;
+
+/** @param {string} file */
+async function render(file) {
+  if (!file.endsWith('index.html')) return readFileSync(resolve(dist, file), 'utf8');
+  const response = await fetch(`http://localhost:${port}${toPath(file)}`);
+  assert.equal(response.status, 200, `${toPath(file)} returned ${response.status}`);
+  return response.text();
+}
+
+/** @param {string} file */
+async function exists(file) {
+  if (!file.endsWith('index.html')) return existsSync(resolve(dist, file));
+  const response = await fetch(`http://localhost:${port}${toPath(file)}`);
+  return response.status === 200;
+}
+
+await waitForPreview();
 const pages = [
   ['index.html', 'https://www.example.com/'],
   ['es/index.html', 'https://www.example.com/es/'],
@@ -19,7 +63,7 @@ const pages = [
 ];
 
 for (const [page, canonical] of pages) {
-  const html = readFileSync(resolve(dist, page), 'utf8');
+  const html = await render(page);
 
   assert.match(
     html,
@@ -40,7 +84,7 @@ for (const [page, canonical] of pages) {
 }
 
 for (const page of ['index.html', 'es/index.html']) {
-  const html = readFileSync(resolve(dist, page), 'utf8');
+  const html = await render(page);
 
   assert.match(html, /<source src="\/HeroVideo\.mp4" type="video\/mp4">/);
   assert.match(html, /<video[^>]*data-hero-video[^>]*muted[^>]*loop[^>]*playsinline/);
@@ -59,29 +103,29 @@ for (const page of ['index.html', 'es/index.html']) {
   assert.doesNotMatch(html, /01 \/ 04/);
 }
 
-assert.match(readFileSync(resolve(dist, 'index.html'), 'utf8'), /mobile-nav flex justify-center/);
+assert.match(await render('index.html'), /mobile-nav flex justify-center/);
 
-const homeCa = readFileSync(resolve(dist, 'index.html'), 'utf8');
-const homeEs = readFileSync(resolve(dist, 'es/index.html'), 'utf8');
+const homeCa = await render('index.html');
+const homeEs = await render('es/index.html');
 assert.match(homeCa, /Consultar Aliments/);
 assert.match(homeCa, /Consultar Celler/);
 assert.match(homeEs, /Consultar Alimentos/);
 assert.match(homeEs, /Consultar Bodega/);
 
-assert.ok(existsSync(resolve(dist, 'HeroVideo.mp4')));
-assert.ok(existsSync(resolve(dist, 'images/moritz-mark-transparent.png')));
+assert.ok(await exists('HeroVideo.mp4'));
+assert.ok(await exists('images/moritz-mark-transparent.png'));
 
-const notFound = readFileSync(resolve(dist, '404.html'), 'utf8');
+const notFound = await render('404.html');
 assert.match(notFound, /name="robots" content="noindex, follow"/);
 
-const robots = readFileSync(resolve(dist, 'robots.txt'), 'utf8');
+const robots = await render('robots.txt');
 assert.match(robots, /Sitemap: https:\/\/www\.example\.com\/sitemap-index\.xml/);
 
-assert.ok(existsSync(resolve(dist, 'sitemap-index.xml')));
-assert.ok(existsSync(resolve(dist, 'sitemap-0.xml')));
+assert.ok(await exists('sitemap-index.xml'));
+assert.ok(await exists('sitemap-0.xml'));
 
-const aboutCa = readFileSync(resolve(dist, 'nosaltres/index.html'), 'utf8');
-const aboutEs = readFileSync(resolve(dist, 'es/nosotros/index.html'), 'utf8');
+const aboutCa = await render('nosaltres/index.html');
+const aboutEs = await render('es/nosotros/index.html');
 assert.match(aboutCa, /abril de 1999/);
 assert.match(aboutCa, /PIGAL/);
 assert.match(aboutCa, /src="\/images\/about-route\.jpeg"/);
@@ -101,11 +145,11 @@ for (const page of [
   'es/alimentos/index.html',
   'es/bodega/index.html',
 ]) {
-  assert.match(readFileSync(resolve(dist, page), 'utf8'), /max-w-3xl sm:pb-36/);
+  assert.match(await render(page), /max-w-3xl sm:pb-36/);
 }
 
 for (const page of ['contacte/index.html', 'es/contacto/index.html']) {
-  const html = readFileSync(resolve(dist, page), 'utf8');
+  const html = await render(page);
   assert.match(html, /mailto:info@poblaliment\.com/);
   assert.match(html, /tel:\+34973680341/);
   assert.match(html, /instagram\.com\/poblaliment/);
@@ -113,8 +157,8 @@ for (const page of ['contacte/index.html', 'es/contacto/index.html']) {
   assert.doesNotMatch(html, /page-intro/);
 }
 
-const foodCa = readFileSync(resolve(dist, 'aliments/index.html'), 'utf8');
-const foodEs = readFileSync(resolve(dist, 'es/alimentos/index.html'), 'utf8');
+const foodCa = await render('aliments/index.html');
+const foodEs = await render('es/alimentos/index.html');
 assert.match(foodCa, /Aliments per a cada servei/);
 assert.match(foodCa, /food-supplier-grid/);
 assert.doesNotMatch(foodCa, /data-auto-rail/);
@@ -131,8 +175,8 @@ assert.match(foodEs, /id="food-filter"/);
 assert.match(foodEs, /Descubre los alimentos/);
 assert.match(foodEs, /food-scroll-cue-spacing/);
 
-const cellarCa = readFileSync(resolve(dist, 'celler/index.html'), 'utf8');
-const cellarEs = readFileSync(resolve(dist, 'es/bodega/index.html'), 'utf8');
+const cellarCa = await render('celler/index.html');
+const cellarEs = await render('es/bodega/index.html');
 assert.match(cellarCa, /Vins i escumosos/);
 assert.match(cellarCa, />La nostra cervesa\.<\/h2>/);
 assert.match(cellarCa, /moritz\/ca_ES\/images\/logo\.svg/);
@@ -162,15 +206,21 @@ assert.match(
 );
 assert.match(globalCss, /@keyframes cellar-scroll-pulse/);
 
-assert.ok(!existsSync(resolve(dist, 'marques/index.html')));
-assert.ok(!existsSync(resolve(dist, 'es/marcas/index.html')));
+assert.ok(!(await exists('marques/index.html')));
+assert.ok(!(await exists('es/marcas/index.html')));
 
 for (const page of ['legal/index.html', 'es/legal/index.html']) {
-  const html = readFileSync(resolve(dist, page), 'utf8');
+  const html = await render(page);
   assert.match(html, /id="avis-legal"/);
   assert.match(html, /id="privacitat"/);
   assert.match(html, /id="cookies"/);
   assert.match(html, /B25433939/);
 }
 
-console.log('Static site metadata, robots.txt, sitemap, and 404 output verified.');
+const admin = await fetch(`http://localhost:${port}/admin/`, { redirect: 'manual' });
+assert.equal(admin.status, 302);
+assert.match(admin.headers.get('location') ?? '', /\/admin\/login\/$/);
+assert.doesNotMatch(await render('sitemap-0.xml'), /\/admin/);
+
+console.log('Site metadata, robots.txt, sitemap, 404 and admin protection verified.');
+process.exit(0);

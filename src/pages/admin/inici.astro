@@ -1,0 +1,96 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { listCategories, listSuppliers, logoSrc, published } from '../../lib/admin';
+import { requireSql } from '../../lib/db';
+
+const sql = requireSql();
+let notice: string | null = null;
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const selected = form
+    .getAll('featured')
+    .map(Number)
+    .filter(Number.isInteger)
+    .map((id) => ({ id, order: Number(form.get(`order_${id}`)) || Number.MAX_SAFE_INTEGER }))
+    .sort((a, b) => a.order - b.order);
+
+  await sql.transaction([
+    sql`UPDATE suppliers SET featured = false, featured_order = 0`,
+    ...selected.map(
+      ({ id }, index) =>
+        sql`UPDATE suppliers SET featured = true, featured_order = ${(index + 1) * 10}
+            WHERE id = ${id}`,
+    ),
+  ]);
+  published();
+  notice = 'Marques d’inici desades.';
+}
+
+const [categories, suppliers] = await Promise.all([listCategories(), listSuppliers()]);
+const featured = suppliers
+  .filter((supplier) => supplier.featured)
+  .sort((a, b) => a.featured_order - b.featured_order);
+const featuredPosition = new Map(featured.map((supplier, index) => [supplier.id, index + 1]));
+---
+
+<AdminLayout title="Marques d’inici" active="home" notice={notice}>
+  <p class="max-w-2xl text-[var(--color-ink-soft)]">
+    Marca les que vols mostrar a la portada, a la secció «Marques que donen forma al recorregut», i
+    posa’ls un número per decidir l’ordre (1 surt primer).
+  </p>
+
+  {featured.length > 0 && (
+    <div class="mt-6 flex flex-wrap gap-3">
+      {featured.map((supplier) => (
+        <span class="admin-card flex items-center gap-3 py-2!">
+          <span class="admin-logo">
+            {logoSrc(supplier) ? <img src={logoSrc(supplier)} alt="" /> : <span>—</span>}
+          </span>
+          <strong>
+            {featuredPosition.get(supplier.id)}. {supplier.name}
+          </strong>
+        </span>
+      ))}
+    </div>
+  )}
+
+  <form method="post" class="mt-8">
+    {categories.map((category) => {
+      const rows = suppliers.filter((supplier) => supplier.category_id === category.id);
+      return (
+        rows.length > 0 && (
+          <fieldset class="mt-8">
+            <legend class="display text-2xl">{category.name_ca}</legend>
+            <div class="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {rows.map((supplier) => (
+                <div class="admin-card flex items-center justify-between gap-3 py-3!">
+                  <label class="flex! items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      value={supplier.id}
+                      checked={supplier.featured}
+                    >
+                    {supplier.name}
+                  </label>
+                  <input
+                    class="admin-input mt-0! w-16!"
+                    type="number"
+                    min="1"
+                    name={`order_${supplier.id}`}
+                    aria-label={`Ordre de ${supplier.name}`}
+                    value={featuredPosition.get(supplier.id) ?? ''}
+                  >
+                </div>
+              ))}
+            </div>
+          </fieldset>
+        )
+      );
+    })}
+    <div class="sticky bottom-0 mt-8 border-t rule bg-[var(--color-paper)] py-4">
+      <button class="admin-button" type="submit">Desar marques d’inici</button>
+    </div>
+  </form>
+</AdminLayout>

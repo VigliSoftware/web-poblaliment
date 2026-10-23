@@ -1,5 +1,4 @@
 ---
-import { suppliers } from '../data/suppliers';
 import { localizedPath, type Locale } from '../lib/i18n';
 import SupplierMark from './SupplierMark.astro';
 
@@ -8,32 +7,20 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const featured = suppliers.filter((supplier) => supplier.principal);
-const isSpanish = locale === 'es';
+const { featured, categories, content } = Astro.locals.site;
+const sectionOf = (categoryId: string) =>
+  categories.find((category) => category.id === categoryId)?.section;
 ---
 
 <div class="featured-suppliers">
   {featured.map((supplier) => {
-    const page = supplier.category === 'Cerveses' ? 'cellar' : 'food';
+    const page = sectionOf(supplier.categoryId) === 'food' ? 'food' : 'cellar';
     return (
       <a class="featured-supplier" href={localizedPath(locale, page)}>
-        {supplier.name === 'Moritz' ? (
-          <span class="supplier-mark supplier-mark--transparent" aria-hidden="true">
-            <img
-              src="/images/moritz-mark-transparent.png"
-              alt=""
-              width="1351"
-              height="1164"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
-        ) : (
-          <SupplierMark supplier={supplier} />
-        )}
+        <SupplierMark supplier={supplier} />
         <span>
           <strong>{supplier.name}</strong>
-          <small>{isSpanish ? 'Marca principal' : 'Marca principal'}</small>
+          <small>{content[locale].home.featuredLabel}</small>
         </span>
         <span aria-hidden="true">↗</span>
       </a>
