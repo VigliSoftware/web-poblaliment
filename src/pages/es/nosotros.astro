@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import anniversaryBeer from '../../../images/Pasted image.png';
 import PageIntro from '../../components/PageIntro.astro';
+import SiteImage from '../../components/SiteImage.astro';
 import { content } from '../../data/content';
 import Layout from '../../layouts/Layout.astro';
 
@@ -20,7 +19,9 @@ const copy = content[locale].about;
   <section class="page-frame py-8 sm:py-16" data-reveal>
     <div class="grid gap-8 border-t rule pt-8 sm:grid-cols-[0.65fr_1.35fr]">
       <h2 class="display text-4xl sm:text-5xl">Desde abril de 1999.</h2>
-      <div class="max-w-2xl space-y-5 justify-self-end text-lg leading-relaxed text-[var(--color-ink-soft)]">
+      <div
+        class="max-w-2xl space-y-5 justify-self-end text-lg leading-relaxed text-[var(--color-ink-soft)]"
+      >
         <p>
           Poblaliment S.L. nació en La Pobla de Segur, en el corazón del Pallars Jussà. Más de 25
           años después, seguimos creciendo junto a los negocios y las personas del territorio.
@@ -52,11 +53,10 @@ const copy = content[locale].about;
         </p>
       </div>
       <figure class="anniversary-image overflow-hidden">
-        <Image
-          src={anniversaryBeer}
+        <SiteImage
+          src="/images/pigal-anniversary.jpg"
           alt="Cerveza artesanal PIGAL creada por el 25.º aniversario de Poblaliment"
           class="anniversary-photo"
-          widths={[480, 720, 960]}
           sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
         />

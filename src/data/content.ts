@@ -104,8 +104,11 @@ export const content: Record<Locale, SiteCopy> = {
       galleryNote: 'Imatges de suport · galeria preparada per ampliar',
       gallery: [
         { src: '/images/truck-sunset.jpg', alt: 'Camió de Poblaliment en ruta al capvespre' },
-        { src: '/images/truck-snow.jpg', alt: 'Camió de Poblaliment en una carretera de muntanya' },
-        { src: '/images/warehouse.jpg', alt: 'Espai de distribució de Poblaliment' },
+        {
+          src: '/images/truck-snow.jpg',
+          alt: 'Camió de Poblaliment en una carretera d’alta muntanya',
+        },
+        { src: '/images/moritz-pirineus.jpg', alt: 'Cerveses Moritz al cor del Pirineu' },
       ],
       contactTitle: 'Tens una pregunta o una proposta?',
       contactBody: 'Escriu-nos i prepararem el següent pas.',
@@ -143,8 +146,8 @@ export const content: Record<Locale, SiteCopy> = {
       heading: 'Marques i proveïdors.',
       intro:
         'Una guia de les marques que formen part del nostre assortiment, ordenades per famílies de producte.',
-      imageAlt: 'Llauna i copa de cervesa UBLA Golden Ale',
-      imageCaption: 'Begudes i productes seleccionats de marques de confiança.',
+      imageAlt: 'Cerveses artesanals UBLA i PIGAL amb copes a la barra',
+      imageCaption: 'Begudes i productes seleccionats per a bars, restaurants i comerços.',
       note: 'Proveïdors agrupats per família de producte',
     },
     contact: {
@@ -217,8 +220,11 @@ export const content: Record<Locale, SiteCopy> = {
       galleryNote: 'Imágenes de apoyo · galería preparada para ampliar',
       gallery: [
         { src: '/images/truck-sunset.jpg', alt: 'Camión de Poblaliment en ruta al atardecer' },
-        { src: '/images/truck-snow.jpg', alt: 'Camión de Poblaliment en una carretera de montaña' },
-        { src: '/images/warehouse.jpg', alt: 'Espacio de distribución de Poblaliment' },
+        {
+          src: '/images/truck-snow.jpg',
+          alt: 'Camión de Poblaliment en una carretera de alta montaña',
+        },
+        { src: '/images/moritz-pirineus.jpg', alt: 'Cervezas Moritz en el corazón del Pirineo' },
       ],
       contactTitle: '¿Tienes una pregunta o una propuesta?',
       contactBody: 'Escríbenos y prepararemos el siguiente paso.',
@@ -256,8 +262,8 @@ export const content: Record<Locale, SiteCopy> = {
       heading: 'Marcas y proveedores.',
       intro:
         'Una guía de las marcas que forman parte de nuestro surtido, ordenadas por familias de producto.',
-      imageAlt: 'Lata y vaso de cerveza UBLA Golden Ale',
-      imageCaption: 'Bebidas y productos seleccionados de marcas de confianza.',
+      imageAlt: 'Cervezas artesanales UBLA y PIGAL con copas en la barra',
+      imageCaption: 'Bebidas y productos seleccionados para bares, restaurantes y comercios.',
       note: 'Proveedores agrupados por familia de producto',
     },
     contact: {
