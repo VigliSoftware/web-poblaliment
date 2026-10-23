@@ -26,29 +26,35 @@ const defaultUrl = new URL(localizedPath('ca', page), `${siteOrigin}/`).href;
 const socialImagePath =
   page === 'about'
     ? '/images/about-route.jpeg'
-    : page === 'brands'
-      ? '/images/products-ubla.jpeg'
-      : page === 'contact'
-        ? '/images/contact.jpg'
-        : '/images/truck-sunset.jpg';
+    : page === 'food'
+      ? '/images/products-selection.jpeg'
+      : page === 'cellar'
+        ? '/images/sumarroca.jpg'
+        : page === 'contact'
+          ? '/images/contact.jpg'
+          : '/images/truck-sunset.jpg';
 const socialImageUrl = new URL(socialImagePath, `${siteOrigin}/`).href;
 const socialImage = imageDimensions[socialImagePath];
 const socialImageAlt =
   locale === 'ca'
     ? page === 'about'
       ? 'Vehicle de Poblaliment en una ruta de muntanya del Pirineu'
-      : page === 'brands'
-        ? 'Cerveses artesanals UBLA i PIGAL distribuïdes per Poblaliment'
-        : page === 'contact'
-          ? 'Vehicle de distribució de Poblaliment al Pirineu'
-          : 'Camió de Poblaliment en ruta al territori'
+      : page === 'food'
+        ? 'Selecció de productes d’alimentació distribuïts per Poblaliment'
+        : page === 'cellar'
+          ? 'Vins del celler Sumarroca distribuïts per Poblaliment'
+          : page === 'contact'
+            ? 'Vehicle de distribució de Poblaliment al Pirineu'
+            : 'Camió de Poblaliment en ruta al territori'
     : page === 'about'
       ? 'Vehículo de Poblaliment en una ruta de montaña del Pirineo'
-      : page === 'brands'
-        ? 'Cervezas artesanales UBLA y PIGAL distribuidas por Poblaliment'
-        : page === 'contact'
-          ? 'Vehículo de distribución de Poblaliment en el Pirineo'
-          : 'Camión de Poblaliment en ruta por el territorio';
+      : page === 'food'
+        ? 'Selección de productos de alimentación distribuidos por Poblaliment'
+        : page === 'cellar'
+          ? 'Vinos de la bodega Sumarroca distribuidos por Poblaliment'
+          : page === 'contact'
+            ? 'Vehículo de distribución de Poblaliment en el Pirineo'
+            : 'Camión de Poblaliment en ruta por el territorio';
 const logoUrl = new URL('/images/logo.jpg', `${siteOrigin}/`).href;
 const organizationId = `${siteOrigin}/#organization`;
 const websiteId = `${siteOrigin}/#website`;
@@ -57,14 +63,16 @@ const pageNames: Record<Locale, Record<PageKey, string>> = {
   ca: {
     home: 'Inici',
     about: 'Nosaltres',
-    brands: 'Producte',
+    food: 'Aliments',
+    cellar: 'Celler',
     contact: 'Contacte',
     legal: 'Informació legal',
   },
   es: {
     home: 'Inicio',
     about: 'Nosotros',
-    brands: 'Producto',
+    food: 'Alimentos',
+    cellar: 'Bodega',
     contact: 'Contacto',
     legal: 'Información legal',
   },
@@ -72,7 +80,8 @@ const pageNames: Record<Locale, Record<PageKey, string>> = {
 const pageTypes: Record<PageKey, string> = {
   home: 'WebPage',
   about: 'AboutPage',
-  brands: 'CollectionPage',
+  food: 'CollectionPage',
+  cellar: 'CollectionPage',
   contact: 'ContactPage',
   legal: 'WebPage',
 };
@@ -191,7 +200,7 @@ const structuredData = {
     <title>{title}</title>
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
-  <body>
+  <body class:list={{ 'contact-page': page === 'contact' }}>
     <a class="skip-link" href="#main-content">
       {locale === 'ca' ? 'Salta al contingut principal' : 'Saltar al contenido principal'}
     </a>

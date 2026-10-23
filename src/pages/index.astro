@@ -1,8 +1,8 @@
 ---
 import HeroVideo from '../components/HeroVideo.astro';
 import HeroTextAnimation from '../components/HeroTextAnimation.astro';
+import FeaturedSuppliers from '../components/FeaturedSuppliers.astro';
 import SiteImage from '../components/SiteImage.astro';
-import SupplierCarousel from '../components/SupplierCarousel.astro';
 import { content } from '../data/content';
 import Layout from '../layouts/Layout.astro';
 import { localizedPath } from '../lib/i18n';
@@ -69,9 +69,9 @@ const copy = content[locale];
     >
       <h2 class="display max-w-xl text-5xl leading-none sm:text-6xl">Servei que es nota.</h2>
     </div>
-    <div class="service-list mt-2">
+    <div class="service-list mt-4 grid gap-3">
       {copy.home.services.map((service) => (
-        <article class="service-row grid gap-4 border-b rule py-7 sm:grid-cols-[minmax(15rem,0.7fr)_1.3fr] sm:items-center">
+        <article class="service-row grid gap-4 px-5 py-8 sm:grid-cols-[minmax(15rem,0.7fr)_1.3fr] sm:items-center sm:px-8">
           <h3 class="display text-3xl sm:text-4xl">{service.title}</h3>
           <p class="max-w-xl text-[var(--color-ink-soft)]">{service.body}</p>
         </article>
@@ -93,16 +93,18 @@ const copy = content[locale];
             Una selecció de marques i proveïdors que expliquen el nostre catàleg des del producte
             real.
           </p>
-          <a
-            href={localizedPath(locale, 'brands')}
-            class="mt-7 inline-block whitespace-nowrap font-semibold text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4"
-          >
-            <span>Veure totes les marques&nbsp;<span aria-hidden="true">↗</span></span>
-          </a>
+          <div class="catalog-links mt-7 flex flex-wrap gap-x-6 gap-y-3 font-semibold">
+            <a href={localizedPath(locale, 'food')}
+              >Consultar Aliments <span aria-hidden="true">↗</span></a
+            >
+            <a href={localizedPath(locale, 'cellar')}
+              >Consultar Celler <span aria-hidden="true">↗</span></a
+            >
+          </div>
         </div>
       </div>
 
-      <SupplierCarousel locale={locale} />
+      <FeaturedSuppliers locale={locale} />
     </div>
   </section>
 

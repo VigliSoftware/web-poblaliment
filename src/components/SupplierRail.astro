@@ -1,0 +1,40 @@
+---
+import type { Supplier } from '../data/suppliers';
+import type { Locale } from '../lib/i18n';
+import SupplierMark from './SupplierMark.astro';
+
+interface Props {
+  locale: Locale;
+  suppliers: Supplier[];
+  label: string;
+}
+
+const { locale, suppliers, label } = Astro.props;
+const isSpanish = locale === 'es';
+---
+
+<section
+  class="food-supplier-grid"
+  aria-label={`${label}: ${isSpanish ? 'proveedores' : 'proveïdors'}`}
+>
+  {suppliers.map((supplier) =>
+    supplier.website ? (
+      <a
+        class="food-rail-item"
+        href={supplier.website}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${supplier.name} (${isSpanish ? 'se abre en una pestaña nueva' : 's’obre en una pestanya nova'})`}
+      >
+        <SupplierMark supplier={supplier} />
+        <strong>{supplier.name}</strong>
+        <span aria-hidden="true">↗</span>
+      </a>
+    ) : (
+      <div class="food-rail-item">
+        <SupplierMark supplier={supplier} />
+        <strong>{supplier.name}</strong>
+      </div>
+    ),
+  )}
+</section>

@@ -1,0 +1,45 @@
+---
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  target?: string;
+  label?: string;
+}
+
+const {
+  locale,
+  target = 'cellar-selection',
+  label = locale === 'ca' ? 'Descobreix la selecció' : 'Descubre la selección',
+} = Astro.props;
+---
+
+<a class="cellar-scroll-cue" href={`#${target}`}>
+  <span>{label}</span>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 4v15M6.5 13.5 12 19l5.5-5.5"></path>
+  </svg>
+</a>
+
+<script>
+const heading = document.querySelector<HTMLElement>('[data-cellar-heading]');
+const copy = document.querySelector<HTMLElement>('[data-cellar-copy]');
+
+if (heading) {
+  let previousY = window.scrollY;
+  let hasPassedHeading = false;
+
+  const updateHeading = () => {
+    const currentY = window.scrollY;
+    const scrollingUp = currentY < previousY;
+    const headingTop = heading.getBoundingClientRect().top + currentY;
+
+    if (currentY > headingTop + heading.offsetHeight) hasPassedHeading = true;
+    heading.classList.toggle('is-hidden-on-return', hasPassedHeading && scrollingUp);
+    copy?.classList.toggle('is-hidden-on-return', hasPassedHeading && scrollingUp);
+    previousY = currentY;
+  };
+
+  window.addEventListener('scroll', updateHeading, { passive: true });
+}
+</script>

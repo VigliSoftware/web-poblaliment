@@ -28,7 +28,7 @@ No necessita l'adapter `@astrojs/cloudflare` perquè totes les pàgines es gener
 Per connectar el repositori perquè Cloudflare desplegui cada push a `main`:
 
 1. A Cloudflare, obre **Workers & Pages**, crea un Worker connectat a un repositori Git i selecciona
-   `Alpons-Lab/web-poblaliment`.
+   `VigliSoftware/web-poblaliment`.
 2. Fes servir `web-poblaliment` com a nom del Worker. Ha de coincidir exactament amb `name` a
    `wrangler.jsonc`.
 3. Configura `main` com a branca de producció i `/` com a directori arrel.
@@ -49,14 +49,16 @@ Català és l’idioma per defecte:
 
 - `/` — Inici
 - `/nosaltres/` — Nosaltres
-- `/marques/` — Les nostres marques
+- `/aliments/` — Aliments i proveïdors
+- `/celler/` — Cellers, vins i cervesa
 - `/contacte/` — Contacte
 
 Castellà viu sota `/es/`:
 
 - `/es/`
 - `/es/nosotros/`
-- `/es/marcas/`
+- `/es/alimentos/`
+- `/es/bodega/`
 - `/es/contacto/`
 
 Els textos i les rutes d’idioma estan separats a `src/data/content.ts` i `src/lib/i18n.ts`, perquè afegir una tercera llengua no obligui a reescriure els components.

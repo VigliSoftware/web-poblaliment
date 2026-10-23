@@ -1,20 +1,22 @@
 export const locales = ['ca', 'es'] as const;
 
 export type Locale = (typeof locales)[number];
-export type PageKey = 'home' | 'about' | 'brands' | 'contact' | 'legal';
+export type PageKey = 'home' | 'food' | 'cellar' | 'about' | 'contact' | 'legal';
 
 export const pagePaths: Record<Locale, Record<PageKey, string>> = {
   ca: {
     home: '/',
     about: '/nosaltres/',
-    brands: '/marques/',
+    food: '/aliments/',
+    cellar: '/celler/',
     contact: '/contacte/',
     legal: '/legal/',
   },
   es: {
     home: '/es/',
     about: '/es/nosotros/',
-    brands: '/es/marcas/',
+    food: '/es/alimentos/',
+    cellar: '/es/bodega/',
     contact: '/es/contacto/',
     legal: '/es/legal/',
   },

@@ -1,0 +1,52 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import CellarScrollCue from '../components/CellarScrollCue.astro';
+import SupplierRail from '../components/SupplierRail.astro';
+import { content } from '../data/content';
+import { supplierCategories, suppliers } from '../data/suppliers';
+import Layout from '../layouts/Layout.astro';
+
+const locale = 'ca';
+const copy = content[locale].food;
+const excludedCategories = new Set(['Celler', 'Cerveses']);
+const foodCategories = supplierCategories.filter((category) => !excludedCategories.has(category));
+---
+
+<Layout locale={locale} page="food" title={copy.title} description={copy.description}>
+  <div class="food-hero-stage">
+    <PageIntro
+      heading={copy.heading}
+      intro={copy.intro}
+      image="/images/products-selection.jpeg"
+      imageAlt={copy.imageAlt}
+      imageCaption={copy.imageCaption}
+      compact
+    />
+
+    <div class="food-scroll-cue-spacing">
+      <CellarScrollCue locale={locale} target="food-filter" label="Descobreix els aliments" />
+    </div>
+  </div>
+
+  <section class="page-frame food-directory pb-12 sm:pb-24">
+    <nav id="food-filter" class="food-category-nav" aria-label="Famílies d’aliments">
+      {foodCategories.map((category, index) => <a href={`#familia-${index}`}>{category}</a>)}
+    </nav>
+
+    {foodCategories.map((category, index) => (
+      <section class="food-category" id={`familia-${index}`} data-reveal>
+        <div class="food-category-heading">
+          <h2 class="display">{category}</h2>
+          <span>
+            {suppliers.filter((supplier) => supplier.category === category).length} proveïdors
+          </span>
+        </div>
+        <SupplierRail
+          locale={locale}
+          label={category}
+          suppliers={suppliers.filter((supplier) => supplier.category === category)}
+        />
+      </section>
+    ))}
+  </section>
+</Layout>

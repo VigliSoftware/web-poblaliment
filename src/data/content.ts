@@ -40,9 +40,8 @@ export type SiteCopy = {
     valuesTitle: string;
     values: Array<{ title: string; body: string }>;
   };
-  brands: PageCopy & {
-    note: string;
-  };
+  food: PageCopy;
+  cellar: PageCopy;
   contact: PageCopy & {
     formTitle: string;
     formNote: string;
@@ -55,14 +54,16 @@ export type SiteCopy = {
 
 const sharedNavCa: NavItem[] = [
   { label: 'Inici', page: 'home' },
-  { label: 'Producte', page: 'brands' },
+  { label: 'Aliments', page: 'food' },
+  { label: 'Celler', page: 'cellar' },
   { label: 'Nosaltres', page: 'about' },
   { label: 'Contacte', page: 'contact' },
 ];
 
 const sharedNavEs: NavItem[] = [
   { label: 'Inicio', page: 'home' },
-  { label: 'Producto', page: 'brands' },
+  { label: 'Alimentos', page: 'food' },
+  { label: 'Bodega', page: 'cellar' },
   { label: 'Nosotros', page: 'about' },
   { label: 'Contacto', page: 'contact' },
 ];
@@ -97,7 +98,8 @@ export const content: Record<Locale, SiteCopy> = {
       exploreTitle: 'Explora Poblaliment',
       exploreLinks: [
         { label: 'Nosaltres', detail: 'La base del projecte', page: 'about' },
-        { label: 'Proveïdors', detail: 'Les marques que ens acompanyen', page: 'brands' },
+        { label: 'Aliments', detail: 'Proveïdors per família de producte', page: 'food' },
+        { label: 'Celler', detail: 'Vins, escumosos i cervesa', page: 'cellar' },
         { label: 'Contacte', detail: 'Obrim una conversa', page: 'contact' },
       ],
       galleryTitle: 'Una mirada al nostre dia a dia',
@@ -139,16 +141,25 @@ export const content: Record<Locale, SiteCopy> = {
         },
       ],
     },
-    brands: {
-      title: 'Marques de vins, begudes i alimentació | Poblaliment',
+    food: {
+      title: 'Aliments i proveïdors | Poblaliment',
       description:
-        'Consulta les marques i proveïdors de vins, cerveses, formatges, conserves, carns, peix, congelats, cafè i altres productes distribuïts per Poblaliment.',
-      heading: 'Marques i proveïdors.',
+        'Consulta els proveïdors de formatges, conserves, carns, peix, congelats, cafè, dolços, olis i condiments distribuïts per Poblaliment.',
+      heading: 'Aliments per a cada servei.',
       intro:
-        'Una guia de les marques que formen part del nostre assortiment, ordenades per famílies de producte.',
-      imageAlt: 'Cerveses artesanals UBLA i PIGAL amb copes a la barra',
-      imageCaption: 'Begudes i productes seleccionats per a bars, restaurants i comerços.',
-      note: 'Proveïdors agrupats per família de producte',
+        'Un assortiment ampli, ordenat per famílies, per trobar amb agilitat els productes que necessita cada negoci.',
+      imageAlt: 'Selecció de productes d’alimentació distribuïts per Poblaliment',
+      imageCaption: 'Proveïdors de confiança per a restauració, comerç i particulars.',
+    },
+    cellar: {
+      title: 'Celler, vins i cervesa | Poblaliment',
+      description:
+        'Descobreix els cellers, vins, escumosos i la cervesa Moritz distribuïts per Poblaliment.',
+      heading: 'Celler amb criteri propi.',
+      intro:
+        'Una selecció més concentrada de vins, escumosos i cervesa, presentada perquè cada productor tingui el seu espai.',
+      imageAlt: 'Ampolles de vi del celler Sumarroca entre vinyes',
+      imageCaption: 'Cellers escollits per origen, qualitat i continuïtat.',
     },
     contact: {
       title: 'Contacte amb Poblaliment | Distribució alimentària a Lleida',
@@ -213,7 +224,8 @@ export const content: Record<Locale, SiteCopy> = {
       exploreTitle: 'Explora Poblaliment',
       exploreLinks: [
         { label: 'Nosotros', detail: 'La base del proyecto', page: 'about' },
-        { label: 'Proveedores', detail: 'Las marcas que nos acompañan', page: 'brands' },
+        { label: 'Alimentos', detail: 'Proveedores por familia de producto', page: 'food' },
+        { label: 'Bodega', detail: 'Vinos, espumosos y cerveza', page: 'cellar' },
         { label: 'Contacto', detail: 'Abrimos una conversación', page: 'contact' },
       ],
       galleryTitle: 'Una mirada a nuestro día a día',
@@ -255,16 +267,25 @@ export const content: Record<Locale, SiteCopy> = {
         },
       ],
     },
-    brands: {
-      title: 'Marcas de vinos, bebidas y alimentación | Poblaliment',
+    food: {
+      title: 'Alimentos y proveedores | Poblaliment',
       description:
-        'Consulta las marcas y proveedores de vinos, cervezas, quesos, conservas, carnes, pescado, congelados, café y otros productos distribuidos por Poblaliment.',
-      heading: 'Marcas y proveedores.',
+        'Consulta los proveedores de quesos, conservas, carnes, pescado, congelados, café, dulces, aceites y condimentos distribuidos por Poblaliment.',
+      heading: 'Alimentos para cada servicio.',
       intro:
-        'Una guía de las marcas que forman parte de nuestro surtido, ordenadas por familias de producto.',
-      imageAlt: 'Cervezas artesanales UBLA y PIGAL con copas en la barra',
-      imageCaption: 'Bebidas y productos seleccionados para bares, restaurantes y comercios.',
-      note: 'Proveedores agrupados por familia de producto',
+        'Un surtido amplio, ordenado por familias, para encontrar con agilidad los productos que necesita cada negocio.',
+      imageAlt: 'Selección de productos de alimentación distribuidos por Poblaliment',
+      imageCaption: 'Proveedores de confianza para hostelería, comercio y particulares.',
+    },
+    cellar: {
+      title: 'Bodega, vinos y cerveza | Poblaliment',
+      description:
+        'Descubre las bodegas, vinos, espumosos y la cerveza Moritz distribuidos por Poblaliment.',
+      heading: 'Bodega con criterio propio.',
+      intro:
+        'Una selección más concentrada de vinos, espumosos y cerveza, presentada para que cada productor tenga su espacio.',
+      imageAlt: 'Botellas de vino de la bodega Sumarroca entre viñedos',
+      imageCaption: 'Bodegas escogidas por origen, calidad y continuidad.',
     },
     contact: {
       title: 'Contacto con Poblaliment | Distribución alimentaria en Lleida',

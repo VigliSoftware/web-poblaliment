@@ -1,5 +1,4 @@
 ---
-import PageIntro from '../../components/PageIntro.astro';
 import { content } from '../../data/content';
 import Layout from '../../layouts/Layout.astro';
 
@@ -8,21 +7,13 @@ const copy = content[locale].contact;
 ---
 
 <Layout locale={locale} title={copy.title} description={copy.description}>
-  <PageIntro
-    heading={copy.heading}
-    intro={copy.intro}
-    image="/images/contact.jpg"
-    imageAlt={copy.imageAlt}
-    imageCaption={copy.imageCaption}
-    compact
-  />
-  <section class="page-frame grid gap-12 border-t rule py-12 sm:grid-cols-[1.2fr_0.8fr] sm:py-20">
+  <section class="page-frame grid gap-12 py-12 sm:grid-cols-[1.2fr_0.8fr] sm:py-20">
     <div>
       <h2 class="display text-4xl sm:text-5xl">{copy.formTitle}</h2>
       <p class="mt-3 text-sm text-[var(--color-ink-soft)]">{copy.formNote}</p>
       <form class="mt-8 max-w-xl space-y-7" onsubmit="return false">
-        <label class="block text-sm font-semibold" for="name">
-          {copy.fields.name}
+        <label class="block" for="name">
+          <span class="eyebrow">{copy.fields.name}</span>
           <input
             id="name"
             name="name"
@@ -31,8 +22,8 @@ const copy = content[locale].contact;
             class="mt-2 w-full border-b-2 border-[var(--color-ink)] bg-transparent px-0 py-3 text-lg outline-none focus:border-[var(--color-orange)]"
           >
         </label>
-        <label class="block text-sm font-semibold" for="email">
-          {copy.fields.email}
+        <label class="block" for="email">
+          <span class="eyebrow">{copy.fields.email}</span>
           <input
             id="email"
             name="email"
@@ -41,8 +32,8 @@ const copy = content[locale].contact;
             class="mt-2 w-full border-b-2 border-[var(--color-ink)] bg-transparent px-0 py-3 text-lg outline-none focus:border-[var(--color-orange)]"
           >
         </label>
-        <label class="block text-sm font-semibold" for="message">
-          {copy.fields.message}
+        <label class="block" for="message">
+          <span class="eyebrow">{copy.fields.message}</span>
           <textarea
             id="message"
             name="message"
@@ -82,5 +73,18 @@ const copy = content[locale].contact;
         ))}
       </dl>
     </aside>
+  </section>
+
+  <section class="page-frame pb-16 sm:pb-24">
+    <div class="overflow-hidden border-t-4 border-[var(--color-green)]">
+      <iframe
+        src="https://www.google.com/maps?q=Tros%20del%20Roi%2C%20s%2Fn%2C%2025500%20La%20Pobla%20de%20Segur&output=embed"
+        title="Mapa de la ubicación de Poblaliment en La Pobla de Segur"
+        class="block h-[22rem] w-full border-0 sm:h-[28rem]"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
   </section>
 </Layout>
