@@ -8,8 +8,7 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "html_handling": "auto-trailing-slash"
   },
   "vars": {
     "S3_ENDPOINT": "https://br-green-recipe-ba0e6mou.storage.c-8.eu-central-1.aws.neon.tech",
