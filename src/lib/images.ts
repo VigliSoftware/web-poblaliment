@@ -1,6 +1,8 @@
 export const imageDimensions: Record<string, { width: number; height: number }> = {
   '/images/about.jpg': { width: 1440, height: 809 },
+  '/images/about-dawn.jpeg': { width: 1206, height: 1177 },
   '/images/about-route.jpeg': { width: 1200, height: 1600 },
+  '/images/cellar-vineyard.png': { width: 1200, height: 510 },
   '/images/contact.jpg': { width: 1600, height: 1200 },
   '/images/hero.jpg': { width: 2528, height: 1696 },
   '/images/logo.jpg': { width: 786, height: 786 },

@@ -1,0 +1,192 @@
+- generic [active] [ref=f97e1]:
+  - banner [ref=f97e2]:
+    - generic [ref=f97e3]:
+      - link "POBLALIMENT · ADMIN" [ref=f97e4] [cursor=pointer]:
+        - /url: /admin/
+      - generic [ref=f97e6]:
+        - navigation "Administració" [ref=f97e7]:
+          - link "Proveïdors" [ref=f97e8] [cursor=pointer]:
+            - /url: /admin/proveidors/
+          - link "Categories" [ref=f97e9] [cursor=pointer]:
+            - /url: /admin/categories/
+          - link "Marques d’inici" [ref=f97e10] [cursor=pointer]:
+            - /url: /admin/inici/
+          - link "Imatges" [ref=f97e11] [cursor=pointer]:
+            - /url: /admin/imatges/
+          - link "Textos" [ref=f97e12] [cursor=pointer]:
+            - /url: /admin/textos/
+        - link "Veure la web ↗" [ref=f97e13] [cursor=pointer]:
+          - /url: /
+        - button "Sortir" [ref=f97e15] [cursor=pointer]
+  - main [ref=f97e16]:
+    - heading "Imatges" [level=1] [ref=f97e17]
+    - generic [ref=f97e18]:
+      - paragraph [ref=f97e19]:
+        - text: Canvia les imatges del web i prem «Desar imatge». Són compartides entre el català i el castellà. Els textos alternatius (ALT) es modifiquen a
+        - link "Textos" [ref=f97e20] [cursor=pointer]:
+          - /url: /admin/textos/
+        - text: .
+      - generic [ref=f97e21]:
+        - region "General" [ref=f97e22]:
+          - heading "General" [level=2] [ref=f97e23]
+          - form "General · Logo del web" [ref=f97e25]:
+            - img "Logo del web" [ref=f97e26]
+            - generic [ref=f97e27]:
+              - heading "Logo del web" [level=3] [ref=f97e28]
+              - generic [ref=f97e30]:
+                - generic [ref=f97e31] [cursor=pointer]:
+                  - generic [ref=f97e32]: Seleccionar imatge
+                  - button "Seleccionar imatge" [ref=f97e33]
+                - status [ref=f97e34]: Cap fitxer seleccionat
+                - paragraph [ref=f97e35]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+              - generic [ref=f97e36]:
+                - button "Desar imatge" [ref=f97e37] [cursor=pointer]
+                - button "Recuperar original" [disabled] [ref=f97e38] [cursor=pointer]
+        - region "Inici" [ref=f97e39]:
+          - heading "Inici" [level=2] [ref=f97e40]
+          - generic [ref=f97e41]:
+            - form "Inici · Galeria · foto gran" [ref=f97e42]:
+              - img "Galeria · foto gran" [ref=f97e43]
+              - generic [ref=f97e44]:
+                - heading "Galeria · foto gran" [level=3] [ref=f97e45]
+                - generic [ref=f97e47]:
+                  - generic [ref=f97e48] [cursor=pointer]:
+                    - generic [ref=f97e49]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e50]
+                  - status [ref=f97e51]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e52]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e53]:
+                  - button "Desar imatge" [ref=f97e54] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e55] [cursor=pointer]
+            - form "Inici · Galeria · segona foto" [ref=f97e56]:
+              - img "Galeria · segona foto" [ref=f97e57]
+              - generic [ref=f97e58]:
+                - heading "Galeria · segona foto" [level=3] [ref=f97e59]
+                - generic [ref=f97e61]:
+                  - generic [ref=f97e62] [cursor=pointer]:
+                    - generic [ref=f97e63]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e64]
+                  - status [ref=f97e65]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e66]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e67]:
+                  - button "Desar imatge" [ref=f97e68] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e69] [cursor=pointer]
+            - form "Inici · Galeria · tercera foto" [ref=f97e70]:
+              - img "Galeria · tercera foto" [ref=f97e71]
+              - generic [ref=f97e72]:
+                - heading "Galeria · tercera foto" [level=3] [ref=f97e73]
+                - generic [ref=f97e75]:
+                  - generic [ref=f97e76] [cursor=pointer]:
+                    - generic [ref=f97e77]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e78]
+                  - status [ref=f97e79]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e80]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e81]:
+                  - button "Desar imatge" [ref=f97e82] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e83] [cursor=pointer]
+        - region "Nosaltres" [ref=f97e84]:
+          - heading "Nosaltres" [level=2] [ref=f97e85]
+          - generic [ref=f97e86]:
+            - form "Nosaltres · Imatge principal" [ref=f97e87]:
+              - img "Imatge principal" [ref=f97e88]
+              - generic [ref=f97e89]:
+                - heading "Imatge principal" [level=3] [ref=f97e90]
+                - generic [ref=f97e92]:
+                  - generic [ref=f97e93] [cursor=pointer]:
+                    - generic [ref=f97e94]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e95]
+                  - status [ref=f97e96]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e97]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e98]:
+                  - button "Desar imatge" [ref=f97e99] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e100] [cursor=pointer]
+            - form "Nosaltres · Aniversari · foto" [ref=f97e101]:
+              - img "Aniversari · foto" [ref=f97e102]
+              - generic [ref=f97e103]:
+                - heading "Aniversari · foto" [level=3] [ref=f97e104]
+                - generic [ref=f97e106]:
+                  - generic [ref=f97e107] [cursor=pointer]:
+                    - generic [ref=f97e108]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e109]
+                  - status [ref=f97e110]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e111]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e112]:
+                  - button "Desar imatge" [ref=f97e113] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e114] [cursor=pointer]
+        - region "Alimentació" [ref=f97e115]:
+          - heading "Alimentació" [level=2] [ref=f97e116]
+          - form "Alimentació · Imatge principal" [ref=f97e118]:
+            - img "Imatge principal" [ref=f97e119]
+            - generic [ref=f97e120]:
+              - heading "Imatge principal" [level=3] [ref=f97e121]
+              - generic [ref=f97e123]:
+                - generic [ref=f97e124] [cursor=pointer]:
+                  - generic [ref=f97e125]: Seleccionar imatge
+                  - button "Seleccionar imatge" [ref=f97e126]
+                - status [ref=f97e127]: Cap fitxer seleccionat
+                - paragraph [ref=f97e128]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+              - generic [ref=f97e129]:
+                - button "Desar imatge" [ref=f97e130] [cursor=pointer]
+                - button "Recuperar original" [disabled] [ref=f97e131] [cursor=pointer]
+        - region "Celler" [ref=f97e132]:
+          - heading "Celler" [level=2] [ref=f97e133]
+          - generic [ref=f97e134]:
+            - form "Celler · Imatge principal" [ref=f97e135]:
+              - img "Imatge principal" [ref=f97e136]
+              - generic [ref=f97e137]:
+                - heading "Imatge principal" [level=3] [ref=f97e138]
+                - generic [ref=f97e140]:
+                  - generic [ref=f97e141] [cursor=pointer]:
+                    - generic [ref=f97e142]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e143]
+                  - status [ref=f97e144]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e145]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e146]:
+                  - button "Desar imatge" [ref=f97e147] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e148] [cursor=pointer]
+            - form "Celler · Destacat · foto" [ref=f97e149]:
+              - img "Destacat · foto" [ref=f97e150]
+              - generic [ref=f97e151]:
+                - heading "Destacat · foto" [level=3] [ref=f97e152]
+                - generic [ref=f97e154]:
+                  - generic [ref=f97e155] [cursor=pointer]:
+                    - generic [ref=f97e156]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e157]
+                  - status [ref=f97e158]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e159]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e160]:
+                  - button "Desar imatge" [ref=f97e161] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e162] [cursor=pointer]
+            - form "Celler · Destacat · logo" [ref=f97e163]:
+              - img "Destacat · logo" [ref=f97e164]
+              - generic [ref=f97e165]:
+                - heading "Destacat · logo" [level=3] [ref=f97e166]
+                - generic [ref=f97e168]:
+                  - generic [ref=f97e169] [cursor=pointer]:
+                    - generic [ref=f97e170]: Seleccionar imatge
+                    - button "Seleccionar imatge" [ref=f97e171]
+                  - status [ref=f97e172]: Cap fitxer seleccionat
+                  - paragraph [ref=f97e173]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+                - generic [ref=f97e174]:
+                  - button "Desar imatge" [ref=f97e175] [cursor=pointer]
+                  - button "Recuperar original" [disabled] [ref=f97e176] [cursor=pointer]
+        - region "Contacte" [ref=f97e177]:
+          - heading "Contacte" [level=2] [ref=f97e178]
+          - form "Contacte · Imatge per compartir la pàgina" [ref=f97e180]:
+            - img "Imatge per compartir la pàgina" [ref=f97e181]
+            - generic [ref=f97e182]:
+              - heading "Imatge per compartir la pàgina" [level=3] [ref=f97e183]
+              - generic [ref=f97e185]:
+                - generic [ref=f97e186] [cursor=pointer]:
+                  - generic [ref=f97e187]: Seleccionar imatge
+                  - button "Seleccionar imatge" [ref=f97e188]
+                - status [ref=f97e189]: Cap fitxer seleccionat
+                - paragraph [ref=f97e190]: PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge».
+              - generic [ref=f97e191]:
+                - button "Desar imatge" [ref=f97e192] [cursor=pointer]
+                - button "Recuperar original" [disabled] [ref=f97e193] [cursor=pointer]
+  - generic [ref=f97e196]:
+    - button [ref=f97e197]
+    - button [ref=f97e203]
+    - button [ref=f97e207]
+    - button [ref=f97e212]

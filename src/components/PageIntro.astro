@@ -1,18 +1,21 @@
 ---
-import MotionVisual from './MotionVisual';
+import { getPageImage, type PageImageSlot } from '../data/page-images';
 import { imageDimensions } from '../lib/images';
+import MotionVisual from './MotionVisual';
 
 interface Props {
   heading: string;
   intro: string;
   image: string;
+  imageSlot?: PageImageSlot;
   imageAlt: string;
   imageCaption: string;
   compact?: boolean;
 }
 
-const { heading, intro, image, imageAlt, imageCaption, compact = false } = Astro.props;
-const dimensions = imageDimensions[image];
+const { heading, intro, image, imageSlot, imageAlt, imageCaption, compact = false } = Astro.props;
+const resolved = imageSlot ? getPageImage(Astro.locals.site.images, imageSlot) : undefined;
+const dimensions = resolved ?? imageDimensions[image];
 
 if (!dimensions) {
   throw new Error(`Missing image dimensions for ${image}`);
@@ -29,7 +32,7 @@ if (!dimensions) {
     </div>
     <MotionVisual
       client:load
-      src={image}
+      src={resolved?.src ?? image}
       alt={imageAlt}
       caption={imageCaption}
       width={dimensions.width}

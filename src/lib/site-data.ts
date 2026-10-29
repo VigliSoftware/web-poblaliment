@@ -1,17 +1,20 @@
 import { content as defaultContent, type SiteCopy } from '../data/content';
+import type { PageImages } from '../data/page-images';
 import {
+  type CategorySection,
   defaultCategories,
   defaultSuppliers,
-  type CategorySection,
   type Supplier,
   type SupplierCategory,
 } from '../data/suppliers';
 import { mergeCopy } from './content-fields';
 import { getSql } from './db';
 import type { Locale } from './i18n';
+import { type PageImageRow, pageImagesFromRows } from './page-images';
 
 export type SiteData = {
   content: Record<Locale, SiteCopy>;
+  images: PageImages;
   categories: SupplierCategory[];
   // Ordered by category, then by the order set in the admin panel.
   suppliers: Supplier[];
@@ -33,6 +36,7 @@ type ContentRow = { locale: Locale; data: unknown };
 
 export const defaultSiteData: SiteData = {
   content: defaultContent,
+  images: {},
   categories: defaultCategories,
   suppliers: defaultSuppliers,
   featured: defaultSuppliers.filter((supplier) => supplier.featured),
@@ -50,7 +54,7 @@ async function loadSiteData(): Promise<SiteData> {
   const sql = getSql();
   if (!sql) return defaultSiteData;
 
-  const [categoryRows, supplierRows, featuredRows, contentRows] = (await sql.transaction(
+  const [categoryRows, supplierRows, featuredRows, contentRows, imageRows] = (await sql.transaction(
     [
       sql`SELECT id, name_ca, name_es, section FROM categories ORDER BY sort_order, id`,
       sql`SELECT s.id, s.name, s.category_id, s.website, s.featured, s.logo_key, s.logo_url
@@ -58,9 +62,10 @@ async function loadSiteData(): Promise<SiteData> {
           ORDER BY c.sort_order, c.id, s.sort_order, s.name`,
       sql`SELECT id FROM suppliers WHERE featured ORDER BY featured_order, name`,
       sql`SELECT locale, data FROM site_content`,
+      sql`SELECT slot, object_key, width, height, content_type FROM site_images`,
     ],
     { readOnly: true },
-  )) as [CategoryRow[], SupplierRow[], Array<{ id: number }>, ContentRow[]];
+  )) as [CategoryRow[], SupplierRow[], Array<{ id: number }>, ContentRow[], PageImageRow[]];
 
   const storedContent = Object.fromEntries(contentRows.map((row) => [row.locale, row.data]));
   const content = {
@@ -68,8 +73,10 @@ async function loadSiteData(): Promise<SiteData> {
     es: mergeCopy(defaultContent.es, storedContent.es),
   };
 
+  const images = pageImagesFromRows(imageRows);
+
   // Until the catalogue is seeded, keep showing the bundled suppliers.
-  if (categoryRows.length === 0) return { ...defaultSiteData, content };
+  if (categoryRows.length === 0) return { ...defaultSiteData, content, images };
 
   const suppliers: Supplier[] = supplierRows.map((row) => ({
     id: String(row.id),
@@ -83,6 +90,7 @@ async function loadSiteData(): Promise<SiteData> {
 
   return {
     content,
+    images,
     categories: categoryRows.map((row) => ({
       id: String(row.id),
       nameCa: row.name_ca,

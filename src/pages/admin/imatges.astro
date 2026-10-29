@@ -1,0 +1,136 @@
+---
+import LogoUpload from '../../components/LogoUpload.astro';
+import { getPageImage, isPageImageSlot, pageImageSlots } from '../../data/page-images';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { errorMessage, FormError, published, text } from '../../lib/admin';
+import { requireSql } from '../../lib/db';
+import {
+  maxPageImageBytes,
+  PageImageError,
+  pageImageAccept,
+  readPageImage,
+} from '../../lib/page-image-files';
+import { listPageImages } from '../../lib/page-images';
+import { deleteObject, putObject } from '../../lib/storage';
+
+const sql = requireSql();
+let error: string | null = null;
+const saved = Astro.url.searchParams.get('ok') ?? '';
+const notice = isPageImageSlot(saved)
+  ? `${pageImageSlots[saved].group} · ${pageImageSlots[saved].label}: imatge desada.`
+  : null;
+
+if (Astro.request.method === 'POST') {
+  try {
+    if (Number(Astro.request.headers.get('Content-Length')) > maxPageImageBytes + 65536) {
+      throw new FormError('La imatge no pot superar 5 MB.');
+    }
+    const form = await Astro.request.formData();
+    const slot = text(form, 'slot');
+    if (!isPageImageSlot(slot)) throw new FormError('Aquesta imatge no existeix.');
+    const action = text(form, 'action');
+    if (action === 'restore') {
+      await sql`DELETE FROM site_images WHERE slot = ${slot}`;
+    } else if (action === 'upload') {
+      const file = form.get('image');
+      if (!(file instanceof File) || !file.size)
+        throw new FormError('Selecciona una imatge abans de desar.');
+      const image = await readPageImage(file);
+      const key = `pages/${slot}-${crypto.randomUUID()}.${image.extension}`;
+      await putObject(key, image.body, image.type);
+      try {
+        await sql`INSERT INTO site_images (slot, object_key, width, height, content_type)
+          VALUES (${slot}, ${key}, ${image.width}, ${image.height}, ${image.type})
+          ON CONFLICT (slot) DO UPDATE SET object_key = EXCLUDED.object_key, width = EXCLUDED.width,
+            height = EXCLUDED.height, content_type = EXCLUDED.content_type, updated_at = now()`;
+      } catch (caught) {
+        try {
+          await deleteObject(key);
+        } catch (cleanupError) {
+          console.error('Could not remove failed page image upload', cleanupError);
+        }
+        throw caught;
+      }
+      // Published versions remain available so cached pages and shared links keep working.
+    } else {
+      throw new FormError('Acció no vàlida.');
+    }
+    published();
+    return Astro.redirect(`/admin/imatges/?ok=${slot}`);
+  } catch (caught) {
+    if (!(caught instanceof FormError) && !(caught instanceof PageImageError))
+      console.error(caught);
+    error = caught instanceof PageImageError ? caught.message : errorMessage(caught);
+  }
+}
+
+const images = await listPageImages();
+const groups = [...new Set(Object.values(pageImageSlots).map((image) => image.group))];
+---
+
+<AdminLayout title="Imatges" active="images" notice={notice} error={error}>
+  <p class="max-w-2xl text-[var(--color-ink-soft)]">
+    Canvia les imatges del web i prem «Desar imatge». Són compartides entre el català i el castellà.
+    Els textos alternatius (ALT) es modifiquen a <a href="/admin/textos/">Textos</a>.
+  </p>
+  <div class="mt-10 space-y-12">
+    {groups.map((group) => (
+      <section aria-label={group}>
+        <h2 class="display mb-5 text-3xl">{group}</h2>
+        <div class="space-y-5">
+          {Object.entries(pageImageSlots)
+            .filter(([, definition]) => definition.group === group)
+            .map(([key, definition]) => {
+              if (!isPageImageSlot(key)) return null;
+              const image = getPageImage(images, key);
+              return (
+                <form
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="admin-card grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]"
+                  aria-label={`${group} · ${definition.label}`}
+                >
+                  <input type="hidden" name="slot" value={key} />
+                  <img
+                    id={`preview-${key}`}
+                    src={image.src}
+                    alt={definition.label}
+                    width={image.width}
+                    height={image.height}
+                    loading="lazy"
+                    class="aspect-[8/5] w-full border rule bg-[var(--color-paper-deep)] object-contain"
+                  />
+                  <div class="min-w-0">
+                    <h3 class="text-lg font-semibold">{definition.label}</h3>
+                    <div class="mt-4">
+                      <LogoUpload
+                        name="image"
+                        id={`page-image-${key}`}
+                        previewId={`preview-${key}`}
+                        accept={pageImageAccept}
+                        help="PNG, JPG, WebP, AVIF o SVG, fins a 5 MB. La imatge es pujarà quan premis «Desar imatge»."
+                      />
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-3">
+                      <button type="submit" name="action" value="upload" class="admin-button">
+                        Desar imatge
+                      </button>
+                      <button
+                        type="submit"
+                        name="action"
+                        value="restore"
+                        class="admin-button admin-button--ghost disabled:cursor-not-allowed disabled:opacity-50"
+                        disabled={!images[key]}
+                      >
+                        Recuperar original
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              );
+            })}
+        </div>
+      </section>
+    ))}
+  </div>
+</AdminLayout>

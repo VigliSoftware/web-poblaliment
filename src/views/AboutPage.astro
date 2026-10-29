@@ -1,5 +1,4 @@
 ---
-import PageIntro from '../components/PageIntro.astro';
 import SiteImage from '../components/SiteImage.astro';
 import Layout from '../layouts/Layout.astro';
 import type { Locale } from '../lib/i18n';
@@ -13,13 +12,24 @@ const copy = Astro.locals.site.content[locale].about;
 ---
 
 <Layout locale={locale} title={copy.title} description={copy.description}>
-  <PageIntro
-    heading={copy.heading}
-    intro={copy.intro}
-    image="/images/about-route.jpeg"
-    imageAlt={copy.imageAlt}
-    imageCaption={copy.imageCaption}
-  />
+  <section class="page-frame about-intro pt-12 sm:pt-16">
+    <SiteImage
+      src="/images/about-dawn.jpeg"
+      slot="aboutHero"
+      alt={copy.imageAlt}
+      class="aspect-[4/3] w-full object-cover object-[center_60%] sm:aspect-[16/9]"
+      sizes="(min-width: 1312px) 1280px, calc(100vw - 32px)"
+      loading="eager"
+    />
+    <div class="mx-auto mt-10 max-w-4xl text-center sm:mt-12">
+      <h1 class="display text-5xl leading-[0.96] sm:text-7xl">{copy.heading}</h1>
+      <p
+        class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)] sm:text-xl"
+      >
+        {copy.intro}
+      </p>
+    </div>
+  </section>
 
   <section class="page-frame py-16 sm:py-24" data-reveal>
     <div class="grid gap-8 border-t rule pt-8 sm:grid-cols-[0.65fr_1.35fr]">
@@ -47,6 +57,7 @@ const copy = Astro.locals.site.content[locale].about;
       <figure class="anniversary-image overflow-hidden sm:-mt-6">
         <SiteImage
           src="/images/products-ubla.jpeg"
+          slot="aboutAnniversary"
           alt={copy.anniversaryImageAlt}
           class="anniversary-photo"
           sizes="(min-width: 640px) 50vw, 100vw"

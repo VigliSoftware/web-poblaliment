@@ -1,8 +1,8 @@
 ---
-import PageIntro from '../components/PageIntro.astro';
 import CellarScrollCue from '../components/CellarScrollCue.astro';
 import SiteImage from '../components/SiteImage.astro';
 import SupplierMark from '../components/SupplierMark.astro';
+import { getPageImage } from '../data/page-images';
 import Layout from '../layouts/Layout.astro';
 import type { Locale } from '../lib/i18n';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const { content, categories, suppliers } = Astro.locals.site;
+const { content, categories, suppliers, images } = Astro.locals.site;
 const copy = content[locale].cellar;
 const inSection = (section: string) =>
   suppliers.filter(
@@ -20,20 +20,29 @@ const inSection = (section: string) =>
   );
 const wineries = inSection('cellar');
 const beer = inSection('beer')[0];
-const moritzWordmark =
-  'https://moritz.com/static/version1792476927/frontend/Hiberus/moritz/ca_ES/images/logo.svg';
+const beerLogo = getPageImage(images, 'cellarBeerLogo');
 ---
 
 <Layout locale={locale} page="cellar" title={copy.title} description={copy.description}>
   <div class="cellar-hero-stage">
-    <PageIntro
-      heading={copy.heading}
-      intro={copy.intro}
-      image="/images/sumarroca.jpg"
-      imageAlt={copy.imageAlt}
-      imageCaption={copy.imageCaption}
-      compact
-    />
+    <section class="page-frame page-intro cellar-intro pt-12 pb-12 sm:pt-16">
+      <SiteImage
+        src="/images/cellar-vineyard.png"
+        slot="cellarHero"
+        alt={copy.imageAlt}
+        class="aspect-[4/3] w-full object-cover sm:aspect-[40/17]"
+        sizes="(min-width: 1312px) 1280px, calc(100vw - 32px)"
+        loading="eager"
+      />
+      <div class="mx-auto mt-10 max-w-4xl text-center sm:mt-12">
+        <h1 class="display text-5xl leading-[0.96] sm:text-7xl">{copy.heading}</h1>
+        <p
+          class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)] sm:text-xl"
+        >
+          {copy.intro}
+        </p>
+      </div>
+    </section>
 
     <div class="cellar-scroll-cue-spacing">
       <CellarScrollCue label={copy.scrollCue} />
@@ -66,18 +75,19 @@ const moritzWordmark =
         <figure>
           <SiteImage
             src="/images/moritz-pirineus.jpg"
+            slot="cellarBeer"
             alt={copy.beerImageAlt}
             sizes="(min-width: 801px) 58vw, 100vw"
           />
         </figure>
         <div class="beer-feature-copy">
-          {beer.name === 'Moritz' ? (
+          {beer.name === 'Moritz' || images.cellarBeerLogo ? (
             <img
               class="beer-brand-logo"
-              src={moritzWordmark}
-              alt="Moritz"
-              width="544"
-              height="149"
+              src={beerLogo.src}
+              alt={beer.name}
+              width={beerLogo.width}
+              height={beerLogo.height}
               loading="lazy"
               decoding="async"
             />

@@ -379,6 +379,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Berlys',
     categoryId: 'producte-congelat',
     website: 'https://www.berlys.es/',
+    logo: '/images/berlys.svg',
     featured: false,
   },
   {
@@ -428,6 +429,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Olis Pons',
     categoryId: 'olis-i-condiments',
     website: 'https://pons.shop/es/',
+    logo: '/images/olis-pons.svg',
     featured: false,
   },
   {
@@ -449,6 +451,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Choví',
     categoryId: 'olis-i-condiments',
     website: 'https://www.chovi.com/',
+    logo: '/images/chovi.png',
     featured: false,
   },
 ];

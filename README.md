@@ -99,3 +99,14 @@ Els logos es desen al bucket privat de Neon Object Storage i el Worker els serve
 `pnpm admin:create`.
 
 Els textos per defecte i les rutes d’idioma estan separats a `src/data/content.ts` i `src/lib/i18n.ts`, perquè afegir una tercera llengua no obligui a reescriure els components.
+
+### Imatges de les pàgines
+
+A `/admin/imatges/` es poden substituir les fotos de les pàgines i el logo general. Les imatges
+són comunes als dos idiomes; els ALT es continuen editant a Textos. S’admeten PNG, JPG, WebP,
+AVIF i SVG de fins a 5 MB. Les dimensions es comproven abans de pujar-les a Neon S3 i es desen
+a `site_images`. Executa `pnpm db:setup` abans de desplegar aquesta funcionalitat en una altra
+base de dades. `Recuperar original` elimina la substitució i recupera la imatge del projecte.
+Les versions publicades es conserven a l’emmagatzematge perquè les URL en memòria cau continuïn
+funcionant. Les fotos principals també s’utilitzen a les previsualitzacions en compartir enllaços.
+El vídeo de portada continua gestionant-se al projecte.

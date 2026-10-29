@@ -1,5 +1,5 @@
-import type { APIContext, MiddlewareNext } from 'astro';
 import { defineMiddleware } from 'astro:middleware';
+import type { APIContext, MiddlewareNext } from 'astro';
 import { readSession } from './lib/auth';
 import { defaultSiteData, getSiteData } from './lib/site-data';
 
@@ -35,6 +35,8 @@ async function handle(context: APIContext, next: MiddlewareNext): Promise<Respon
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     return response;
   }
+
+  if (pathname.startsWith('/media/')) return next();
 
   context.locals.site = context.isPrerendered ? defaultSiteData : await getSiteData();
   return next();

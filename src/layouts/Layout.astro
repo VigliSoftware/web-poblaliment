@@ -1,10 +1,10 @@
 ---
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import SiteAnimations from '../components/SiteAnimations.astro';
 import '../styles/global.css';
-import { getPageFromPath, localizedPath, type Locale, type PageKey } from '../lib/i18n';
-import { imageDimensions } from '../lib/images';
+import { getPageImage, type PageImageSlot } from '../data/page-images';
+import { getPageFromPath, type Locale, localizedPath, type PageKey } from '../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -23,39 +23,33 @@ const alternateUrls = {
   es: new URL(localizedPath('es', page), `${siteOrigin}/`).href,
 };
 const defaultUrl = new URL(localizedPath('ca', page), `${siteOrigin}/`).href;
-const socialImagePath =
+const socialSlot: PageImageSlot =
   page === 'about'
-    ? '/images/about-route.jpeg'
+    ? 'aboutHero'
     : page === 'food'
-      ? '/images/products-selection.jpeg'
+      ? 'foodHero'
       : page === 'cellar'
-        ? '/images/sumarroca.jpg'
+        ? 'cellarHero'
         : page === 'contact'
-          ? '/images/contact.jpg'
-          : '/images/truck-sunset.jpg';
-const socialImageUrl = new URL(socialImagePath, `${siteOrigin}/`).href;
-const socialImage = imageDimensions[socialImagePath];
+          ? 'contactSocial'
+          : 'homeGalleryMain';
+const socialImage = getPageImage(Astro.locals.site.images, socialSlot);
+const socialImageUrl = new URL(socialImage.src, `${siteOrigin}/`).href;
+const copy = Astro.locals.site.content[locale];
 const socialImageAlt =
-  locale === 'ca'
-    ? page === 'about'
-      ? 'Vehicle de Poblaliment en una ruta de muntanya del Pirineu'
-      : page === 'food'
-        ? 'Selecció de productes d’alimentació distribuïts per Poblaliment'
-        : page === 'cellar'
-          ? 'Vins del celler Sumarroca distribuïts per Poblaliment'
-          : page === 'contact'
+  page === 'about'
+    ? copy.about.imageAlt
+    : page === 'food'
+      ? copy.food.imageAlt
+      : page === 'cellar'
+        ? copy.cellar.imageAlt
+        : page === 'contact'
+          ? locale === 'ca'
             ? 'Vehicle de distribució de Poblaliment al Pirineu'
-            : 'Camió de Poblaliment en ruta al territori'
-    : page === 'about'
-      ? 'Vehículo de Poblaliment en una ruta de montaña del Pirineo'
-      : page === 'food'
-        ? 'Selección de productos de alimentación distribuidos por Poblaliment'
-        : page === 'cellar'
-          ? 'Vinos de la bodega Sumarroca distribuidos por Poblaliment'
-          : page === 'contact'
-            ? 'Vehículo de distribución de Poblaliment en el Pirineo'
-            : 'Camión de Poblaliment en ruta por el territorio';
-const logoUrl = new URL('/images/logo.jpg', `${siteOrigin}/`).href;
+            : 'Vehículo de distribución de Poblaliment en el Pirineo'
+          : copy.home.gallery[0].alt;
+const logoUrl = new URL(getPageImage(Astro.locals.site.images, 'siteLogo').src, `${siteOrigin}/`)
+  .href;
 const organizationId = `${siteOrigin}/#organization`;
 const websiteId = `${siteOrigin}/#website`;
 const breadcrumbId = `${canonicalUrl}#breadcrumb`;
@@ -63,7 +57,7 @@ const pageNames: Record<Locale, Record<PageKey, string>> = {
   ca: {
     home: 'Inici',
     about: 'Nosaltres',
-    food: 'Aliments',
+    food: 'Alimentació',
     cellar: 'Celler',
     contact: 'Contacte',
     legal: 'Informació legal',
@@ -71,7 +65,7 @@ const pageNames: Record<Locale, Record<PageKey, string>> = {
   es: {
     home: 'Inicio',
     about: 'Nosotros',
-    food: 'Alimentos',
+    food: 'Alimentación',
     cellar: 'Bodega',
     contact: 'Contacto',
     legal: 'Información legal',
@@ -189,13 +183,13 @@ const structuredData = {
     <meta property="og:image:alt" content={socialImageAlt}>
     <meta property="og:image:width" content={String(socialImage.width)}>
     <meta property="og:image:height" content={String(socialImage.height)}>
-    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:type" content={socialImage.type}>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content={socialImageUrl}>
     <meta name="twitter:image:alt" content={socialImageAlt}>
-    <link rel="icon" href="/images/logo.jpg">
+    <link rel="icon" href={logoUrl}>
     <link rel="sitemap" href="/sitemap-index.xml">
     <title>{title}</title>
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}

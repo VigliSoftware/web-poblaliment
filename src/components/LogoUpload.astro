@@ -1,0 +1,60 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  accept?: string;
+  help?: string;
+  previewId?: string;
+}
+const {
+  name = 'logo',
+  id = 'logo',
+  accept = 'image/png,image/jpeg,image/webp,image/svg+xml',
+  help = 'PNG, JPG, WebP o SVG, fins a 1 MB. Millor quadrat i amb fons transparent o blanc. La imatge es pujarà quan premis «Desar».',
+  previewId,
+} = Astro.props;
+---
+
+<div data-logo-upload data-preview-id={previewId}>
+  <label
+    class="admin-button relative inline-flex! focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-[var(--color-orange)]"
+  >
+    <span>Seleccionar imatge</span>
+    <input
+      name={name}
+      type="file"
+      accept={accept}
+      aria-describedby={`${id}-file-name ${id}-file-help`}
+      class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+    >
+  </label>
+  <p
+    id={`${id}-file-name`}
+    class="mt-2 break-all text-sm text-[var(--color-ink-soft)]"
+    role="status"
+  >
+    Cap fitxer seleccionat
+  </p>
+  <p id={`${id}-file-help`} class="mt-2 text-sm text-[var(--color-ink-soft)]">
+    {help}
+  </p>
+</div>
+
+<script>
+for (const upload of document.querySelectorAll<HTMLElement>('[data-logo-upload]')) {
+  const input = upload.querySelector<HTMLInputElement>('input[type="file"]');
+  const status = upload.querySelector<HTMLElement>('[role="status"]');
+  const preview = document.getElementById(
+    upload.dataset.previewId ?? '',
+  ) as HTMLImageElement | null;
+  const originalSrc = preview?.getAttribute('src') ?? '';
+  let objectUrl: string | undefined;
+  input?.addEventListener('change', () => {
+    const file = input.files?.[0];
+    if (status) status.textContent = file?.name ?? 'Cap fitxer seleccionat';
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = file && preview ? URL.createObjectURL(file) : undefined;
+    if (preview) preview.src = objectUrl ?? originalSrc;
+  });
+}
+</script>

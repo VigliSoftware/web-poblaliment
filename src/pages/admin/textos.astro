@@ -13,7 +13,7 @@ import {
   setAtPath,
 } from '../../lib/content-fields';
 import { requireSql } from '../../lib/db';
-import { locales, type Locale } from '../../lib/i18n';
+import { type Locale, locales } from '../../lib/i18n';
 
 const sql = requireSql();
 const requested = Astro.url.searchParams.get('seccio') as keyof SiteCopy | null;
@@ -85,7 +85,7 @@ if (Astro.request.method === 'POST') {
   </nav>
 
   <p class="mt-6 max-w-2xl text-sm text-[var(--color-ink-soft)]">
-    Si deixes un camp buit, es recupera el text original. Els «Títol» i «Descripció per a Google»
+    Si deixes un camp buit, es recupera el text original. Els «Títol Google» i «Descripció Google»
     són els que apareixen a la pestanya del navegador i als resultats de cerca.
   </p>
 

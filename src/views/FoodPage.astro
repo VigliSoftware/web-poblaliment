@@ -1,6 +1,6 @@
 ---
-import PageIntro from '../components/PageIntro.astro';
 import CellarScrollCue from '../components/CellarScrollCue.astro';
+import PageIntro from '../components/PageIntro.astro';
 import SupplierRail from '../components/SupplierRail.astro';
 import Layout from '../layouts/Layout.astro';
 import type { Locale } from '../lib/i18n';
@@ -28,6 +28,7 @@ const families = categories
       heading={copy.heading}
       intro={copy.intro}
       image="/images/products-selection.jpeg"
+      imageSlot="foodHero"
       imageAlt={copy.imageAlt}
       imageCaption={copy.imageCaption}
       compact

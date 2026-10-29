@@ -37,6 +37,15 @@ await sql`CREATE TABLE IF NOT EXISTS site_content (
   updated_at timestamptz NOT NULL DEFAULT now()
 )`;
 
+await sql`CREATE TABLE IF NOT EXISTS site_images (
+  slot text PRIMARY KEY,
+  object_key text NOT NULL,
+  width integer NOT NULL CHECK (width > 0),
+  height integer NOT NULL CHECK (height > 0),
+  content_type text NOT NULL,
+  updated_at timestamptz NOT NULL DEFAULT now()
+)`;
+
 await sql`CREATE TABLE IF NOT EXISTS admin_users (
   id serial PRIMARY KEY,
   username text NOT NULL UNIQUE,

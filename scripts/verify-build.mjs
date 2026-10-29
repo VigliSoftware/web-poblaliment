@@ -1,7 +1,50 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { createHmac } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { content } from '../src/data/content.ts';
+import { fieldLabel, listTextFields, mergeCopy, setAtPath } from '../src/lib/content-fields.ts';
+
+assert.equal(fieldLabel('home.galleryCaption'), 'Galeria · Figcaption');
+assert.equal(fieldLabel('about.title'), 'Títol Google');
+assert.equal(fieldLabel('about.description'), 'Descripció Google');
+assert.equal(fieldLabel('about.values.0.title'), 'Valor › 1 › Subtítol');
+assert.equal(fieldLabel('home.services.0.title'), 'Servei › 1 › Subtítol');
+assert.equal(fieldLabel('about.imageAlt'), 'Text alternatiu (ALT)');
+assert.equal(fieldLabel('home.gallery.0.alt'), 'Foto de la galeria › 1 › Text alternatiu (ALT)');
+for (const defaults of Object.values(content)) {
+  const legalFields = listTextFields(defaults.legal, 'legal');
+  assert.ok(legalFields.some((field) => field.path === 'legal.privacy.rightsBody'));
+  assert.ok(legalFields.some((field) => field.path === 'legal.notice.email.href'));
+  const edited = structuredClone(defaults);
+  setAtPath(edited, 'legal.privacy.rightsBody', 'Text legal editat');
+  assert.equal(mergeCopy(defaults, edited).legal.privacy.rightsBody, 'Text legal editat');
+  assert.deepEqual(mergeCopy(defaults, {}).legal, defaults.legal);
+}
+
+const removedCopyPaths = [
+  'home.foodLink',
+  'home.cellarLink',
+  'about.imageCaption',
+  'cellar.imageCaption',
+  'contact.detailsTitle',
+];
+for (const [locale, defaults] of Object.entries(content)) {
+  const fields = new Set(listTextFields(defaults).map((field) => field.path));
+  for (const path of removedCopyPaths)
+    assert.ok(!fields.has(path), `${locale}: obsolete field ${path}`);
+  assert.ok(fields.has('home.brandsAction'));
+  assert.ok(fields.has('food.imageCaption'));
+  const stored = {
+    ...structuredClone(defaults),
+    home: { ...defaults.home, heading: 'Text editat a la base de dades', foodLink: 'Enllaç antic' },
+  };
+  const merged = mergeCopy(defaults, stored);
+  assert.equal(merged.home.heading, stored.home.heading);
+  assert.ok(!Object.hasOwn(merged.home, 'foodLink'));
+  assert.deepEqual(mergeCopy(defaults, undefined), defaults);
+}
 
 // Pages render on demand, so they are checked through `astro preview` (workerd). Static
 // output (404, robots.txt, sitemap) is read from dist/client. Preview reads .dev.vars, so
@@ -107,12 +150,31 @@ assert.match(await render('index.html'), /mobile-nav flex justify-center/);
 
 const homeCa = await render('index.html');
 const homeEs = await render('es/index.html');
-assert.match(homeCa, /Consultar Aliments/);
-assert.match(homeCa, /Consultar Celler/);
-assert.match(homeEs, /Consultar Alimentos/);
-assert.match(homeEs, /Consultar Bodega/);
+assert.match(homeCa, /Consultar les nostres marques/);
+assert.match(homeEs, /Consultar nuestras marcas/);
+for (const [html, label] of [
+  [homeCa, 'Marques'],
+  [homeEs, 'Marcas'],
+]) {
+  const catalog = html.match(/<div class="catalog-links[\s\S]*?<\/div>/)?.[0] ?? '';
+  assert.equal((catalog.match(/<button/g) ?? []).length, 1);
+  assert.doesNotMatch(catalog, /<a /);
+  assert.match(catalog, /aria-haspopup="menu"/);
+  assert.match(html, new RegExp(`>${label}<svg`));
+  assert.match(
+    html,
+    /signal-band border-y rule bg-\[var\(--color-blue\)\] text-\[var\(--color-paper\)\]/,
+  );
+  const signal = html.match(/<section class="signal-band[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.doesNotMatch(signal, /color-ink-soft/);
+}
+assert.doesNotMatch(homeCa, /Consultar Aliments|Consultar Celler/);
+assert.doesNotMatch(homeEs, /Consultar Alimentos|Consultar Bodega/);
 
 assert.ok(await exists('HeroVideo.mp4'));
+assert.ok(await exists('images/chovi.png'));
+assert.ok(await exists('images/olis-pons.svg'));
+assert.ok(await exists('images/berlys.svg'));
 assert.ok(await exists('images/moritz-mark-transparent.png'));
 
 const notFound = await render('404.html');
@@ -126,25 +188,26 @@ assert.ok(await exists('sitemap-0.xml'));
 
 const aboutCa = await render('nosaltres/index.html');
 const aboutEs = await render('es/nosotros/index.html');
+for (const html of [aboutCa, aboutEs]) {
+  const hero = html.match(/<section class="page-frame about-intro[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
+  assert.match(hero, /text-center/);
+  assert.match(hero, /loading="eager"/);
+  assert.doesNotMatch(hero, /hero-grid|sm:pb-36/);
+}
 assert.match(aboutCa, /abril de 1999/);
 assert.match(aboutCa, /PIGAL/);
-assert.match(aboutCa, /src="\/images\/about-route\.jpeg"/);
+assert.match(aboutCa, /src="\/images\/about-dawn\.jpeg"/);
 assert.match(aboutCa, /src="\/images\/products-ubla\.jpeg"/);
 assert.match(aboutCa, /anniversary-image overflow-hidden sm:-mt-6/);
-assert.match(aboutCa, /max-w-3xl sm:pb-36/);
+
 assert.match(aboutEs, /abril de 1999/);
 assert.match(aboutEs, /PIGAL/);
-assert.match(aboutEs, /src="\/images\/about-route\.jpeg"/);
+assert.match(aboutEs, /src="\/images\/about-dawn\.jpeg"/);
 assert.match(aboutEs, /src="\/images\/products-ubla\.jpeg"/);
 assert.match(aboutEs, /anniversary-image overflow-hidden sm:-mt-6/);
-assert.match(aboutEs, /max-w-3xl sm:pb-36/);
 
-for (const page of [
-  'aliments/index.html',
-  'celler/index.html',
-  'es/alimentos/index.html',
-  'es/bodega/index.html',
-]) {
+for (const page of ['aliments/index.html', 'es/alimentos/index.html']) {
   assert.match(await render(page), /max-w-3xl sm:pb-36/);
 }
 
@@ -154,12 +217,25 @@ for (const page of ['contacte/index.html', 'es/contacto/index.html']) {
   assert.match(html, /tel:\+34973680341/);
   assert.match(html, /instagram\.com\/poblaliment/);
   assert.match(html, /<body class="contact-page">/);
+  assert.match(
+    html,
+    /<aside class="self-center border-l-4 border-\[var\(--color-green\)\] py-1 pl-6">/,
+  );
+  assert.doesNotMatch(html, /<aside[^>]*border-t-4/);
+  const details = html.match(/<aside[\s\S]*?<\/aside>/)?.[0] ?? '';
+  assert.doesNotMatch(details, /<h2|mt-6/);
+  assert.match(details, /<dl>/);
+  assert.match(html, /<h2 class="display text-4xl sm:text-5xl">[^<]+<\/h2>/);
+  assert.match(html, /contact-layout grid gap-10 pt-12 pb-10 md:grid-cols-/);
+  assert.match(html, /md:pb-12/);
+  assert.match(html, /<form[^>]*space-y-7/);
+  assert.match(html, /<iframe[^>]*src="https:\/\/www\.google\.com\/maps\?[^"]*output=embed/);
   assert.doesNotMatch(html, /page-intro/);
 }
 
 const foodCa = await render('aliments/index.html');
 const foodEs = await render('es/alimentos/index.html');
-assert.match(foodCa, /Aliments per a cada servei/);
+assert.match(foodCa, /Alimentació per a cada servei/);
 assert.match(foodCa, /food-supplier-grid/);
 assert.doesNotMatch(foodCa, /data-auto-rail/);
 assert.match(foodCa, /href="#food-filter"/);
@@ -167,8 +243,15 @@ assert.match(foodCa, /id="food-filter"/);
 assert.match(foodCa, /Descobreix els aliments/);
 assert.match(foodCa, /food-scroll-cue-spacing/);
 assert.doesNotMatch(foodCa, />Moritz</);
-assert.match(foodEs, /Alimentos para cada servicio/);
+assert.match(foodEs, /Alimentación para cada servicio/);
 assert.match(foodEs, /food-supplier-grid/);
+for (const html of [foodCa, foodEs]) {
+  assert.match(html, /supplier-mark--chovi/);
+  assert.match(html, /supplier-mark--pons/);
+  assert.match(html, /src="\/images\/berlys\.svg"/);
+  assert.match(html, /src="\/images\/olis-pons\.svg"/);
+  assert.match(html, /src="\/images\/chovi\.png"/);
+}
 assert.doesNotMatch(foodEs, /data-auto-rail/);
 assert.match(foodEs, /href="#food-filter"/);
 assert.match(foodEs, /id="food-filter"/);
@@ -177,6 +260,16 @@ assert.match(foodEs, /food-scroll-cue-spacing/);
 
 const cellarCa = await render('celler/index.html');
 const cellarEs = await render('es/bodega/index.html');
+assert.ok(await exists('images/cellar-vineyard.png'));
+for (const html of [cellarCa, cellarEs]) {
+  const hero =
+    html.match(/<section class="page-frame page-intro cellar-intro[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.match(hero, /src="\/images\/cellar-vineyard\.png"/);
+  assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
+  assert.match(hero, /text-center/);
+  assert.match(hero, /loading="eager"/);
+  assert.doesNotMatch(hero, /hero-grid|sm:pb-36/);
+}
 assert.match(cellarCa, /Vins i escumosos/);
 assert.match(cellarCa, />La nostra cervesa\.<\/h2>/);
 assert.match(cellarCa, /moritz\/ca_ES\/images\/logo\.svg/);
@@ -194,6 +287,19 @@ assert.match(cellarEs, /data-cellar-copy/);
 
 const globalCss = readFileSync(resolve('src/styles/global.css'), 'utf8');
 assert.doesNotMatch(globalCss, /\.signal-band::after/);
+assert.match(
+  globalCss,
+  /\.featured-suppliers\s*{[^}]*grid-auto-flow: column;[^}]*grid-auto-columns: minmax\(18rem, 1fr\);[^}]*overflow-x: auto/s,
+);
+assert.match(
+  globalCss,
+  /@media \(max-width: 800px\)[\s\S]*?\.featured-suppliers\s*{[^}]*grid-auto-flow: row;[^}]*overflow-x: visible/s,
+);
+assert.doesNotMatch(globalCss, /\.featured-suppliers\s*{[^}]*repeat\(3,/s);
+assert.match(globalCss, /\.supplier-mark\.supplier-mark--chovi\s*{[^}]*background: #0e793c/s);
+assert.match(globalCss, /\.supplier-mark\.supplier-mark--pons\s*{[^}]*background: #000000/s);
+assert.match(globalCss, /\.site-header nav > astro-island\s*{[^}]*display: flex/s);
+assert.match(globalCss, /\.brands-trigger--navigation\s*{[^}]*line-height: 1\.25rem/s);
 assert.match(globalCss, /\.beer-feature\s*{[^}]*padding-block:/s);
 assert.match(
   globalCss,
@@ -221,6 +327,77 @@ const admin = await fetch(`http://localhost:${port}/admin/`, { redirect: 'manual
 assert.equal(admin.status, 302);
 assert.match(admin.headers.get('location') ?? '', /\/admin\/login\/$/);
 assert.doesNotMatch(await render('sitemap-0.xml'), /\/admin/);
+const protectedImages = await fetch(`http://localhost:${port}/admin/imatges/`, {
+  redirect: 'manual',
+});
+assert.equal(protectedImages.status, 302);
+for (const key of ['../secret.png', 'logos/test.svg', 'pages/bad.exe']) {
+  const invalidMedia = await fetch(
+    `http://localhost:${port}/media/image/?k=${encodeURIComponent(key)}`,
+  );
+  assert.equal(invalidMedia.status, 404);
+}
+
+// Exercise the protected supplier editor with a short-lived local test session.
+if (existsSync('.dev.vars')) process.loadEnvFile('.dev.vars');
+if (process.env.SESSION_SECRET) {
+  const payload = `${Buffer.from('poblaliment').toString('base64url')}.${Math.floor(Date.now() / 1000) + 60}`;
+  const signature = createHmac('sha256', process.env.SESSION_SECRET)
+    .update(payload)
+    .digest('base64url');
+  const response = await fetch(`http://localhost:${port}/admin/proveidors/nou/`, {
+    headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
+    redirect: 'manual',
+  });
+  assert.equal(response.status, 200);
+  const editor = await response.text();
+  assert.match(editor, /Seleccionar imatge/);
+  assert.match(editor, /Cap fitxer seleccionat/);
+  assert.match(editor, /aria-describedby="logo-file-name logo-file-help"/);
+  assert.match(editor, /La imatge es pujarà quan premis «Desar»/);
+  assert.match(editor, /name="logo" type="file"/);
+  assert.match(editor, /enctype="multipart\/form-data"/);
+  assert.match(editor, /Destacat/);
+  const categoriesResponse = await fetch(`http://localhost:${port}/admin/categories/`, {
+    headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
+    redirect: 'manual',
+  });
+  assert.equal(categoriesResponse.status, 200);
+  const categoriesEditor = await categoriesResponse.text();
+  assert.match(categoriesEditor, /<option value="beer"[^>]*>Destacat<\/option>/);
+  assert.doesNotMatch(categoriesEditor, /Cervesa \(destacat del Celler\)/);
+  const imagesEditorResponse = await fetch(`http://localhost:${port}/admin/imatges/`, {
+    headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
+    redirect: 'manual',
+  });
+  assert.equal(imagesEditorResponse.status, 200);
+  const imagesEditor = await imagesEditorResponse.text();
+  assert.match(imagesEditor, /Desar imatge/);
+  assert.match(imagesEditor, /Recuperar original/);
+  assert.match(imagesEditor, /name="slot" value="aboutHero"/);
+  assert.match(imagesEditor, /name="slot" value="cellarHero"/);
+  assert.match(imagesEditor, /name="slot" value="homeGalleryMain"/);
+  assert.equal((imagesEditor.match(/id="page-image-/g) ?? []).length, 22);
+  const invalidImage = new FormData();
+  invalidImage.set('slot', 'aboutHero');
+  invalidImage.set('action', 'upload');
+  const noFile = await fetch(`http://localhost:${port}/admin/imatges/`, {
+    method: 'POST',
+    headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
+    body: invalidImage,
+  });
+  assert.match(await noFile.text(), /Selecciona una imatge abans de desar/);
+  const legalEditorResponse = await fetch(`http://localhost:${port}/admin/textos/?seccio=legal`, {
+    headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
+    redirect: 'manual',
+  });
+  assert.equal(legalEditorResponse.status, 200);
+  const legalEditor = await legalEditorResponse.text();
+  assert.match(legalEditor, /name="ca\|legal\.privacy\.rightsBody"/);
+  assert.match(legalEditor, /name="es\|legal\.privacy\.rightsBody"/);
+  assert.match(legalEditor, /name="ca\|legal\.title"/);
+  assert.match(legalEditor, /name="es\|legal\.cookies\.usage"/);
+}
 
 console.log('Site metadata, robots.txt, sitemap, 404 and admin protection verified.');
 process.exit(0);

@@ -1,4 +1,5 @@
 ---
+import LogoUpload from '../../../components/LogoUpload.astro';
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import {
   type AdminSupplier,
@@ -148,10 +149,7 @@ const ownLogo = supplier ? hasOwnLogo(supplier) : false;
           {currentLogo ? <img src={currentLogo} alt="" /> : <span>—</span>}
         </span>
         <div class="space-y-2 text-sm">
-          <input name="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
-          <p class="text-[var(--color-ink-soft)]">
-            PNG, JPG, WebP o SVG, fins a 1 MB. Millor quadrat i amb fons transparent o blanc.
-          </p>
+          <LogoUpload />
           {ownLogo && (
             <label class="flex items-center gap-2">
               <input type="checkbox" name="remove_logo"> Treure el logo i fer servir la icona de la

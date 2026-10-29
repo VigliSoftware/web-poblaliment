@@ -1,5 +1,6 @@
 ---
-import { localizedPath, type Locale } from '../lib/i18n';
+import { type Locale, localizedPath } from '../lib/i18n';
+import BrandsDropdown from './BrandsDropdown';
 import SiteImage from './SiteImage.astro';
 
 interface Props {
@@ -26,6 +27,7 @@ const activePage =
     >
       <SiteImage
         src="/images/logo.jpg"
+        slot="siteLogo"
         alt="Poblaliment"
         class="h-11 w-11 rounded-full object-cover"
         loading="eager"
@@ -48,20 +50,26 @@ const activePage =
       aria-label={locale === 'ca' ? 'Navegació principal' : 'Navegación principal'}
       class="hidden items-center gap-6 md:flex"
     >
-      {copy.nav.map((item) => (
-        <a
-          href={localizedPath(locale, item.page)}
-          class:list={[
-            'nav-link text-sm no-underline transition-colors hover:text-[var(--color-orange)]',
-            activePage === item.page
-              ? 'font-semibold text-[var(--color-ink)]'
-              : 'text-[var(--color-ink-soft)]',
-          ]}
-          aria-current={activePage === item.page ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
+      {copy.nav
+        .filter((item) => item.page !== 'cellar')
+        .map((item) =>
+          item.page === 'food' ? (
+            <BrandsDropdown locale={locale} activePage={activePage} client:load />
+          ) : (
+            <a
+              href={localizedPath(locale, item.page)}
+              class:list={[
+                'nav-link text-sm no-underline transition-colors hover:text-[var(--color-orange)]',
+                activePage === item.page
+                  ? 'font-semibold text-[var(--color-ink)]'
+                  : 'text-[var(--color-ink-soft)]',
+              ]}
+              aria-current={activePage === item.page ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ),
+        )}
     </nav>
 
     <nav
@@ -84,19 +92,25 @@ const activePage =
 
   <nav
     aria-label={locale === 'ca' ? 'Navegació mòbil' : 'Navegación móvil'}
-    class="page-frame mobile-nav flex justify-center gap-5 overflow-x-auto pb-4 md:hidden"
+    class="page-frame mobile-nav flex justify-center gap-5 pb-4 md:hidden"
   >
-    {copy.nav.map((item) => (
-      <a
-        href={localizedPath(locale, item.page)}
-        class:list={[
-          'shrink-0 text-sm no-underline',
-          activePage === item.page ? 'font-semibold' : 'text-[var(--color-ink-soft)]',
-        ]}
-        aria-current={activePage === item.page ? 'page' : undefined}
-      >
-        {item.label}
-      </a>
-    ))}
+    {copy.nav
+      .filter((item) => item.page !== 'cellar')
+      .map((item) =>
+        item.page === 'food' ? (
+          <BrandsDropdown locale={locale} activePage={activePage} client:load />
+        ) : (
+          <a
+            href={localizedPath(locale, item.page)}
+            class:list={[
+              'shrink-0 text-sm no-underline',
+              activePage === item.page ? 'font-semibold' : 'text-[var(--color-ink-soft)]',
+            ]}
+            aria-current={activePage === item.page ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ),
+      )}
   </nav>
 </header>

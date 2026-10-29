@@ -9,15 +9,33 @@ interface Props {
 
 const { supplier, class: className = '' } = Astro.props;
 const initial = supplier.name.trim().charAt(0).toLocaleUpperCase('ca');
+const customBrand = ['Choví', 'Chovi'].includes(supplier.name)
+  ? 'chovi'
+  : supplier.name === 'Olis Pons'
+    ? 'pons'
+    : undefined;
 const src = supplier.logo ?? faviconFor(supplier.website);
 ---
 
 <span
-  class:list={['supplier-mark', supplier.logo && 'supplier-mark--transparent', className]}
+  class:list={[
+    'supplier-mark',
+    supplier.logo && 'supplier-mark--transparent',
+    customBrand && `supplier-mark--${customBrand}`,
+    className,
+  ]}
   aria-hidden="true"
 >
   {src ? (
-    <img src={src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+    <img
+      class={customBrand ? 'p-2' : undefined}
+      src={src}
+      alt=""
+      width="64"
+      height="64"
+      loading="lazy"
+      decoding="async"
+    />
   ) : (
     <span>{initial}</span>
   )}

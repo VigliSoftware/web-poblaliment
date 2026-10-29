@@ -1,10 +1,11 @@
 ---
-import HeroVideo from '../components/HeroVideo.astro';
-import HeroTextAnimation from '../components/HeroTextAnimation.astro';
+import BrandsDropdown from '../components/BrandsDropdown';
 import FeaturedSuppliers from '../components/FeaturedSuppliers.astro';
+import HeroTextAnimation from '../components/HeroTextAnimation.astro';
+import HeroVideo from '../components/HeroVideo.astro';
 import SiteImage from '../components/SiteImage.astro';
 import Layout from '../layouts/Layout.astro';
-import { localizedPath, type Locale } from '../lib/i18n';
+import { type Locale, localizedPath } from '../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -54,12 +55,12 @@ const copy = Astro.locals.site.content[locale];
     <HeroTextAnimation />
   </section>
 
-  <section class="signal-band border-y rule bg-[var(--color-paper-deep)]">
+  <section class="signal-band border-y rule bg-[var(--color-blue)] text-[var(--color-paper)]">
     <div class="page-frame grid gap-8 py-10 sm:grid-cols-[0.72fr_1.28fr] sm:items-end sm:py-14">
       <h2 class="display max-w-sm text-4xl leading-none sm:text-5xl">
         {copy.home.signalTitle}
       </h2>
-      <p class="max-w-2xl text-xl leading-relaxed text-[var(--color-ink-soft)]">
+      <p class="max-w-2xl text-xl leading-relaxed text-[var(--color-paper)]">
         {copy.home.signalBody}
       </p>
     </div>
@@ -94,13 +95,13 @@ const copy = Astro.locals.site.content[locale];
           <p class="max-w-xl text-lg leading-relaxed text-[rgba(245,241,232,0.78)]">
             {copy.home.suppliersBody}
           </p>
-          <div class="catalog-links mt-7 flex flex-wrap gap-x-6 gap-y-3 font-semibold">
-            <a href={localizedPath(locale, 'food')}
-              >{copy.home.foodLink} <span aria-hidden="true">↗</span></a
-            >
-            <a href={localizedPath(locale, 'cellar')}
-              >{copy.home.cellarLink} <span aria-hidden="true">↗</span></a
-            >
+          <div class="catalog-links mt-7">
+            <BrandsDropdown
+              locale={locale}
+              label={copy.home.brandsAction}
+              variant="catalog"
+              client:load
+            />
           </div>
         </div>
       </div>
@@ -122,6 +123,7 @@ const copy = Astro.locals.site.content[locale];
       <figure class="gallery-feature overflow-hidden">
         <SiteImage
           src={copy.home.gallery[0].src}
+          slot="homeGalleryMain"
           alt={copy.home.gallery[0].alt}
           sizes="(min-width: 801px) 60vw, 100vw"
         />
@@ -131,6 +133,7 @@ const copy = Astro.locals.site.content[locale];
         <figure class="gallery-secondary overflow-hidden">
           <SiteImage
             src={copy.home.gallery[1].src}
+            slot="homeGallerySecond"
             alt={copy.home.gallery[1].alt}
             sizes="(min-width: 801px) 30vw, 50vw"
           />
@@ -138,6 +141,7 @@ const copy = Astro.locals.site.content[locale];
         <figure class="gallery-secondary overflow-hidden">
           <SiteImage
             src={copy.home.gallery[2].src}
+            slot="homeGalleryThird"
             alt={copy.home.gallery[2].alt}
             sizes="(min-width: 801px) 30vw, 50vw"
           />

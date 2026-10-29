@@ -6,7 +6,7 @@ import { deleteObject, logoTypes, maxLogoBytes, putObject } from './storage';
 export const sectionNames: Record<SupplierCategory['section'], string> = {
   food: 'Aliments',
   cellar: 'Celler',
-  beer: 'Cervesa (destacat del Celler)',
+  beer: 'Destacat',
 };
 
 export type AdminCategory = {

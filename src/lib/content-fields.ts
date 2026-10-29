@@ -74,14 +74,15 @@ const sectionLabels: Record<string, string> = {
   cellar: 'Celler',
   contact: 'Contacte',
   footer: 'Peu de pàgina',
+  legal: 'Legal',
 };
 
 const keyLabels: Record<string, string> = {
-  title: 'Títol',
-  description: 'Descripció per a Google',
+  title: 'Subtítol',
+  description: 'Descripció',
   heading: 'Titular principal',
   intro: 'Introducció',
-  imageAlt: 'Descripció de la imatge',
+  imageAlt: 'Text alternatiu (ALT)',
   imageCaption: 'Peu de la imatge',
   primaryAction: 'Botó principal',
   secondaryAction: 'Botó secundari',
@@ -94,14 +95,13 @@ const keyLabels: Record<string, string> = {
   suppliersKicker: 'Marques · avantítol',
   suppliersTitle: 'Marques · títol',
   suppliersBody: 'Marques · text',
-  foodLink: 'Enllaç a Aliments',
-  cellarLink: 'Enllaç a Celler',
+  brandsAction: 'Marques · botó de consulta',
   featuredLabel: 'Etiqueta de marca destacada',
   galleryTitle: 'Galeria · títol',
   galleryNote: 'Galeria · nota',
-  galleryCaption: 'Galeria · peu de la foto gran',
+  galleryCaption: 'Galeria · Figcaption',
   gallery: 'Foto de la galeria',
-  alt: 'Descripció',
+  alt: 'Text alternatiu (ALT)',
   contactTitle: 'Contacte · títol',
   contactBody: 'Contacte · text',
   contactAction: 'Contacte · enllaç',
@@ -110,7 +110,7 @@ const keyLabels: Record<string, string> = {
   anniversaryKicker: 'Aniversari · avantítol',
   anniversaryTitle: 'Aniversari · títol',
   anniversaryBody: 'Aniversari · text',
-  anniversaryImageAlt: 'Aniversari · descripció de la imatge',
+  anniversaryImageAlt: 'Aniversari · text alternatiu (ALT)',
   valuesTitle: 'Valors · títol',
   values: 'Valor',
   scrollCue: 'Indicador de desplaçament',
@@ -119,7 +119,7 @@ const keyLabels: Record<string, string> = {
   winesTitle: 'Vins · títol',
   winesBody: 'Vins · text',
   visitLabel: 'Enllaç «visita el celler»',
-  beerImageAlt: 'Cervesa · descripció de la imatge',
+  beerImageAlt: 'Cervesa · text alternatiu (ALT)',
   beerTitle: 'Cervesa · títol',
   beerBody: 'Cervesa · text',
   beerLink: 'Cervesa · enllaç',
@@ -130,7 +130,6 @@ const keyLabels: Record<string, string> = {
   email: 'Camp correu',
   message: 'Camp missatge',
   submit: 'Botó enviar',
-  detailsTitle: 'Contacte directe · títol',
   details: 'Dada de contacte',
   label: 'Etiqueta',
   value: 'Text visible',
@@ -138,6 +137,25 @@ const keyLabels: Record<string, string> = {
   mapTitle: 'Mapa · descripció accessible',
   statement: 'Frase',
   credit: 'Crèdit',
+  indexLabel: 'Índex · etiqueta accessible',
+  notice: 'Avís legal',
+  owner: 'Titular del lloc web',
+  contactLabel: 'Etiqueta de contacte',
+  contactJoin: 'Separador dels contactes',
+  phone: 'Telèfon',
+  conditions: 'Condicions d’ús',
+  intellectualProperty: 'Propietat intel·lectual',
+  privacy: 'Privacitat',
+  purposeHeading: 'Finalitat · subtítol',
+  purposeBody: 'Finalitat · text',
+  retentionHeading: 'Conservació · subtítol',
+  retentionBody: 'Conservació · text',
+  rightsHeading: 'Drets · subtítol',
+  rightsBody: 'Drets · text',
+  cookies: 'Cookies',
+  usage: 'Ús de cookies',
+  externalServices: 'Serveis externs',
+  lastUpdated: 'Última actualització',
 };
 
 export const editorSections = Object.keys(sectionLabels) as Array<keyof SiteCopy>;
@@ -145,6 +163,8 @@ export const editorSections = Object.keys(sectionLabels) as Array<keyof SiteCopy
 export const sectionLabel = (section: string) => sectionLabels[section] ?? section;
 
 export function fieldLabel(path: string): string {
+  if (/^[^.]+\.title$/.test(path)) return 'Títol Google';
+  if (/^[^.]+\.description$/.test(path)) return 'Descripció Google';
   const parts = path.split('.').slice(1);
   return parts
     .map((part) => (/^\d+$/.test(part) ? String(Number(part) + 1) : (keyLabels[part] ?? part)))

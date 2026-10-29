@@ -1,13 +1,10 @@
 ---
 import LegalContent from '../../components/LegalContent.astro';
 import Layout from '../../layouts/Layout.astro';
+
+const copy = Astro.locals.site.content.es.legal;
 ---
 
-<Layout
-  locale="es"
-  page="legal"
-  title="Información legal y privacidad | Poblaliment"
-  description="Aviso legal, política de privacidad y política de cookies de Poblaliment."
->
+<Layout locale="es" page="legal" title={copy.title} description={copy.description}>
   <LegalContent locale="es" />
 </Layout>

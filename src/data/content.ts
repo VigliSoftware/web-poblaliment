@@ -1,4 +1,5 @@
 import type { Locale, PageKey } from '../lib/i18n';
+import { type LegalCopy, legalContent } from './legal.ts';
 
 type NavItem = { label: string; page: PageKey };
 
@@ -8,7 +9,6 @@ export type PageCopy = {
   heading: string;
   intro: string;
   imageAlt: string;
-  imageCaption: string;
 };
 
 // Default copy for both locales. The admin panel stores edited copy in the database and
@@ -32,8 +32,7 @@ export type SiteCopy = {
     suppliersKicker: string;
     suppliersTitle: string;
     suppliersBody: string;
-    foodLink: string;
-    cellarLink: string;
+    brandsAction: string;
     featuredLabel: string;
     galleryTitle: string;
     galleryNote: string;
@@ -54,6 +53,7 @@ export type SiteCopy = {
     values: Array<{ title: string; body: string }>;
   };
   food: PageCopy & {
+    imageCaption: string;
     scrollCue: string;
     filterLabel: string;
     supplierCount: string;
@@ -74,16 +74,16 @@ export type SiteCopy = {
     formTitle: string;
     formNote: string;
     fields: { name: string; email: string; message: string; submit: string };
-    detailsTitle: string;
     details: Array<{ label: string; value: string; href?: string }>;
     mapTitle: string;
   };
+  legal: LegalCopy;
   footer: { statement: string; credit: string };
 };
 
 const sharedNavCa: NavItem[] = [
   { label: 'Inici', page: 'home' },
-  { label: 'Aliments', page: 'food' },
+  { label: 'Alimentació', page: 'food' },
   { label: 'Celler', page: 'cellar' },
   { label: 'Nosaltres', page: 'about' },
   { label: 'Contacte', page: 'contact' },
@@ -91,7 +91,7 @@ const sharedNavCa: NavItem[] = [
 
 const sharedNavEs: NavItem[] = [
   { label: 'Inicio', page: 'home' },
-  { label: 'Alimentos', page: 'food' },
+  { label: 'Alimentación', page: 'food' },
   { label: 'Bodega', page: 'cellar' },
   { label: 'Nosotros', page: 'about' },
   { label: 'Contacto', page: 'contact' },
@@ -99,6 +99,7 @@ const sharedNavEs: NavItem[] = [
 
 export const content: Record<Locale, SiteCopy> = {
   ca: {
+    legal: legalContent.ca,
     localeLabel: 'CA',
     otherLocaleLabel: 'ES',
     nav: sharedNavCa,
@@ -130,8 +131,7 @@ export const content: Record<Locale, SiteCopy> = {
       suppliersTitle: 'Marques que donen forma al recorregut.',
       suppliersBody:
         'Una selecció de marques i proveïdors que expliquen el nostre catàleg des del producte real.',
-      foodLink: 'Consultar Aliments',
-      cellarLink: 'Consultar Celler',
+      brandsAction: 'Consultar les nostres marques',
       featuredLabel: 'Marca principal',
       galleryTitle: 'Una mirada al dia a dia.',
       galleryNote: 'La distribució també forma part del producte.',
@@ -155,8 +155,7 @@ export const content: Record<Locale, SiteCopy> = {
       heading: '25 anys fent territori.',
       intro:
         'Vam néixer a la Pobla de Segur per acostar productes de qualitat als negocis i les persones del Pirineu.',
-      imageAlt: 'Vehicle de Poblaliment en una carretera de muntanya del Pirineu',
-      imageCaption: 'Rutes pròpies des de la Pobla de Segur, al cor del Pallars Jussà.',
+      imageAlt: 'Vehicle de Poblaliment al costat d’un camp gebrat a la sortida del sol',
       historyTitle: 'Des de l’abril de 1999.',
       historyParagraphs: [
         'Poblaliment S.L. va néixer a la Pobla de Segur, al cor del Pallars Jussà. Més de 25 anys després, continuem creixent al costat dels negocis i les persones del territori.',
@@ -188,7 +187,7 @@ export const content: Record<Locale, SiteCopy> = {
       title: 'Aliments i proveïdors | Poblaliment',
       description:
         'Consulta els proveïdors de formatges, conserves, carns, peix, congelats, cafè, dolços, olis i condiments distribuïts per Poblaliment.',
-      heading: 'Aliments per a cada servei.',
+      heading: 'Alimentació per a cada servei.',
       intro:
         'Un assortiment ampli, ordenat per famílies, per trobar amb agilitat els productes que necessita cada negoci.',
       imageAlt: 'Selecció de productes d’alimentació distribuïts per Poblaliment',
@@ -204,8 +203,7 @@ export const content: Record<Locale, SiteCopy> = {
       heading: 'Celler amb criteri propi.',
       intro:
         'Una selecció més concentrada de vins, escumosos i cervesa, presentada perquè cada productor tingui el seu espai.',
-      imageAlt: 'Ampolles de vi del celler Sumarroca entre vinyes',
-      imageCaption: 'Cellers escollits per origen, qualitat i continuïtat.',
+      imageAlt: 'Vinyes verdes entre muntanyes sota un cel amb núvols',
       scrollCue: 'Descobreix la selecció',
       winesTitle: 'Vins i escumosos',
       winesBody:
@@ -221,7 +219,7 @@ export const content: Record<Locale, SiteCopy> = {
       title: 'Contacte amb Poblaliment | Distribució alimentària a Lleida',
       description:
         'Contacta amb Poblaliment per parlar de distribució alimentària, productes, marques i col·laboracions.',
-      formTitle: 'Escriu-nos',
+      formTitle: "Contacta'ns",
       formNote: 'Explica’ns què necessites i ens posarem en contacte amb tu.',
       fields: {
         name: 'Nom',
@@ -229,7 +227,6 @@ export const content: Record<Locale, SiteCopy> = {
         message: 'Missatge',
         submit: 'Enviar missatge',
       },
-      detailsTitle: 'Contacte directe',
       details: [
         { label: 'Correu', value: 'info@poblaliment.com', href: 'mailto:info@poblaliment.com' },
         { label: 'Telèfon', value: '973 680 341', href: 'tel:+34973680341' },
@@ -248,6 +245,7 @@ export const content: Record<Locale, SiteCopy> = {
     },
   },
   es: {
+    legal: legalContent.es,
     localeLabel: 'ES',
     otherLocaleLabel: 'CA',
     nav: sharedNavEs,
@@ -279,8 +277,7 @@ export const content: Record<Locale, SiteCopy> = {
       suppliersTitle: 'Marcas que dan forma al recorrido.',
       suppliersBody:
         'Una selección de marcas y proveedores que explican nuestro catálogo desde el producto real.',
-      foodLink: 'Consultar Alimentos',
-      cellarLink: 'Consultar Bodega',
+      brandsAction: 'Consultar nuestras marcas',
       featuredLabel: 'Marca principal',
       galleryTitle: 'Una mirada al día a día.',
       galleryNote: 'La distribución también forma parte del producto.',
@@ -304,8 +301,7 @@ export const content: Record<Locale, SiteCopy> = {
       heading: '25 años haciendo territorio.',
       intro:
         'Nacimos en La Pobla de Segur para acercar productos de calidad a los negocios y las personas del Pirineo.',
-      imageAlt: 'Vehículo de Poblaliment en una carretera de montaña del Pirineo',
-      imageCaption: 'Rutas propias desde La Pobla de Segur, en el corazón del Pallars Jussà.',
+      imageAlt: 'Vehículo de Poblaliment junto a un campo helado al amanecer',
       historyTitle: 'Desde abril de 1999.',
       historyParagraphs: [
         'Poblaliment S.L. nació en La Pobla de Segur, en el corazón del Pallars Jussà. Más de 25 años después, seguimos creciendo junto a los negocios y las personas del territorio.',
@@ -337,7 +333,7 @@ export const content: Record<Locale, SiteCopy> = {
       title: 'Alimentos y proveedores | Poblaliment',
       description:
         'Consulta los proveedores de quesos, conservas, carnes, pescado, congelados, café, dulces, aceites y condimentos distribuidos por Poblaliment.',
-      heading: 'Alimentos para cada servicio.',
+      heading: 'Alimentación para cada servicio.',
       intro:
         'Un surtido amplio, ordenado por familias, para encontrar con agilidad los productos que necesita cada negocio.',
       imageAlt: 'Selección de productos de alimentación distribuidos por Poblaliment',
@@ -353,8 +349,7 @@ export const content: Record<Locale, SiteCopy> = {
       heading: 'Bodega con criterio propio.',
       intro:
         'Una selección más concentrada de vinos, espumosos y cerveza, presentada para que cada productor tenga su espacio.',
-      imageAlt: 'Botellas de vino de la bodega Sumarroca entre viñedos',
-      imageCaption: 'Bodegas escogidas por origen, calidad y continuidad.',
+      imageAlt: 'Viñedos verdes entre montañas bajo un cielo con nubes',
       scrollCue: 'Descubre la selección',
       winesTitle: 'Vinos y espumosos',
       winesBody:
@@ -370,7 +365,7 @@ export const content: Record<Locale, SiteCopy> = {
       title: 'Contacto con Poblaliment | Distribución alimentaria en Lleida',
       description:
         'Contacta con Poblaliment para hablar de distribución alimentaria, productos, marcas y colaboraciones.',
-      formTitle: 'Escríbenos',
+      formTitle: 'CONTÁCTANOS',
       formNote: 'Cuéntanos qué necesitas y nos pondremos en contacto contigo.',
       fields: {
         name: 'Nombre',
@@ -378,7 +373,6 @@ export const content: Record<Locale, SiteCopy> = {
         message: 'Mensaje',
         submit: 'Enviar mensaje',
       },
-      detailsTitle: 'Contacto directo',
       details: [
         { label: 'Correo', value: 'info@poblaliment.com', href: 'mailto:info@poblaliment.com' },
         { label: 'Teléfono', value: '973 680 341', href: 'tel:+34973680341' },

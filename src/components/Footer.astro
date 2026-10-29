@@ -1,5 +1,5 @@
 ---
-import { localizedPath, type Locale } from '../lib/i18n';
+import { type Locale, localizedPath } from '../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -26,13 +26,13 @@ const copy = Astro.locals.site.content[locale];
         aria-label={locale === 'ca' ? 'Informació legal' : 'Información legal'}
       >
         <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#avis-legal`}>
-          {locale === 'ca' ? 'Avís legal' : 'Aviso legal'}
+          {copy.legal.notice.heading}
         </a>
         <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#privacitat`}>
-          {locale === 'ca' ? 'Política de privacitat' : 'Política de privacidad'}
+          {copy.legal.privacy.heading}
         </a>
         <a class="footer-legal-link" href={`${localizedPath(locale, 'legal')}#cookies`}>
-          Política de cookies
+          {copy.legal.cookies.heading}
         </a>
       </nav>
     </div>
