@@ -264,11 +264,11 @@ assert.match(foodEs, /food-scroll-cue-spacing/);
 
 const cellarCa = await render('celler/index.html');
 const cellarEs = await render('es/bodega/index.html');
-assert.ok(await exists('images/cellar-vineyard.png'));
+assert.ok(await exists('images/pexels-allen-cullen-2740212-5934491.jpg'));
 for (const html of [cellarCa, cellarEs]) {
   const hero =
     html.match(/<section class="page-frame page-intro cellar-intro[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.match(hero, /src="\/images\/cellar-vineyard\.png"/);
+  assert.match(hero, /src="\/images\/pexels-allen-cullen-2740212-5934491\.jpg"/);
   assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
   assert.match(hero, /text-center/);
   assert.match(hero, /loading="eager"/);

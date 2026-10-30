@@ -28,7 +28,11 @@ export const pageImageSlots = {
     label: 'Imatge principal',
     src: '/images/Gemini_Generated_Image_bpvsh8bpvsh8bpvs.jpeg',
   },
-  cellarHero: { group: 'Celler', label: 'Imatge principal', src: '/images/cellar-vineyard.png' },
+  cellarHero: {
+    group: 'Celler',
+    label: 'Imatge principal',
+    src: '/images/pexels-allen-cullen-2740212-5934491.jpg',
+  },
   cellarBeer: { group: 'Celler', label: 'Destacat · foto', src: '/images/moritz-pirineus.jpg' },
   cellarBeerLogo: {
     group: 'Celler',

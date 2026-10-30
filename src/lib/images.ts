@@ -11,6 +11,7 @@ export const imageDimensions: Record<string, { width: number; height: number }> 
   '/images/moritz.jpg': { width: 1024, height: 768 },
   '/images/moritz-pirineus.jpg': { width: 957, height: 556 },
   '/images/muntanya.jpg': { width: 960, height: 1200 },
+  '/images/pexels-allen-cullen-2740212-5934491.jpg': { width: 5184, height: 3456 },
   '/images/pigal.jpg': { width: 903, height: 1155 },
   '/images/pigal-anniversary.jpg': { width: 1024, height: 1365 },
   '/images/products.jpg': { width: 1024, height: 768 },
