@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "check": "astro check",
-    "test": "node --test scripts/validate-production-url.test.mjs && node scripts/verify-page-images.mjs && pnpm build && node scripts/verify-build.mjs",
+    "test": "node --test scripts/*.test.mjs && node scripts/verify-page-images.mjs && pnpm build && node scripts/verify-build.mjs",
     "preview": "astro preview",
     "predeploy:cloudflare": "node --env-file-if-exists=.env scripts/validate-production-url.mjs",
     "deploy:cloudflare": "wrangler deploy",
