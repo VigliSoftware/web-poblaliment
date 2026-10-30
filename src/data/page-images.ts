@@ -15,7 +15,7 @@ export const pageImageSlots = {
   homeGalleryThird: {
     group: 'Inici',
     label: 'Galeria · tercera foto',
-    src: '/images/masia.jpg',
+    src: '/images/oficina_poblaliment.jpeg',
   },
   aboutHero: { group: 'Nosaltres', label: 'Imatge principal', src: '/images/about-dawn.jpeg' },
   aboutAnniversary: {

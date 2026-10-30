@@ -168,7 +168,10 @@ export const content: Record<Locale, SiteCopy> = {
           src: '/images/truck-snow.jpg',
           alt: 'Camió de Poblaliment en una carretera d’alta muntanya',
         },
-        { src: '/images/masia.jpg', alt: 'Masia tradicional amb taula de vins i embotits' },
+        {
+          src: '/images/oficina_poblaliment.jpeg',
+          alt: 'Oficines de Poblaliment a La Pobla de Segur',
+        },
       ],
       contactTitle: 'Tens una pregunta o una proposta?',
       contactBody: 'Escriu-nos i prepararem el següent pas.',
@@ -340,7 +343,10 @@ export const content: Record<Locale, SiteCopy> = {
           src: '/images/truck-snow.jpg',
           alt: 'Camión de Poblaliment en una carretera de alta montaña',
         },
-        { src: '/images/masia.jpg', alt: 'Masia tradicional con mesa de vinos y embutidos' },
+        {
+          src: '/images/oficina_poblaliment.jpeg',
+          alt: 'Oficinas de Poblaliment en La Pobla de Segur',
+        },
       ],
       contactTitle: '¿Tienes una pregunta o una propuesta?',
       contactBody: 'Escríbenos y prepararemos el siguiente paso.',
