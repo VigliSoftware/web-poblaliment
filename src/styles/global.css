@@ -601,8 +601,80 @@ a {
     border-color 180ms ease;
 }
 
-.beer-feature-copy > a:hover {
+.beer-feature-copy > a:hover,
+.novelty-feature-copy > a:hover {
   color: var(--color-orange);
+}
+
+.novelty-section {
+  padding-block: clamp(3rem, 7vw, 6rem);
+  background: var(--color-blue);
+  color: var(--color-paper);
+}
+
+.novelty-feature-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  min-height: 32rem;
+  align-items: center;
+}
+
+.novelty-feature-grid.is-reversed {
+  grid-template-columns: minmax(20rem, 0.85fr) minmax(0, 1.15fr);
+}
+
+.novelty-section figure {
+  height: 100%;
+  min-height: 28rem;
+  max-height: 38rem;
+  overflow: hidden;
+}
+
+.novelty-section figure img {
+  width: 100%;
+  height: 100%;
+  max-height: 38rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.novelty-feature-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+.novelty-feature-copy h2,
+.novelty-feature-copy h3 {
+  margin-top: 1.25rem;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 0.94;
+}
+
+.novelty-feature-copy p {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  color: rgba(245, 241, 232, 0.78);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.novelty-feature-copy > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.75rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--color-orange);
+  color: inherit;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .cellar-scroll-cue {
@@ -945,7 +1017,9 @@ a {
   .featured-suppliers,
   .cellar-suppliers,
   .cellar-heading,
-  .beer-feature-grid {
+  .beer-feature-grid,
+  .novelty-feature-grid,
+  .novelty-feature-grid.is-reversed {
     grid-template-columns: 1fr;
   }
 
@@ -1007,11 +1081,17 @@ a {
     grid-column: 2;
   }
 
-  .beer-feature figure {
+  .beer-feature figure,
+  .novelty-section figure {
     min-height: 18rem;
   }
 
-  .beer-feature-copy {
+  .novelty-feature-grid.is-reversed figure {
+    order: -1;
+  }
+
+  .beer-feature-copy,
+  .novelty-feature-copy {
     padding-inline: 0;
   }
 

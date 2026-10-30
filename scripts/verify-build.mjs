@@ -209,7 +209,8 @@ assert.match(aboutEs, /anniversary-image overflow-hidden sm:-mt-6/);
 
 for (const page of ['aliments/index.html', 'es/alimentos/index.html']) {
   const html = await render(page);
-  const hero = html.match(/<section class="page-frame page-intro food-intro[\s\S]*?<\/section>/)?.[0] ?? '';
+  const hero =
+    html.match(/<section class="page-frame page-intro food-intro[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
   assert.match(hero, /text-center/);
   assert.match(hero, /loading="eager"/);
@@ -242,10 +243,13 @@ const foodEs = await render('es/alimentos/index.html');
 assert.match(foodCa, /Alimentació per a cada servei/);
 assert.match(foodCa, /food-supplier-grid/);
 assert.doesNotMatch(foodCa, /data-auto-rail/);
-assert.match(foodCa, /href="#food-filter"/);
+assert.match(foodCa, /href="#novetats"/);
 assert.match(foodCa, /id="food-filter"/);
 assert.match(foodCa, /Descobreix els aliments/);
 assert.match(foodCa, /food-scroll-cue-spacing/);
+assert.match(foodCa, /es im-perfecte/);
+assert.match(foodCa, /Bacallà selecte Frime/);
+assert.match(foodCa, /src="\/images\/im-perfect\.jpeg"/);
 assert.doesNotMatch(foodCa, />Moritz</);
 assert.match(foodEs, /Alimentación para cada servicio/);
 assert.match(foodEs, /food-supplier-grid/);
@@ -257,10 +261,12 @@ for (const html of [foodCa, foodEs]) {
   assert.match(html, /src="\/images\/chovi\.png"/);
 }
 assert.doesNotMatch(foodEs, /data-auto-rail/);
-assert.match(foodEs, /href="#food-filter"/);
+assert.match(foodEs, /href="#novetats"/);
 assert.match(foodEs, /id="food-filter"/);
 assert.match(foodEs, /Descubre los alimentos/);
 assert.match(foodEs, /food-scroll-cue-spacing/);
+assert.match(foodEs, /es im-perfecte/);
+assert.match(foodEs, /Bacalao selecto Frime/);
 
 const cellarCa = await render('celler/index.html');
 const cellarEs = await render('es/bodega/index.html');
@@ -275,6 +281,8 @@ for (const html of [cellarCa, cellarEs]) {
   assert.doesNotMatch(hero, /hero-grid|sm:pb-36/);
 }
 assert.match(cellarCa, /Vins i escumosos/);
+assert.match(cellarCa, /Bodegas Tamaral/);
+assert.match(cellarCa, /src="\/images\/tamaral\.jpeg"/);
 assert.match(cellarCa, />La nostra cervesa\.<\/h2>/);
 assert.match(cellarCa, /moritz\/ca_ES\/images\/logo\.svg/);
 assert.match(cellarCa, /cellar-scroll-cue/);
@@ -283,6 +291,7 @@ assert.match(cellarCa, /data-cellar-heading/);
 assert.match(cellarCa, /data-cellar-copy/);
 assert.match(cellarCa, /is-hidden-on-return/);
 assert.match(cellarEs, /Vinos y espumosos/);
+assert.match(cellarEs, /Bodegas Tamaral/);
 assert.match(cellarEs, />Nuestra cerveza\.<\/h2>/);
 assert.match(cellarEs, /moritz\/ca_ES\/images\/logo\.svg/);
 assert.match(cellarEs, /cellar-scroll-cue/);
@@ -381,7 +390,7 @@ if (process.env.SESSION_SECRET) {
   assert.match(imagesEditor, /name="slot" value="aboutHero"/);
   assert.match(imagesEditor, /name="slot" value="cellarHero"/);
   assert.match(imagesEditor, /name="slot" value="homeGalleryMain"/);
-  assert.equal((imagesEditor.match(/id="page-image-/g) ?? []).length, 22);
+  assert.equal((imagesEditor.match(/id="page-image-/g) ?? []).length, 28);
   const invalidImage = new FormData();
   invalidImage.set('slot', 'aboutHero');
   invalidImage.set('action', 'upload');

@@ -44,11 +44,63 @@ const families = categories
     </section>
 
     <div class="food-scroll-cue-spacing">
-      <CellarScrollCue target="food-filter" label={copy.scrollCue} />
+      <CellarScrollCue target="novetats" label={copy.scrollCue} />
     </div>
   </div>
 
-  <section class="page-frame food-directory pb-12 sm:pb-24">
+  <section id="novetats" class="novelty-section border-y rule" data-reveal>
+    <div class="page-frame mb-12 sm:mb-16">
+      <p class="supplier-kicker">{copy.noveltiesKicker}</p>
+      <h2 class="display mt-3 text-4xl leading-tight sm:text-6xl text-[var(--color-paper)]">
+        {copy.noveltiesTitle}
+      </h2>
+    </div>
+    <div class="space-y-16 sm:space-y-24">
+      <article class="page-frame novelty-feature-grid">
+        <figure>
+          <SiteImage
+            src="/images/im-perfect.jpeg"
+            slot="foodNoveltyImperfect"
+            alt={copy.noveltyImperfect.imageAlt}
+            sizes="(min-width: 801px) 58vw, 100vw"
+          />
+        </figure>
+        <div class="novelty-feature-copy">
+          <p class="supplier-kicker">{copy.noveltyImperfect.kicker}</p>
+          <h3 class="display">{copy.noveltyImperfect.title}</h3>
+          <p>{copy.noveltyImperfect.body}</p>
+          {copy.noveltyImperfect.href && (
+            <a href={copy.noveltyImperfect.href} target="_blank" rel="noopener noreferrer">
+              {copy.noveltyImperfect.link} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      </article>
+
+      <article class="page-frame novelty-feature-grid is-reversed">
+        <div class="novelty-feature-copy">
+          <p class="supplier-kicker">{copy.noveltyFrime.kicker}</p>
+          <h3 class="display">{copy.noveltyFrime.title}</h3>
+          <p>{copy.noveltyFrime.body}</p>
+          {copy.noveltyFrime.href && (
+            <a href={copy.noveltyFrime.href} target="_blank" rel="noopener noreferrer">
+              {copy.noveltyFrime.link} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+        <figure>
+          <SiteImage
+            src="/images/bacallà_frime.jpeg"
+            slot="foodNoveltyFrime"
+            alt={copy.noveltyFrime.imageAlt}
+            sizes="(min-width: 801px) 58vw, 100vw"
+          />
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <section class="page-frame food-directory py-12 sm:py-24">
     <nav id="food-filter" class="food-category-nav" aria-label={copy.filterLabel}>
       {families.map((family, index) => <a href={`#familia-${index}`}>{family.name}</a>)}
     </nav>

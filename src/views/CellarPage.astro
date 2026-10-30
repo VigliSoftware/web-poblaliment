@@ -45,9 +45,32 @@ const beerLogo = getPageImage(images, 'cellarBeerLogo');
     </section>
 
     <div class="cellar-scroll-cue-spacing">
-      <CellarScrollCue label={copy.scrollCue} />
+      <CellarScrollCue target="novetat" label={copy.scrollCue} />
     </div>
   </div>
+
+  <section id="novetat" class="novelty-section border-y rule" data-reveal>
+    <div class="page-frame novelty-feature-grid">
+      <figure>
+        <SiteImage
+          src="/images/tamaral.jpeg"
+          slot="cellarNoveltyTamaral"
+          alt={copy.noveltyTamaral.imageAlt}
+          sizes="(min-width: 801px) 58vw, 100vw"
+        />
+      </figure>
+      <div class="novelty-feature-copy">
+        <p class="supplier-kicker">{copy.noveltyTamaral.kicker}</p>
+        <h2 class="display">{copy.noveltyTamaral.title}</h2>
+        <p>{copy.noveltyTamaral.body}</p>
+        {copy.noveltyTamaral.href && (
+          <a href={copy.noveltyTamaral.href} target="_blank" rel="noopener noreferrer">
+            {copy.noveltyTamaral.link} <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
 
   <section id="cellar-selection" class="page-frame cellar-directory py-12 sm:py-24" data-reveal>
     <div class="cellar-heading">

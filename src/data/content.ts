@@ -57,12 +57,38 @@ export type SiteCopy = {
     scrollCue: string;
     filterLabel: string;
     supplierCount: string;
+    noveltiesKicker: string;
+    noveltiesTitle: string;
+    noveltyImperfect: {
+      kicker: string;
+      title: string;
+      body: string;
+      link: string;
+      href: string;
+      imageAlt: string;
+    };
+    noveltyFrime: {
+      kicker: string;
+      title: string;
+      body: string;
+      link: string;
+      href: string;
+      imageAlt: string;
+    };
   };
   cellar: PageCopy & {
     scrollCue: string;
     winesTitle: string;
     winesBody: string;
     visitLabel: string;
+    noveltyTamaral: {
+      kicker: string;
+      title: string;
+      body: string;
+      link: string;
+      href: string;
+      imageAlt: string;
+    };
     beerImageAlt: string;
     beerTitle: string;
     beerBody: string;
@@ -195,6 +221,24 @@ export const content: Record<Locale, SiteCopy> = {
       scrollCue: 'Descobreix els aliments',
       filterLabel: 'Famílies d’aliments',
       supplierCount: 'proveïdors',
+      noveltiesKicker: 'Novetats',
+      noveltiesTitle: 'Productes destacats d’alimentació.',
+      noveltyImperfect: {
+        kicker: 'Conserves vegetals i compromís social',
+        title: 'es im-perfecte',
+        body: 'Conserves 100% naturals elaborades a partir d’excedents agrícoles per la Fundació Espigoladors. Melmelades, patés vegetals i salses que uneixen qualitat gastronòmica, sostenibilitat i oportunitats laborals per a col·lectius en situació de vulnerabilitat.',
+        link: 'Conèixer es im-perfecte',
+        href: 'https://esimperfect.com/',
+        imageAlt: 'Pots de conserves vegetals artesanes de la marca es im-perfecte',
+      },
+      noveltyFrime: {
+        kicker: 'Peix i congelats de qualitat',
+        title: 'Bacallà selecte Frime',
+        body: 'Especialistes en peix i bacallà de primera qualitat, seleccionat i dessalat amb els màxims estàndards perquè arribi a la cuina professional amb una textura òptima, un sabor autèntic i el millor rendiment per a cada recepta.',
+        link: 'Conèixer Frime',
+        href: 'https://www.frime.com/',
+        imageAlt: 'Llom de bacallà selecte de la marca Frime llest per cuinar',
+      },
     },
     cellar: {
       title: 'Celler, vins i cervesa | Poblaliment',
@@ -209,6 +253,14 @@ export const content: Record<Locale, SiteCopy> = {
       winesBody:
         'Una selecció de cellers amb identitat pròpia, pensada per donar visibilitat a cada origen.',
       visitLabel: 'Visita el celler',
+      noveltyTamaral: {
+        kicker: 'Novetat al celler',
+        title: 'Bodegas Tamaral',
+        body: 'Vins de la D.O. Ribera del Duero elaborats a Peñafiel amb raïm 100% Tempranillo procedent de vinyes pròpies. Un projecte familiar que combina cura artesanal del terrer i tecnologia puntera per oferir vins de gran caràcter i elegància.',
+        link: 'Conèixer Bodegas Tamaral',
+        href: 'https://www.tamaral.com/',
+        imageAlt: 'Ampolles de vi de Bodegas Tamaral al peu de les vinyes',
+      },
       beerImageAlt: 'Cerveses Moritz al cor del Pirineu',
       beerTitle: 'La nostra cervesa.',
       beerBody:
@@ -341,6 +393,24 @@ export const content: Record<Locale, SiteCopy> = {
       scrollCue: 'Descubre los alimentos',
       filterLabel: 'Familias de alimentos',
       supplierCount: 'proveedores',
+      noveltiesKicker: 'Novedades',
+      noveltiesTitle: 'Productos destacados de alimentación.',
+      noveltyImperfect: {
+        kicker: 'Conservas vegetales y compromiso social',
+        title: 'es im-perfecte',
+        body: 'Conservas 100% naturales elaboradas a partir de excedentes agrícolas por la Fundación Espigoladors. Mermeladas, patés vegetales y salsas que aúnan calidad gastronómica, sostenibilidad y oportunidades laborales para colectivos vulnerables.',
+        link: 'Conocer es im-perfecte',
+        href: 'https://esimperfect.com/',
+        imageAlt: 'Botes de conservas vegetales artesanas de la marca es im-perfecte',
+      },
+      noveltyFrime: {
+        kicker: 'Pescado y congelados de calidad',
+        title: 'Bacalao selecto Frime',
+        body: 'Especialistas en pescado y bacalao de primera calidad, seleccionado y desalado con los máximos estándares para llegar a la cocina profesional con una textura óptima, sabor auténtico y el mejor rendimiento en cada receta.',
+        link: 'Conocer Frime',
+        href: 'https://www.frime.com/',
+        imageAlt: 'Lomo de bacalao selecto de la marca Frime listo para cocinar',
+      },
     },
     cellar: {
       title: 'Bodega, vinos y cerveza | Poblaliment',
@@ -355,6 +425,14 @@ export const content: Record<Locale, SiteCopy> = {
       winesBody:
         'Una selección de bodegas con identidad propia, pensada para dar visibilidad a cada origen.',
       visitLabel: 'Visitar la bodega',
+      noveltyTamaral: {
+        kicker: 'Novedad en bodega',
+        title: 'Bodegas Tamaral',
+        body: 'Vinos de la D.O. Ribera del Duero elaborados en Peñafiel con uva 100% Tempranillo procedente de viñedos propios. Un proyecto familiar que aúna cuidado artesanal del terruño y tecnología puntera para ofrecer vinos de gran carácter y elegancia.',
+        link: 'Conocer Bodegas Tamaral',
+        href: 'https://www.tamaral.com/',
+        imageAlt: 'Botellas de vino de Bodegas Tamaral al pie de los viñedos',
+      },
       beerImageAlt: 'Cervezas Moritz en el corazón del Pirineo',
       beerTitle: 'Nuestra cerveza.',
       beerBody:
