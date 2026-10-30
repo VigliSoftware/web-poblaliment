@@ -208,7 +208,11 @@ assert.match(aboutEs, /src="\/images\/products-ubla\.jpeg"/);
 assert.match(aboutEs, /anniversary-image overflow-hidden sm:-mt-6/);
 
 for (const page of ['aliments/index.html', 'es/alimentos/index.html']) {
-  assert.match(await render(page), /max-w-3xl sm:pb-36/);
+  const html = await render(page);
+  const hero = html.match(/<section class="page-frame page-intro food-intro[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
+  assert.match(hero, /text-center/);
+  assert.match(hero, /loading="eager"/);
 }
 
 for (const page of ['contacte/index.html', 'es/contacto/index.html']) {

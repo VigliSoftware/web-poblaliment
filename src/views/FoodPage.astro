@@ -1,6 +1,6 @@
 ---
 import CellarScrollCue from '../components/CellarScrollCue.astro';
-import PageIntro from '../components/PageIntro.astro';
+import SiteImage from '../components/SiteImage.astro';
 import SupplierRail from '../components/SupplierRail.astro';
 import Layout from '../layouts/Layout.astro';
 import type { Locale } from '../lib/i18n';
@@ -24,15 +24,24 @@ const families = categories
 
 <Layout locale={locale} page="food" title={copy.title} description={copy.description}>
   <div class="food-hero-stage">
-    <PageIntro
-      heading={copy.heading}
-      intro={copy.intro}
-      image="/images/products-selection.jpeg"
-      imageSlot="foodHero"
-      imageAlt={copy.imageAlt}
-      imageCaption={copy.imageCaption}
-      compact
-    />
+    <section class="page-frame page-intro food-intro pt-12 pb-12 sm:pt-16">
+      <SiteImage
+        src="/images/Gemini_Generated_Image_bpvsh8bpvsh8bpvs.jpeg"
+        slot="foodHero"
+        alt={copy.imageAlt}
+        class="aspect-[4/3] w-full object-cover sm:aspect-[40/17]"
+        sizes="(min-width: 1312px) 1280px, calc(100vw - 32px)"
+        loading="eager"
+      />
+      <div class="mx-auto mt-10 max-w-4xl text-center sm:mt-12">
+        <h1 class="display text-5xl leading-[0.96] sm:text-7xl">{copy.heading}</h1>
+        <p
+          class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)] sm:text-xl"
+        >
+          {copy.intro}
+        </p>
+      </div>
+    </section>
 
     <div class="food-scroll-cue-spacing">
       <CellarScrollCue target="food-filter" label={copy.scrollCue} />

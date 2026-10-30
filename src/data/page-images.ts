@@ -15,7 +15,7 @@ export const pageImageSlots = {
   homeGalleryThird: {
     group: 'Inici',
     label: 'Galeria · tercera foto',
-    src: '/images/moritz-pirineus.jpg',
+    src: '/images/masia.jpg',
   },
   aboutHero: { group: 'Nosaltres', label: 'Imatge principal', src: '/images/about-dawn.jpeg' },
   aboutAnniversary: {
@@ -26,7 +26,7 @@ export const pageImageSlots = {
   foodHero: {
     group: 'Alimentació',
     label: 'Imatge principal',
-    src: '/images/products-selection.jpeg',
+    src: '/images/Gemini_Generated_Image_bpvsh8bpvsh8bpvs.jpeg',
   },
   cellarHero: { group: 'Celler', label: 'Imatge principal', src: '/images/cellar-vineyard.png' },
   cellarBeer: { group: 'Celler', label: 'Destacat · foto', src: '/images/moritz-pirineus.jpg' },
