@@ -228,11 +228,11 @@ export const content: Record<Locale, SiteCopy> = {
       noveltiesTitle: 'Productes destacats d’alimentació.',
       noveltyImperfect: {
         kicker: 'Conserves vegetals i compromís social',
-        title: 'es im-perfecte',
+        title: 'es im-perfect',
         body: 'Conserves 100% naturals elaborades a partir d’excedents agrícoles per la Fundació Espigoladors. Melmelades, patés vegetals i salses que uneixen qualitat gastronòmica, sostenibilitat i oportunitats laborals per a col·lectius en situació de vulnerabilitat.',
-        link: 'Conèixer es im-perfecte',
+        link: 'Conèixer es im-perfect',
         href: 'https://esimperfect.com/',
-        imageAlt: 'Pots de conserves vegetals artesanes de la marca es im-perfecte',
+        imageAlt: 'Pots de conserves vegetals artesanes de la marca es im-perfect',
       },
       noveltyFrime: {
         kicker: 'Peix i congelats de qualitat',
@@ -403,11 +403,11 @@ export const content: Record<Locale, SiteCopy> = {
       noveltiesTitle: 'Productos destacados de alimentación.',
       noveltyImperfect: {
         kicker: 'Conservas vegetales y compromiso social',
-        title: 'es im-perfecte',
+        title: 'es im-perfect',
         body: 'Conservas 100% naturales elaboradas a partir de excedentes agrícolas por la Fundación Espigoladors. Mermeladas, patés vegetales y salsas que aúnan calidad gastronómica, sostenibilidad y oportunidades laborales para colectivos vulnerables.',
-        link: 'Conocer es im-perfecte',
+        link: 'Conocer es im-perfect',
         href: 'https://esimperfect.com/',
-        imageAlt: 'Botes de conservas vegetales artesanas de la marca es im-perfecte',
+        imageAlt: 'Botes de conservas vegetales artesanas de la marca es im-perfect',
       },
       noveltyFrime: {
         kicker: 'Pescado y congelados de calidad',

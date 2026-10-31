@@ -105,6 +105,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Ojos del Guadiana',
     categoryId: 'formatges',
     website: 'https://www.ojosdelguadiana.com/',
+    logo: '/images/logo_ojos_guadiana.png',
     featured: false,
   },
   {
@@ -133,6 +134,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Pescamar',
     categoryId: 'conserves-del-mar',
     website: 'https://pescamar.es/',
+    logo: '/images/logo_pescamar.png',
     featured: false,
   },
   {
@@ -140,6 +142,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Pujadó Solano',
     categoryId: 'conserves-del-mar',
     website: 'https://pujadosolano.com/',
+    logo: '/images/logo_pujadosolano.png',
     featured: false,
   },
   {
@@ -147,6 +150,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Conservas de Cambados',
     categoryId: 'conserves-del-mar',
     website: 'https://www.conservasdecambados.com/',
+    logo: '/images/logo_cambados.png',
     featured: false,
   },
   {
@@ -161,6 +165,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Penelas',
     categoryId: 'conserves-vegetals',
     website: 'https://aceyvi.es/penelas/',
+    logo: '/images/logo-penelas.png',
     featured: false,
   },
   {
@@ -182,6 +187,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Sarasa',
     categoryId: 'conserves-vegetals',
     website: 'https://www.aceitunassarasa.es/',
+    logo: '/images/logo_sarasa.png',
     featured: false,
   },
   {
@@ -203,6 +209,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Tamaric · Dispocat',
     categoryId: 'carns-i-embotits',
     website: 'https://www.dispocat.com/',
+    logo: '/images/logo_tamaric.png',
     featured: false,
   },
   {
@@ -210,6 +217,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Ecològica dels Pirineus',
     categoryId: 'carns-i-embotits',
     website: 'https://www.ecologicadelospirineos.com/',
+    logo: '/images/logo_ecologica_pirineus.svg',
     featured: false,
   },
   {
@@ -252,6 +260,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Benfumat',
     categoryId: 'peix',
     website: 'https://benfumat.com/',
+    logo: '/images/logo_benfumat.webp',
     featured: false,
   },
   {
@@ -259,6 +268,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Celler de Capçanes',
     categoryId: 'celler',
     website: 'https://www.cellercapcanes.com/',
+    logo: '/images/logo_capcanes.png',
     featured: false,
   },
   {
@@ -358,6 +368,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Trabanco',
     categoryId: 'celler',
     website: 'https://www.sidratrabanco.com/',
+    logo: '/images/xlogo_trabanco.webp',
     featured: false,
   },
   {
@@ -408,6 +419,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Pastisseria Cobo',
     categoryId: 'cafes-xocolata-i-dolcos',
     website: 'https://especialitatscobo.cat/',
+    logo: '/images/logotip_cobo.png',
     featured: false,
   },
   {
@@ -415,6 +427,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'La Granja',
     categoryId: 'cafes-xocolata-i-dolcos',
     website: 'https://lagranjafoods.com/',
+    logo: '/images/logo_lagranja.png',
     featured: false,
   },
   {
@@ -422,6 +435,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Chocovic',
     categoryId: 'cafes-xocolata-i-dolcos',
     website: 'https://www.chocovic.com/',
+    logo: '/images/chocovic-site-logo.png',
     featured: false,
   },
   {
@@ -444,6 +458,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Millàs',
     categoryId: 'olis-i-condiments',
     website: 'https://millas.es/',
+    logo: '/images/logomillas.svg',
     featured: false,
   },
   {
@@ -452,6 +467,14 @@ export const defaultSuppliers: Supplier[] = [
     categoryId: 'olis-i-condiments',
     website: 'https://www.chovi.com/',
     logo: '/images/chovi.png',
+    featured: false,
+  },
+  {
+    id: '57',
+    name: 'es im-perfect',
+    categoryId: 'olis-i-condiments',
+    website: 'https://esimperfect.com/',
+    logo: '/images/Es-imperfect_logo_800.webp',
     featured: false,
   },
 ];

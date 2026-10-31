@@ -30,7 +30,7 @@ export const pageImageSlots = {
   },
   foodNoveltyImperfect: {
     group: 'Alimentació',
-    label: 'Novetat · es im-perfecte',
+    label: 'Novetat · es im-perfect',
     src: '/images/im-perfect.jpeg',
   },
   foodNoveltyFrime: {

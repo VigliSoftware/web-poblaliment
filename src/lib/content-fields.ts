@@ -118,7 +118,7 @@ const keyLabels: Record<string, string> = {
   supplierCount: 'Paraula després del recompte',
   noveltiesKicker: 'Novetats · avantítol',
   noveltiesTitle: 'Novetats · títol de la secció',
-  noveltyImperfect: 'Novetat · es im-perfecte',
+  noveltyImperfect: 'Novetat · es im-perfect',
   noveltyFrime: 'Novetat · Frime',
   noveltyTamaral: 'Novetat · Tamaral',
   kicker: 'Avantítol',

@@ -13,7 +13,9 @@ const customBrand = ['Choví', 'Chovi'].includes(supplier.name)
   ? 'chovi'
   : supplier.name === 'Olis Pons'
     ? 'pons'
-    : undefined;
+    : ['La Granja', 'La granja'].includes(supplier.name)
+      ? 'lagranja'
+      : undefined;
 const src = supplier.logo ?? faviconFor(supplier.website);
 ---
 
