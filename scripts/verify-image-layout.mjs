@@ -45,7 +45,14 @@ export default async function verifyImageLayout(page) {
           'Truck uses a landscape frame',
         );
         check(metrics.height < 600, 'Gallery height stays bounded on desktop');
-        check(metrics.captionInside, 'Truck caption remains visible');
+        check(metrics.captionInside, 'Truck caption stays inside its figure when present');
+        const frameHeight = await image.evaluate(
+          (el) => el.parentElement.getBoundingClientRect().height,
+        );
+        check(
+          Math.abs(frameHeight - metrics.height) < 1,
+          'Truck frame has no empty space below the image',
+        );
         if (width > 800) {
           const aligned = await section.evaluate((el) => {
             const main = el.querySelector('.gallery-feature').getBoundingClientRect();

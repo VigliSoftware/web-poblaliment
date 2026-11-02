@@ -1183,10 +1183,6 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .gallery-feature {
-    min-height: 20rem;
-  }
-
   .gallery-stack {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: none;
