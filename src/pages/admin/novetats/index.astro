@@ -1,7 +1,7 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { errorMessage, FormError, published, text } from '../../../lib/admin';
-import { NoveltyError } from '../../../lib/novelties';
+import { defaultCellarHeading, noveltyHeading, NoveltyError } from '../../../lib/novelties';
 import { loadNovelties, saveNovelties } from '../../../lib/novelties-store';
 
 let record = await loadNovelties();
@@ -20,12 +20,17 @@ if (Astro.request.method === 'POST') {
         throw new FormError('Aquesta novetat no existeix.');
       next.items = next.items.filter((item) => item.id !== id);
     } else if (action === 'heading') {
+      const section = text(form, 'section');
+      if (section !== 'food' && section !== 'cellar')
+        throw new FormError('Tria Alimentació o Celler.');
+      next.cellarHeading ??= structuredClone(defaultCellarHeading);
+      const heading = section === 'food' ? next.heading : next.cellarHeading;
       for (const locale of ['ca', 'es'] as const) {
         const title = text(form, `${locale}|title`);
         const kicker = text(form, `${locale}|kicker`);
         if (!title || title.length > 500 || kicker.length > 500)
           throw new FormError('Omple els títols (màxim 500 caràcters).');
-        next.heading[locale] = { title, kicker };
+        heading[locale] = { title, kicker };
       }
     } else throw new FormError('Acció no vàlida.');
     await saveNovelties(next, revision);
@@ -113,39 +118,44 @@ const { data, revision } = record;
       </section>
     );
   })}
-  <details class="mt-12 border-t rule pt-6">
-    <summary class="cursor-pointer text-lg font-semibold">Títol de la secció d’Alimentació</summary>
-    <form method="post" class="mt-5">
-      <input type="hidden" name="revision" value={revision}>
-      <div class="grid gap-6 sm:grid-cols-2">
-        {(['ca', 'es'] as const).map((locale) => (
-          <fieldset>
-            <legend class="font-semibold">{locale === 'ca' ? 'Català' : 'Castellano'}</legend>
-            <label class="mt-4">
-              Etiqueta{' '}
-              <input
-                class="admin-input"
-                name={`${locale}|kicker`}
-                value={data.heading[locale].kicker}
-                maxlength="500"
-              />
-            </label>
-            <label class="mt-4">
-              Títol{' '}
-              <input
-                class="admin-input"
-                name={`${locale}|title`}
-                value={data.heading[locale].title}
-                maxlength="500"
-                required
-              />
-            </label>
-          </fieldset>
-        ))}
-      </div>
-      <button type="submit" class="admin-button mt-6" name="action" value="heading">
-        Desar títol de secció
-      </button>
-    </form>
-  </details>
+  {(['food', 'cellar'] as const).map((section) => (
+    <details class="mt-12 border-t rule pt-6">
+      <summary class="cursor-pointer text-lg font-semibold">
+        Títol de la secció {section === 'food' ? 'd’Alimentació' : 'de Celler'}
+      </summary>
+      <form method="post" class="mt-5">
+        <input type="hidden" name="section" value={section} />
+        <input type="hidden" name="revision" value={revision}>
+        <div class="grid gap-6 sm:grid-cols-2">
+          {(['ca', 'es'] as const).map((locale) => (
+            <fieldset>
+              <legend class="font-semibold">{locale === 'ca' ? 'Català' : 'Castellano'}</legend>
+              <label class="mt-4">
+                Etiqueta{' '}
+                <input
+                  class="admin-input"
+                  name={`${locale}|kicker`}
+                  value={noveltyHeading(data, section, locale).kicker}
+                  maxlength="500"
+                />
+              </label>
+              <label class="mt-4">
+                Títol{' '}
+                <input
+                  class="admin-input"
+                  name={`${locale}|title`}
+                  value={noveltyHeading(data, section, locale).title}
+                  maxlength="500"
+                  required
+                />
+              </label>
+            </fieldset>
+          ))}
+        </div>
+        <button type="submit" class="admin-button mt-6" name="action" value="heading">
+          Desar títol de secció
+        </button>
+      </form>
+    </details>
+  ))}
 </AdminLayout>

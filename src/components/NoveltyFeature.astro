@@ -12,7 +12,9 @@ const copy = novelty.copy[locale];
 ---
 
 <article class:list={['page-frame novelty-feature-grid', reversed && 'is-reversed']}>
-  <figure class:list={[reversed && 'md:order-2']}>
+  <figure
+    class:list={[reversed && 'md:order-2', novelty.id === 'tamaral' && 'novelty-image-contained']}
+  >
     <img
       src={novelty.image.src}
       width={novelty.image.width}

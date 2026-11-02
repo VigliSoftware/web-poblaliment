@@ -359,6 +359,11 @@ for (const asset of ['benfumat-wordmark.png', 'millas-wordmark.png']) {
 assert.match(globalCss, /\.site-header nav > astro-island\s*{[^}]*display: flex/s);
 assert.match(globalCss, /\.brands-trigger--navigation\s*{[^}]*line-height: 1\.25rem/s);
 assert.match(globalCss, /\.beer-feature\s*{[^}]*padding-block:/s);
+assert.match(globalCss, /\.beer-feature figure\s*{[^}]*aspect-ratio:\s*1 \/ 1/s);
+assert.match(globalCss, /\.beer-feature figure\s*{[^}]*align-self:\s*center/s);
+assert.doesNotMatch(globalCss, /\.beer-feature figure[^}]*min-height:\s*(?:18|32)rem/s);
+assert.match(globalCss, /\.beer-feature figure img\s*{[^}]*object-fit:\s*cover/s);
+assert.match(globalCss, /\.beer-feature figure img\s*{[^}]*object-position:\s*center/s);
 assert.match(
   globalCss,
   /\.beer-feature-copy\s*>\s*a\s*{[^}]*border-bottom:\s*2px solid var\(--color-orange\)/s,

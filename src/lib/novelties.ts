@@ -11,15 +11,22 @@ export type Novelty = {
   image: PageImage;
   copy: Record<Locale, NoveltyCopy>;
 };
+export const defaultCellarHeading = {
+  ca: { kicker: 'Novetats', title: 'Productes destacats del celler.' },
+  es: { kicker: 'Novedades', title: 'Productos destacados de la bodega.' },
+};
+
 export type Novelties = {
   items: Novelty[];
   heading: Record<Locale, { title: string; kicker: string }>;
+  cellarHeading: Record<Locale, { title: string; kicker: string }>;
 };
 export class NoveltyError extends Error {}
 
 // Read the previous CMS values once during migration, including uploaded photos.
 export function legacyNovelties(content: Record<Locale, SiteCopy>, images: PageImages): Novelties {
   return {
+    cellarHeading: structuredClone(defaultCellarHeading),
     heading: {
       ca: { title: content.ca.food.noveltiesTitle, kicker: content.ca.food.noveltiesKicker },
       es: { title: content.es.food.noveltiesTitle, kicker: content.es.food.noveltiesKicker },
@@ -100,4 +107,15 @@ export function readNovelty(form: FormData, id: string, image: PageImage): Novel
 
 export function replaceNovelty(data: Novelties, item: Novelty): Novelties {
   return { ...data, items: [...data.items.filter((previous) => previous.id !== item.id), item] };
+}
+
+// Existing catalogues predate the cellar heading; resolve it without replacing saved content.
+export function noveltyHeading(
+  data: Pick<Novelties, 'heading'> & Partial<Pick<Novelties, 'cellarHeading'>>,
+  section: Novelty['section'],
+  locale: Locale,
+) {
+  return section === 'food'
+    ? data.heading[locale]
+    : (data.cellarHeading ?? defaultCellarHeading)[locale];
 }

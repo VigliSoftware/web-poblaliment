@@ -1,6 +1,6 @@
 ---
 import NoveltyFeature from '../components/NoveltyFeature.astro';
-import { visibleNovelties } from '../lib/novelties';
+import { noveltyHeading, visibleNovelties } from '../lib/novelties';
 import CellarScrollCue from '../components/CellarScrollCue.astro';
 import SiteImage from '../components/SiteImage.astro';
 import SupplierMark from '../components/SupplierMark.astro';
@@ -16,6 +16,7 @@ const { locale } = Astro.props;
 const { content, categories, suppliers, images, novelties } = Astro.locals.site;
 const copy = content[locale].cellar;
 const items = visibleNovelties(novelties, 'cellar');
+const heading = noveltyHeading(novelties, 'cellar', locale);
 const inSection = (section: string) =>
   suppliers.filter(
     (supplier) =>
@@ -57,13 +58,19 @@ const beerLogo = getPageImage(images, 'cellarBeerLogo');
 
   {items.length > 0 && (
     <section id="novetat" class="novelty-section border-y rule" data-reveal>
+      <div class="page-frame mb-12 sm:mb-16">
+        {heading.kicker && <p class="supplier-kicker">{heading.kicker}</p>}
+        <h2 class="display mt-3 text-4xl leading-tight sm:text-6xl text-[var(--color-paper)]">
+          {heading.title}
+        </h2>
+      </div>
       <div class="space-y-16 sm:space-y-24">
         {items.map((novelty, index) => (
           <NoveltyFeature
             novelty={novelty}
             locale={locale}
             reversed={index % 2 === 1}
-            heading="h2"
+            heading="h3"
           />
         ))}
       </div>
