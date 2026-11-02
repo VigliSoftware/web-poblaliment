@@ -10,6 +10,14 @@ const lockedKeys = new Set(['page', 'src', 'localeLabel', 'otherLocaleLabel']);
 
 export type TextField = { path: string; long: boolean };
 
+const noveltyKeys = new Set([
+  'noveltyImperfect',
+  'noveltyFrime',
+  'noveltyTamaral',
+  'noveltiesKicker',
+  'noveltiesTitle',
+]);
+
 export function listTextFields(schema: unknown, prefix = ''): TextField[] {
   if (typeof schema === 'string') return [{ path: prefix, long: schema.length > 90 }];
   if (Array.isArray(schema)) {
@@ -17,7 +25,9 @@ export function listTextFields(schema: unknown, prefix = ''): TextField[] {
   }
   if (schema && typeof schema === 'object') {
     return Object.entries(schema).flatMap(([key, value]) =>
-      lockedKeys.has(key) ? [] : listTextFields(value, prefix ? `${prefix}.${key}` : key),
+      lockedKeys.has(key) || noveltyKeys.has(key)
+        ? []
+        : listTextFields(value, prefix ? `${prefix}.${key}` : key),
     );
   }
   return [];

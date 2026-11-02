@@ -1,0 +1,36 @@
+---
+import type { Locale } from '../lib/i18n';
+import type { Novelty } from '../lib/novelties';
+interface Props {
+  novelty: Novelty;
+  locale: Locale;
+  reversed?: boolean;
+  heading?: 'h2' | 'h3';
+}
+const { novelty, locale, reversed = false, heading: Heading = 'h3' } = Astro.props;
+const copy = novelty.copy[locale];
+---
+
+<article class:list={['page-frame novelty-feature-grid', reversed && 'is-reversed']}>
+  <figure class:list={[reversed && 'md:order-2']}>
+    <img
+      src={novelty.image.src}
+      width={novelty.image.width}
+      height={novelty.image.height}
+      alt={copy.imageAlt}
+      loading="lazy"
+      decoding="async"
+      sizes="(min-width: 801px) 58vw, 100vw"
+    >
+  </figure>
+  <div class="novelty-feature-copy">
+    {copy.kicker && <p class="supplier-kicker">{copy.kicker}</p>}
+    <Heading class="display">{copy.title}</Heading>
+    <p class="whitespace-pre-line">{copy.body}</p>
+    {copy.href && (
+      <a href={copy.href} target="_blank" rel="noopener noreferrer">
+        {copy.link} <span aria-hidden="true">↗</span>
+      </a>
+    )}
+  </div>
+</article>

@@ -10,11 +10,14 @@ import {
 import { mergeCopy } from './content-fields';
 import { getSql } from './db';
 import type { Locale } from './i18n';
+import { legacyNovelties, type Novelties } from './novelties';
+import { loadNovelties } from './novelties-store';
 import { type PageImageRow, pageImagesFromRows } from './page-images';
 
 export type SiteData = {
   content: Record<Locale, SiteCopy>;
   images: PageImages;
+  novelties: Novelties;
   categories: SupplierCategory[];
   // Ordered by category, then by the order set in the admin panel.
   suppliers: Supplier[];
@@ -37,6 +40,7 @@ type ContentRow = { locale: Locale; data: unknown };
 export const defaultSiteData: SiteData = {
   content: defaultContent,
   images: {},
+  novelties: legacyNovelties(defaultContent, {}),
   categories: defaultCategories,
   suppliers: defaultSuppliers,
   featured: defaultSuppliers.filter((supplier) => supplier.featured),
@@ -74,9 +78,10 @@ async function loadSiteData(): Promise<SiteData> {
   };
 
   const images = pageImagesFromRows(imageRows);
+  const { data: novelties } = await loadNovelties();
 
   // Until the catalogue is seeded, keep showing the bundled suppliers.
-  if (categoryRows.length === 0) return { ...defaultSiteData, content, images };
+  if (categoryRows.length === 0) return { ...defaultSiteData, content, images, novelties };
 
   const suppliers: Supplier[] = supplierRows.map((row) => ({
     id: String(row.id),
@@ -91,6 +96,7 @@ async function loadSiteData(): Promise<SiteData> {
   return {
     content,
     images,
+    novelties,
     categories: categoryRows.map((row) => ({
       id: String(row.id),
       nameCa: row.name_ca,

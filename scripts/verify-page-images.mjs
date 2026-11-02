@@ -19,6 +19,16 @@ for (const slot of Object.keys(pageImageSlots)) {
 assert.equal(isPageImageSlot('__proto__'), false);
 assert.equal(isPageImageSlot('unknown'), false);
 
+const cellarBeer = getPageImage({}, 'cellarBeer');
+const cellarBeerFile = await readPageImage(
+  new File([readFileSync(`public${cellarBeer.src}`)], 'moritz.webp', { type: 'image/webp' }),
+);
+assert.equal(cellarBeer.src, '/images/moritz-selection.webp');
+assert.deepEqual(
+  [cellarBeer.width, cellarBeer.height],
+  [cellarBeerFile.width, cellarBeerFile.height],
+);
+
 const photo = await readPageImage(
   new File([readFileSync('public/images/about-dawn.jpeg')], 'photo.jpg', { type: 'image/jpeg' }),
 );

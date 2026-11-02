@@ -1278,5 +1278,18 @@ a {
 }
 
 .supplier-mark.supplier-mark--lagranja {
-  background: #ffffff;
+  background: #486e4b;
+}
+
+.food-rail-item .supplier-mark--tamaric {
+  background: transparent;
+}
+
+.food-rail-item .supplier-mark--tamaric img {
+  mix-blend-mode: multiply;
+}
+
+.supplier-mark.supplier-mark--benfumat,
+.supplier-mark.supplier-mark--millas {
+  background: var(--color-blue);
 }

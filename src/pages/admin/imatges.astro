@@ -1,6 +1,11 @@
 ---
 import LogoUpload from '../../components/LogoUpload.astro';
-import { getPageImage, isPageImageSlot, pageImageSlots } from '../../data/page-images';
+import {
+  getPageImage,
+  isPageImageSlot,
+  noveltyImageSlots,
+  pageImageSlots,
+} from '../../data/page-images';
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import { errorMessage, FormError, published, text } from '../../lib/admin';
 import { requireSql } from '../../lib/db';
@@ -27,7 +32,8 @@ if (Astro.request.method === 'POST') {
     }
     const form = await Astro.request.formData();
     const slot = text(form, 'slot');
-    if (!isPageImageSlot(slot)) throw new FormError('Aquesta imatge no existeix.');
+    if (!isPageImageSlot(slot) || noveltyImageSlots.has(slot))
+      throw new FormError('Aquesta imatge no existeix.');
     const action = text(form, 'action');
     if (action === 'restore') {
       await sql`DELETE FROM site_images WHERE slot = ${slot}`;
@@ -71,7 +77,8 @@ const groups = [...new Set(Object.values(pageImageSlots).map((image) => image.gr
 <AdminLayout title="Imatges" active="images" notice={notice} error={error}>
   <p class="max-w-2xl text-[var(--color-ink-soft)]">
     Canvia les imatges del web i prem «Desar imatge». Són compartides entre el català i el castellà.
-    Els textos alternatius (ALT) es modifiquen a <a href="/admin/textos/">Textos</a>.
+    Les fotos de novetats es gestionen a <a href="/admin/novetats/">Novetats</a>. Els textos
+    alternatius (ALT) es modifiquen a <a href="/admin/textos/">Textos</a>.
   </p>
   <div class="mt-10 space-y-12">
     {groups.map((group) => (
@@ -79,7 +86,9 @@ const groups = [...new Set(Object.values(pageImageSlots).map((image) => image.gr
         <h2 class="display mb-5 text-3xl">{group}</h2>
         <div class="space-y-5">
           {Object.entries(pageImageSlots)
-            .filter(([, definition]) => definition.group === group)
+            .filter(
+              ([key, definition]) => definition.group === group && !noveltyImageSlots.has(key),
+            )
             .map(([key, definition]) => {
               if (!isPageImageSlot(key)) return null;
               const image = getPageImage(images, key);

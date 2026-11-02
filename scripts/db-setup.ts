@@ -2,6 +2,10 @@
 // first time. Safe to run again: existing rows are left untouched.
 //
 //   pnpm db:setup
+import { content } from '../src/data/content.ts';
+import { mergeCopy } from '../src/lib/content-fields.ts';
+import { legacyNovelties } from '../src/lib/novelties.ts';
+import type { PageImages } from '../src/data/page-images.ts';
 import { neon } from '@neondatabase/serverless';
 import { defaultCategories, defaultSuppliers } from '../src/data/suppliers.ts';
 
@@ -45,6 +49,36 @@ await sql`CREATE TABLE IF NOT EXISTS site_images (
   content_type text NOT NULL,
   updated_at timestamptz NOT NULL DEFAULT now()
 )`;
+
+await sql`CREATE TABLE IF NOT EXISTS site_novelties (
+  id integer PRIMARY KEY CHECK (id = 1),
+  data jsonb NOT NULL,
+  revision integer NOT NULL DEFAULT 0
+)`;
+const storedCopy = await sql`SELECT locale, data FROM site_content`;
+const savedCopy = Object.fromEntries(storedCopy.map((row) => [row.locale, row.data]));
+const savedImages =
+  await sql`SELECT slot, object_key, width, height, content_type FROM site_images`;
+const images = Object.fromEntries(
+  savedImages.map((row) => [
+    row.slot,
+    {
+      src: `/media/image/?k=${encodeURIComponent(row.object_key)}`,
+      width: row.width,
+      height: row.height,
+      type: row.content_type,
+    },
+  ]),
+) as PageImages;
+const migrated = legacyNovelties(
+  {
+    ca: mergeCopy(content.ca, savedCopy.ca),
+    es: mergeCopy(content.es, savedCopy.es),
+  },
+  images,
+);
+await sql`INSERT INTO site_novelties (id, data) VALUES (1, ${JSON.stringify(migrated)}::jsonb)
+  ON CONFLICT (id) DO NOTHING`;
 
 await sql`CREATE TABLE IF NOT EXISTS admin_users (
   id serial PRIMARY KEY,

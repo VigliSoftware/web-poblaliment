@@ -4,6 +4,7 @@ import { createHmac } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { content } from '../src/data/content.ts';
+import { noveltyImageSlots, pageImageSlots } from '../src/data/page-images.ts';
 import { fieldLabel, listTextFields, mergeCopy, setAtPath } from '../src/lib/content-fields.ts';
 
 assert.equal(fieldLabel('home.galleryCaption'), 'Galeria · Figcaption');
@@ -278,9 +279,9 @@ for (const html of [foodCa, foodEs]) {
   assert.match(html, /src="\/images\/Es-imperfect_logo_800\.webp"/);
   assert.match(html, /src="\/images\/logo_cambados\.png"/);
   assert.match(html, /src="\/images\/logo_sarasa\.png"/);
-  assert.match(html, /src="\/images\/logo_benfumat\.webp"/);
+  assert.match(html, /src="\/images\/benfumat-wordmark\.png"/);
   assert.match(html, /src="\/images\/chocovic-site-logo\.png"/);
-  assert.match(html, /src="\/images\/logomillas\.svg"/);
+  assert.match(html, /src="\/images\/millas-wordmark\.png"/);
   assert.match(html, /src="\/images\/logo_lagranja\.png"/);
   assert.match(html, /src="\/images\/logo_tamaric\.png"/);
   assert.match(html, /src="\/images\/logo_ecologica_pirineus\.svg"/);
@@ -343,7 +344,18 @@ assert.match(
 assert.doesNotMatch(globalCss, /\.featured-suppliers\s*{[^}]*repeat\(3,/s);
 assert.match(globalCss, /\.supplier-mark\.supplier-mark--chovi\s*{[^}]*background: #0e793c/s);
 assert.match(globalCss, /\.supplier-mark\.supplier-mark--pons\s*{[^}]*background: #000000/s);
-assert.match(globalCss, /\.supplier-mark\.supplier-mark--lagranja\s*{[^}]*background: #ffffff/s);
+assert.match(globalCss, /\.supplier-mark\.supplier-mark--lagranja\s*{[^}]*background: #486e4b/s);
+assert.match(
+  globalCss,
+  /\.food-rail-item \.supplier-mark--tamaric\s*{[^}]*background: transparent/s,
+);
+assert.match(
+  globalCss,
+  /\.food-rail-item \.supplier-mark--tamaric img\s*{[^}]*mix-blend-mode: multiply/s,
+);
+for (const asset of ['benfumat-wordmark.png', 'millas-wordmark.png']) {
+  assert.ok(await exists(`images/${asset}`));
+}
 assert.match(globalCss, /\.site-header nav > astro-island\s*{[^}]*display: flex/s);
 assert.match(globalCss, /\.brands-trigger--navigation\s*{[^}]*line-height: 1\.25rem/s);
 assert.match(globalCss, /\.beer-feature\s*{[^}]*padding-block:/s);
@@ -412,6 +424,45 @@ if (process.env.SESSION_SECRET) {
   const categoriesEditor = await categoriesResponse.text();
   assert.match(categoriesEditor, /<option value="beer"[^>]*>Destacat<\/option>/);
   assert.doesNotMatch(categoriesEditor, /Cervesa \(destacat del Celler\)/);
+  const adminHeaders = { Cookie: `poblaliment_admin=${payload}.${signature}` };
+  const noveltiesResponse = await fetch(`http://localhost:${port}/admin/novetats/`, {
+    headers: adminHeaders,
+  });
+  assert.equal(noveltiesResponse.status, 200);
+  const noveltiesEditor = await noveltiesResponse.text();
+  assert.match(noveltiesEditor, /Afegir novetat/);
+  assert.match(noveltiesEditor, /Alimentació/);
+  assert.match(noveltiesEditor, /Celler/);
+  const newNovelty = await fetch(`http://localhost:${port}/admin/novetats/nova/`, {
+    headers: adminHeaders,
+  });
+  assert.equal(newNovelty.status, 200);
+  const noveltyForm = await newNovelty.text();
+  assert.match(noveltyForm, /enctype="multipart\/form-data"/);
+  for (const field of [
+    'ca|title',
+    'es|title',
+    'ca|body',
+    'es|imageAlt',
+    'active',
+    'order',
+    'section',
+  ]) {
+    assert.ok(noveltyForm.includes(`name="${field}"`), `Missing novelty field ${field}`);
+  }
+  const staleNovelty = new FormData();
+  staleNovelty.set('revision', '-1');
+  const staleResponse = await fetch(`http://localhost:${port}/admin/novetats/nova/`, {
+    method: 'POST',
+    headers: adminHeaders,
+    body: staleNovelty,
+  });
+  assert.match(await staleResponse.text(), /Una altra sessió ha fet canvis/);
+  const generalTexts = await fetch(`http://localhost:${port}/admin/textos/?seccio=cellar`, {
+    headers: adminHeaders,
+  });
+  const generalTextEditor = await generalTexts.text();
+  assert.doesNotMatch(generalTextEditor, /name="(?:ca|es)\|cellar\.novelty/);
   const imagesEditorResponse = await fetch(`http://localhost:${port}/admin/imatges/`, {
     headers: { Cookie: `poblaliment_admin=${payload}.${signature}` },
     redirect: 'manual',
@@ -423,7 +474,21 @@ if (process.env.SESSION_SECRET) {
   assert.match(imagesEditor, /name="slot" value="aboutHero"/);
   assert.match(imagesEditor, /name="slot" value="cellarHero"/);
   assert.match(imagesEditor, /name="slot" value="homeGalleryMain"/);
-  assert.equal((imagesEditor.match(/id="page-image-/g) ?? []).length, 28);
+  assert.equal(
+    (imagesEditor.match(/id="page-image-/g) ?? []).length,
+    Object.keys(pageImageSlots).filter((slot) => !noveltyImageSlots.has(slot)).length * 2,
+  );
+  for (const slot of noveltyImageSlots)
+    assert.ok(!imagesEditor.includes(`name="slot" value="${slot}"`));
+  const protectedNoveltyImage = new FormData();
+  protectedNoveltyImage.set('slot', 'cellarNoveltyTamaral');
+  protectedNoveltyImage.set('action', 'restore');
+  const rejectedNoveltyImage = await fetch(`http://localhost:${port}/admin/imatges/`, {
+    method: 'POST',
+    headers: adminHeaders,
+    body: protectedNoveltyImage,
+  });
+  assert.match(await rejectedNoveltyImage.text(), /Aquesta imatge no existeix/);
   const invalidImage = new FormData();
   invalidImage.set('slot', 'aboutHero');
   invalidImage.set('action', 'upload');

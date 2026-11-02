@@ -13,6 +13,7 @@ export const imageDimensions: Record<string, { width: number; height: number }> 
   '/images/masia.jpg': { width: 867, height: 1156 },
   '/images/moritz.jpg': { width: 1024, height: 768 },
   '/images/moritz-pirineus.jpg': { width: 957, height: 556 },
+  '/images/moritz-selection.webp': { width: 766, height: 1280 },
   '/images/muntanya.jpg': { width: 960, height: 1200 },
   '/images/oficina_poblaliment.jpeg': { width: 1792, height: 2400 },
   '/images/pexels-allen-cullen-2740212-5934491.jpg': { width: 5184, height: 3456 },

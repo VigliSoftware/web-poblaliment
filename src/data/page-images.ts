@@ -48,7 +48,7 @@ export const pageImageSlots = {
     label: 'Novetat · Tamaral',
     src: '/images/tamaral.jpeg',
   },
-  cellarBeer: { group: 'Celler', label: 'Destacat · foto', src: '/images/moritz-pirineus.jpg' },
+  cellarBeer: { group: 'Celler', label: 'Destacat · foto', src: '/images/moritz-selection.webp' },
   cellarBeerLogo: {
     group: 'Celler',
     label: 'Destacat · logo',
@@ -80,3 +80,9 @@ export function getPageImage(images: PageImages, slot: PageImageSlot): PageImage
       : 'image/jpeg';
   return { src, ...dimensions, type };
 }
+
+export const noveltyImageSlots = new Set<string>([
+  'foodNoveltyImperfect',
+  'foodNoveltyFrime',
+  'cellarNoveltyTamaral',
+]);

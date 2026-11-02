@@ -15,7 +15,13 @@ const customBrand = ['Choví', 'Chovi'].includes(supplier.name)
     ? 'pons'
     : ['La Granja', 'La granja'].includes(supplier.name)
       ? 'lagranja'
-      : undefined;
+      : supplier.name === 'Tamaric · Dispocat'
+        ? 'tamaric'
+        : supplier.name === 'Benfumat'
+          ? 'benfumat'
+          : supplier.name === 'Millàs'
+            ? 'millas'
+            : undefined;
 const src = supplier.logo ?? faviconFor(supplier.website);
 ---
 

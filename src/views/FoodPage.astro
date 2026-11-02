@@ -1,4 +1,6 @@
 ---
+import NoveltyFeature from '../components/NoveltyFeature.astro';
+import { visibleNovelties } from '../lib/novelties';
 import CellarScrollCue from '../components/CellarScrollCue.astro';
 import SiteImage from '../components/SiteImage.astro';
 import SupplierRail from '../components/SupplierRail.astro';
@@ -11,8 +13,10 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const { content, categories, suppliers } = Astro.locals.site;
+const { content, categories, suppliers, novelties } = Astro.locals.site;
 const copy = content[locale].food;
+const items = visibleNovelties(novelties, 'food');
+const heading = novelties.heading[locale];
 const families = categories
   .filter((category) => category.section === 'food')
   .map((category) => ({
@@ -44,61 +48,25 @@ const families = categories
     </section>
 
     <div class="food-scroll-cue-spacing">
-      <CellarScrollCue target="novetats" label={copy.scrollCue} />
+      <CellarScrollCue target={items.length ? 'novetats' : 'food-filter'} label={copy.scrollCue} />
     </div>
   </div>
 
-  <section id="novetats" class="novelty-section border-y rule" data-reveal>
-    <div class="page-frame mb-12 sm:mb-16">
-      <p class="supplier-kicker">{copy.noveltiesKicker}</p>
-      <h2 class="display mt-3 text-4xl leading-tight sm:text-6xl text-[var(--color-paper)]">
-        {copy.noveltiesTitle}
-      </h2>
-    </div>
-    <div class="space-y-16 sm:space-y-24">
-      <article class="page-frame novelty-feature-grid">
-        <figure>
-          <SiteImage
-            src="/images/im-perfect.jpeg"
-            slot="foodNoveltyImperfect"
-            alt={copy.noveltyImperfect.imageAlt}
-            sizes="(min-width: 801px) 58vw, 100vw"
-          />
-        </figure>
-        <div class="novelty-feature-copy">
-          <p class="supplier-kicker">{copy.noveltyImperfect.kicker}</p>
-          <h3 class="display">{copy.noveltyImperfect.title}</h3>
-          <p>{copy.noveltyImperfect.body}</p>
-          {copy.noveltyImperfect.href && (
-            <a href={copy.noveltyImperfect.href} target="_blank" rel="noopener noreferrer">
-              {copy.noveltyImperfect.link} <span aria-hidden="true">↗</span>
-            </a>
-          )}
-        </div>
-      </article>
-
-      <article class="page-frame novelty-feature-grid is-reversed">
-        <div class="novelty-feature-copy">
-          <p class="supplier-kicker">{copy.noveltyFrime.kicker}</p>
-          <h3 class="display">{copy.noveltyFrime.title}</h3>
-          <p>{copy.noveltyFrime.body}</p>
-          {copy.noveltyFrime.href && (
-            <a href={copy.noveltyFrime.href} target="_blank" rel="noopener noreferrer">
-              {copy.noveltyFrime.link} <span aria-hidden="true">↗</span>
-            </a>
-          )}
-        </div>
-        <figure>
-          <SiteImage
-            src="/images/bacallà_frime.jpeg"
-            slot="foodNoveltyFrime"
-            alt={copy.noveltyFrime.imageAlt}
-            sizes="(min-width: 801px) 58vw, 100vw"
-          />
-        </figure>
-      </article>
-    </div>
-  </section>
+  {items.length > 0 && (
+    <section id="novetats" class="novelty-section border-y rule" data-reveal>
+      <div class="page-frame mb-12 sm:mb-16">
+        {heading.kicker && <p class="supplier-kicker">{heading.kicker}</p>}
+        <h2 class="display mt-3 text-4xl leading-tight sm:text-6xl text-[var(--color-paper)]">
+          {heading.title}
+        </h2>
+      </div>
+      <div class="space-y-16 sm:space-y-24">
+        {items.map((novelty, index) => (
+          <NoveltyFeature novelty={novelty} locale={locale} reversed={index % 2 === 1} />
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="page-frame food-directory py-12 sm:py-24">
     <nav id="food-filter" class="food-category-nav" aria-label={copy.filterLabel}>

@@ -260,7 +260,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Benfumat',
     categoryId: 'peix',
     website: 'https://benfumat.com/',
-    logo: '/images/logo_benfumat.webp',
+    logo: '/images/benfumat-wordmark.png',
     featured: false,
   },
   {
@@ -458,7 +458,7 @@ export const defaultSuppliers: Supplier[] = [
     name: 'Millàs',
     categoryId: 'olis-i-condiments',
     website: 'https://millas.es/',
-    logo: '/images/logomillas.svg',
+    logo: '/images/millas-wordmark.png',
     featured: false,
   },
   {

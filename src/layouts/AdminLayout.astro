@@ -3,7 +3,7 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
-  active?: 'suppliers' | 'categories' | 'home' | 'texts' | 'images';
+  active?: 'suppliers' | 'categories' | 'home' | 'texts' | 'images' | 'novelties';
   notice?: string | null;
   error?: string | null;
 }
@@ -14,6 +14,7 @@ const links = [
   { key: 'suppliers', label: 'Proveïdors', href: '/admin/proveidors/' },
   { key: 'categories', label: 'Categories', href: '/admin/categories/' },
   { key: 'home', label: 'Marques d’inici', href: '/admin/inici/' },
+  { key: 'novelties', label: 'Novetats', href: '/admin/novetats/' },
   { key: 'images', label: 'Imatges', href: '/admin/imatges/' },
   { key: 'texts', label: 'Textos', href: '/admin/textos/' },
 ];

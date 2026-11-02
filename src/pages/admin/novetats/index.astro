@@ -1,0 +1,151 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { errorMessage, FormError, published, text } from '../../../lib/admin';
+import { NoveltyError } from '../../../lib/novelties';
+import { loadNovelties, saveNovelties } from '../../../lib/novelties-store';
+
+let record = await loadNovelties();
+let error: string | null = null;
+if (Astro.request.method === 'POST') {
+  try {
+    const form = await Astro.request.formData();
+    const revision = Number(text(form, 'revision'));
+    if (revision !== record.revision)
+      throw new NoveltyError('Una altra sessió ha fet canvis. Recarrega la pàgina.');
+    const action = text(form, 'action');
+    const next = structuredClone(record.data);
+    if (action === 'delete') {
+      const id = text(form, 'id');
+      if (!next.items.some((item) => item.id === id))
+        throw new FormError('Aquesta novetat no existeix.');
+      next.items = next.items.filter((item) => item.id !== id);
+    } else if (action === 'heading') {
+      for (const locale of ['ca', 'es'] as const) {
+        const title = text(form, `${locale}|title`);
+        const kicker = text(form, `${locale}|kicker`);
+        if (!title || title.length > 500 || kicker.length > 500)
+          throw new FormError('Omple els títols (màxim 500 caràcters).');
+        next.heading[locale] = { title, kicker };
+      }
+    } else throw new FormError('Acció no vàlida.');
+    await saveNovelties(next, revision);
+    published();
+    return Astro.redirect('/admin/novetats/?ok=1');
+  } catch (caught) {
+    if (!(caught instanceof FormError) && !(caught instanceof NoveltyError)) console.error(caught);
+    error = caught instanceof NoveltyError ? caught.message : errorMessage(caught);
+    record = await loadNovelties();
+  }
+}
+const { data, revision } = record;
+---
+
+<AdminLayout
+  title="Novetats"
+  active="novelties"
+  notice={Astro.url.searchParams.has('ok') ? 'Canvis desats.' : null}
+  error={error}
+>
+  <div class="flex flex-wrap items-start justify-between gap-5">
+    <p class="max-w-2xl text-[var(--color-ink-soft)]">
+      Gestiona aquí les fotos, els textos i els enllaços de les novetats. Tria la pàgina, activa les
+      que vols mostrar i indica’n l’ordre. Els canvis apareixen a la web en menys d’un minut.
+    </p>
+    <a class="admin-button" href="/admin/novetats/nova/">Afegir novetat</a>
+  </div>
+  {(['food', 'cellar'] as const).map((section) => {
+    const items = data.items
+      .filter((item) => item.section === section)
+      .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
+    return (
+      <section class="mt-10" aria-label={section === 'food' ? 'Alimentació' : 'Celler'}>
+        <h2 class="display text-3xl">{section === 'food' ? 'Alimentació' : 'Celler'}</h2>
+        {!items.length && (
+          <p class="mt-4 text-[var(--color-ink-soft)]">
+            Encara no hi ha novetats en aquesta pàgina.
+          </p>
+        )}
+        <div class="mt-5 divide-y rule">
+          {items.map((item) => (
+            <article class="grid gap-5 border-b rule py-5 sm:grid-cols-[7rem_minmax(0,1fr)_auto]">
+              <img
+                src={item.image.src}
+                width={item.image.width}
+                height={item.image.height}
+                alt={item.copy.ca.imageAlt}
+                class="aspect-[4/3] w-28 object-contain"
+                loading="lazy"
+              />
+              <div>
+                <h3 class="text-lg font-semibold">
+                  <a href={`/admin/novetats/${item.id}/`}>{item.copy.ca.title}</a>
+                </h3>
+                <p class="mt-2 text-sm text-[var(--color-ink-soft)]">
+                  {item.active ? 'Visible' : 'Oculta'} · Ordre {item.order}
+                </p>
+              </div>
+              <div class="flex flex-wrap items-start gap-4">
+                <a class="admin-button admin-button--ghost" href={`/admin/novetats/${item.id}/`}>
+                  Editar
+                </a>
+                <details>
+                  <summary class="admin-link">Eliminar</summary>
+                  <form method="post" class="mt-3 max-w-56">
+                    <input type="hidden" name="revision" value={revision} />
+                    <input type="hidden" name="id" value={item.id} />
+                    <p class="mb-3 text-sm">
+                      S’eliminarà aquesta novetat i deixarà de mostrar-se a la web.
+                    </p>
+                    <button
+                      type="submit"
+                      class="admin-button admin-button--danger"
+                      name="action"
+                      value="delete"
+                    >
+                      Eliminar definitivament
+                    </button>
+                  </form>
+                </details>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+  <details class="mt-12 border-t rule pt-6">
+    <summary class="cursor-pointer text-lg font-semibold">Títol de la secció d’Alimentació</summary>
+    <form method="post" class="mt-5">
+      <input type="hidden" name="revision" value={revision}>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {(['ca', 'es'] as const).map((locale) => (
+          <fieldset>
+            <legend class="font-semibold">{locale === 'ca' ? 'Català' : 'Castellano'}</legend>
+            <label class="mt-4">
+              Etiqueta{' '}
+              <input
+                class="admin-input"
+                name={`${locale}|kicker`}
+                value={data.heading[locale].kicker}
+                maxlength="500"
+              />
+            </label>
+            <label class="mt-4">
+              Títol{' '}
+              <input
+                class="admin-input"
+                name={`${locale}|title`}
+                value={data.heading[locale].title}
+                maxlength="500"
+                required
+              />
+            </label>
+          </fieldset>
+        ))}
+      </div>
+      <button type="submit" class="admin-button mt-6" name="action" value="heading">
+        Desar títol de secció
+      </button>
+    </form>
+  </details>
+</AdminLayout>

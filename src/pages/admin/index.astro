@@ -10,6 +10,11 @@ const supplierCount = categories.reduce((total, category) => total + category.su
 
 const cards = [
   {
+    href: '/admin/novetats/',
+    title: 'Novetats',
+    detail: 'Fotos, textos i ordre de les novetats d’Alimentació i Celler.',
+  },
+  {
     href: '/admin/proveidors/',
     title: 'Proveïdors',
     detail: `${supplierCount} proveïdors. Afegeix-ne, canvia’ls de categoria o puja’n el logo.`,
@@ -32,7 +37,7 @@ const cards = [
   {
     href: '/admin/textos/',
     title: 'Textos',
-    detail: 'Tots els textos de la web, en català i castellà.',
+    detail: 'Textos generals de la web, en català i castellà.',
   },
 ];
 ---
