@@ -108,6 +108,18 @@ const pages = [
 
 for (const [page, canonical] of pages) {
   const html = await render(page);
+  const favicon = html.match(/<link rel="icon" type="image\/[^"]+" href="([^"]+)"/);
+  assert.ok(favicon, `${page}: missing logo favicon`);
+  assert.ok(favicon[1].startsWith('/'), `${page}: favicon must use the current origin`);
+  assert.ok(
+    html.includes(`src="${favicon[1]}"`),
+    `${page}: favicon must use the logo displayed on the page`,
+  );
+  const icon = await fetch(
+    new URL(favicon[1].replaceAll('&amp;', '&'), `http://localhost:${port}`),
+  );
+  assert.equal(icon.status, 200, `${page}: favicon must load`);
+  assert.match(icon.headers.get('content-type') ?? '', /^image\//);
 
   assert.match(
     html,
@@ -389,6 +401,13 @@ for (const page of ['legal/index.html', 'es/legal/index.html']) {
 const admin = await fetch(`http://localhost:${port}/admin/`, { redirect: 'manual' });
 assert.equal(admin.status, 302);
 assert.match(admin.headers.get('location') ?? '', /\/admin\/login\/$/);
+const login = await fetch(`http://localhost:${port}/admin/login/`);
+assert.equal(login.status, 200);
+assert.equal(
+  (await login.text()).match(/<link rel="icon"[^>]*>/)?.[0],
+  homeCa.match(/<link rel="icon"[^>]*>/)?.[0],
+  'admin and public pages must use the same logo favicon',
+);
 assert.doesNotMatch(await render('sitemap-0.xml'), /\/admin/);
 const protectedImages = await fetch(`http://localhost:${port}/admin/imatges/`, {
   redirect: 'manual',

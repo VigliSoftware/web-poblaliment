@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { getPageImage } from '../data/page-images';
+import { getSiteData } from '../lib/site-data';
 
 interface Props {
   title: string;
@@ -10,6 +12,7 @@ interface Props {
 
 const { title, active, notice, error } = Astro.props;
 const signedIn = Boolean(Astro.locals.adminUser);
+const siteLogo = getPageImage((await getSiteData()).images, 'siteLogo');
 const links = [
   { key: 'suppliers', label: 'Proveïdors', href: '/admin/proveidors/' },
   { key: 'categories', label: 'Categories', href: '/admin/categories/' },
@@ -26,7 +29,7 @@ const links = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="/images/logo.jpg">
+    <link rel="icon" type={siteLogo.type} href={siteLogo.src}>
     <title>{title} · Admin Poblaliment</title>
   </head>
   <body class="admin">
