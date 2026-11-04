@@ -10,3 +10,6 @@
 
 /HeroVideo.mp4
   Cache-Control: public, max-age=31536000, immutable
+
+/media-static/*
+  Cache-Control: public, max-age=31536000, immutable

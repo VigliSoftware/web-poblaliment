@@ -1,0 +1,1677 @@
+{
+  "images": {
+    "/images/Es-imperfect_logo_800.webp": {
+      "width": 210,
+      "height": 153,
+      "variants": [
+        {
+          "src": "/images/optimized/es-imperfect-logo-800-fd4b33fc73-48.webp",
+          "width": 48,
+          "bytes": 800
+        },
+        {
+          "src": "/images/optimized/es-imperfect-logo-800-fd4b33fc73-96.webp",
+          "width": 96,
+          "bytes": 1894
+        },
+        {
+          "src": "/images/optimized/es-imperfect-logo-800-fd4b33fc73-192.webp",
+          "width": 192,
+          "bytes": 4706
+        },
+        {
+          "src": "/images/optimized/es-imperfect-logo-800-fd4b33fc73-210.webp",
+          "width": 210,
+          "bytes": 4956
+        }
+      ]
+    },
+    "/images/Gemini_Generated_Image_bpvsh8bpvsh8bpvs.jpeg": {
+      "width": 3168,
+      "height": 1344,
+      "variants": [
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-320.webp",
+          "width": 320,
+          "bytes": 9574
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-640.webp",
+          "width": 640,
+          "bytes": 29472
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-960.webp",
+          "width": 960,
+          "bytes": 54942
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-1280.webp",
+          "width": 1280,
+          "bytes": 87026
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-1600.webp",
+          "width": 1600,
+          "bytes": 122758
+        }
+      ]
+    },
+    "/images/Gemini_Generated_Image_exmagsexmagsexma.jpeg": {
+      "width": 2528,
+      "height": 1696,
+      "variants": [
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-320.webp",
+          "width": 320,
+          "bytes": 10068
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-640.webp",
+          "width": 640,
+          "bytes": 29444
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-960.webp",
+          "width": 960,
+          "bytes": 53042
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1280.webp",
+          "width": 1280,
+          "bytes": 81088
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1600.webp",
+          "width": 1600,
+          "bytes": 116152
+        }
+      ]
+    },
+    "/images/about-dawn.jpeg": {
+      "width": 1206,
+      "height": 1177,
+      "variants": [
+        {
+          "src": "/images/optimized/about-dawn-f1f12226c9-320.webp",
+          "width": 320,
+          "bytes": 7882
+        },
+        {
+          "src": "/images/optimized/about-dawn-f1f12226c9-640.webp",
+          "width": 640,
+          "bytes": 33514
+        },
+        {
+          "src": "/images/optimized/about-dawn-f1f12226c9-960.webp",
+          "width": 960,
+          "bytes": 74802
+        },
+        {
+          "src": "/images/optimized/about-dawn-f1f12226c9-1206.webp",
+          "width": 1206,
+          "bytes": 116596
+        }
+      ]
+    },
+    "/images/about-route.jpeg": {
+      "width": 1200,
+      "height": 1600,
+      "variants": [
+        {
+          "src": "/images/optimized/about-route-42c29ff3ae-320.webp",
+          "width": 320,
+          "bytes": 25106
+        },
+        {
+          "src": "/images/optimized/about-route-42c29ff3ae-640.webp",
+          "width": 640,
+          "bytes": 86232
+        },
+        {
+          "src": "/images/optimized/about-route-42c29ff3ae-960.webp",
+          "width": 960,
+          "bytes": 170668
+        },
+        {
+          "src": "/images/optimized/about-route-42c29ff3ae-1200.webp",
+          "width": 1200,
+          "bytes": 245406
+        }
+      ]
+    },
+    "/images/about.jpg": {
+      "width": 1440,
+      "height": 809,
+      "variants": [
+        {
+          "src": "/images/optimized/about-bc3dc5b1d0-320.webp",
+          "width": 320,
+          "bytes": 6038
+        },
+        {
+          "src": "/images/optimized/about-bc3dc5b1d0-640.webp",
+          "width": 640,
+          "bytes": 13844
+        },
+        {
+          "src": "/images/optimized/about-bc3dc5b1d0-960.webp",
+          "width": 960,
+          "bytes": 21130
+        },
+        {
+          "src": "/images/optimized/about-bc3dc5b1d0-1280.webp",
+          "width": 1280,
+          "bytes": 27824
+        },
+        {
+          "src": "/images/optimized/about-bc3dc5b1d0-1440.webp",
+          "width": 1440,
+          "bytes": 31856
+        }
+      ]
+    },
+    "/images/bacalla_frime.jpeg": {
+      "width": 2528,
+      "height": 1684,
+      "variants": [
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-320.webp",
+          "width": 320,
+          "bytes": 3366
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-640.webp",
+          "width": 640,
+          "bytes": 8714
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-960.webp",
+          "width": 960,
+          "bytes": 15426
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-1280.webp",
+          "width": 1280,
+          "bytes": 24072
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-1600.webp",
+          "width": 1600,
+          "bytes": 34840
+        }
+      ]
+    },
+    "/images/bacallà_frime.jpeg": {
+      "width": 2528,
+      "height": 1684,
+      "variants": [
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-320.webp",
+          "width": 320,
+          "bytes": 3366
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-640.webp",
+          "width": 640,
+          "bytes": 8714
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-960.webp",
+          "width": 960,
+          "bytes": 15426
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-1280.webp",
+          "width": 1280,
+          "bytes": 24072
+        },
+        {
+          "src": "/images/optimized/bacalla-frime-395fe13e8b-1600.webp",
+          "width": 1600,
+          "bytes": 34840
+        }
+      ]
+    },
+    "/images/benfumat-wordmark.png": {
+      "width": 400,
+      "height": 139,
+      "variants": [
+        {
+          "src": "/images/optimized/benfumat-wordmark-f881f9ef50-48.webp",
+          "width": 48,
+          "bytes": 602
+        },
+        {
+          "src": "/images/optimized/benfumat-wordmark-f881f9ef50-96.webp",
+          "width": 96,
+          "bytes": 1434
+        },
+        {
+          "src": "/images/optimized/benfumat-wordmark-f881f9ef50-192.webp",
+          "width": 192,
+          "bytes": 3666
+        },
+        {
+          "src": "/images/optimized/benfumat-wordmark-f881f9ef50-384.webp",
+          "width": 384,
+          "bytes": 8976
+        }
+      ]
+    },
+    "/images/cellar-vineyard.png": {
+      "width": 1200,
+      "height": 510,
+      "variants": [
+        {
+          "src": "/images/optimized/cellar-vineyard-7d3e3f2dfd-320.webp",
+          "width": 320,
+          "bytes": 16706
+        },
+        {
+          "src": "/images/optimized/cellar-vineyard-7d3e3f2dfd-640.webp",
+          "width": 640,
+          "bytes": 57198
+        },
+        {
+          "src": "/images/optimized/cellar-vineyard-7d3e3f2dfd-960.webp",
+          "width": 960,
+          "bytes": 114568
+        },
+        {
+          "src": "/images/optimized/cellar-vineyard-7d3e3f2dfd-1200.webp",
+          "width": 1200,
+          "bytes": 165562
+        }
+      ]
+    },
+    "/images/chocovic-site-logo.png": {
+      "width": 224,
+      "height": 44,
+      "variants": [
+        {
+          "src": "/images/optimized/chocovic-site-logo-6027cd7016-48.webp",
+          "width": 48,
+          "bytes": 466
+        },
+        {
+          "src": "/images/optimized/chocovic-site-logo-6027cd7016-96.webp",
+          "width": 96,
+          "bytes": 1196
+        },
+        {
+          "src": "/images/optimized/chocovic-site-logo-6027cd7016-192.webp",
+          "width": 192,
+          "bytes": 2848
+        },
+        {
+          "src": "/images/optimized/chocovic-site-logo-6027cd7016-224.webp",
+          "width": 224,
+          "bytes": 2174
+        }
+      ]
+    },
+    "/images/chovi.png": {
+      "width": 497,
+      "height": 350,
+      "variants": [
+        {
+          "src": "/images/optimized/chovi-0fc4f0ff87-48.webp",
+          "width": 48,
+          "bytes": 926
+        },
+        {
+          "src": "/images/optimized/chovi-0fc4f0ff87-96.webp",
+          "width": 96,
+          "bytes": 2396
+        },
+        {
+          "src": "/images/optimized/chovi-0fc4f0ff87-192.webp",
+          "width": 192,
+          "bytes": 6098
+        },
+        {
+          "src": "/images/optimized/chovi-0fc4f0ff87-384.webp",
+          "width": 384,
+          "bytes": 12780
+        }
+      ]
+    },
+    "/images/contact.jpg": {
+      "width": 1600,
+      "height": 1200,
+      "variants": [
+        {
+          "src": "/images/optimized/contact-898b76d68a-320.webp",
+          "width": 320,
+          "bytes": 12066
+        },
+        {
+          "src": "/images/optimized/contact-898b76d68a-640.webp",
+          "width": 640,
+          "bytes": 46976
+        },
+        {
+          "src": "/images/optimized/contact-898b76d68a-960.webp",
+          "width": 960,
+          "bytes": 101476
+        },
+        {
+          "src": "/images/optimized/contact-898b76d68a-1280.webp",
+          "width": 1280,
+          "bytes": 168994
+        },
+        {
+          "src": "/images/optimized/contact-898b76d68a-1600.webp",
+          "width": 1600,
+          "bytes": 242694
+        }
+      ]
+    },
+    "/images/hero.jpg": {
+      "width": 2528,
+      "height": 1696,
+      "variants": [
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-320.webp",
+          "width": 320,
+          "bytes": 10068
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-640.webp",
+          "width": 640,
+          "bytes": 29444
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-960.webp",
+          "width": 960,
+          "bytes": 53042
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1280.webp",
+          "width": 1280,
+          "bytes": 81088
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1600.webp",
+          "width": 1600,
+          "bytes": 116152
+        }
+      ]
+    },
+    "/images/im-perfect.jpeg": {
+      "width": 2528,
+      "height": 1686,
+      "variants": [
+        {
+          "src": "/images/optimized/im-perfect-7dfb43502a-320.webp",
+          "width": 320,
+          "bytes": 8194
+        },
+        {
+          "src": "/images/optimized/im-perfect-7dfb43502a-640.webp",
+          "width": 640,
+          "bytes": 21646
+        },
+        {
+          "src": "/images/optimized/im-perfect-7dfb43502a-960.webp",
+          "width": 960,
+          "bytes": 37600
+        },
+        {
+          "src": "/images/optimized/im-perfect-7dfb43502a-1280.webp",
+          "width": 1280,
+          "bytes": 55814
+        },
+        {
+          "src": "/images/optimized/im-perfect-7dfb43502a-1600.webp",
+          "width": 1600,
+          "bytes": 73320
+        }
+      ]
+    },
+    "/images/logo-penelas.png": {
+      "width": 817,
+      "height": 290,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-48.webp",
+          "width": 48,
+          "bytes": 646
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-96.webp",
+          "width": 96,
+          "bytes": 1374
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-192.webp",
+          "width": 192,
+          "bytes": 2914
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-384.webp",
+          "width": 384,
+          "bytes": 5458
+        }
+      ]
+    },
+    "/images/logo.jpg": {
+      "width": 786,
+      "height": 786,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-e6b4737745-48.webp",
+          "width": 48,
+          "bytes": 628
+        },
+        {
+          "src": "/images/optimized/logo-e6b4737745-96.webp",
+          "width": 96,
+          "bytes": 1576
+        },
+        {
+          "src": "/images/optimized/logo-e6b4737745-192.webp",
+          "width": 192,
+          "bytes": 3604
+        },
+        {
+          "src": "/images/optimized/logo-e6b4737745-384.webp",
+          "width": 384,
+          "bytes": 7896
+        }
+      ]
+    },
+    "/images/logo_benfumat.webp": {
+      "width": 300,
+      "height": 104,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-benfumat-08a86cf93e-48.webp",
+          "width": 48,
+          "bytes": 614
+        },
+        {
+          "src": "/images/optimized/logo-benfumat-08a86cf93e-96.webp",
+          "width": 96,
+          "bytes": 1474
+        },
+        {
+          "src": "/images/optimized/logo-benfumat-08a86cf93e-192.webp",
+          "width": 192,
+          "bytes": 4006
+        },
+        {
+          "src": "/images/optimized/logo-benfumat-08a86cf93e-300.webp",
+          "width": 300,
+          "bytes": 5678
+        }
+      ]
+    },
+    "/images/logo_cambados.png": {
+      "width": 350,
+      "height": 69,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-cambados-fa525fb546-48.webp",
+          "width": 48,
+          "bytes": 440
+        },
+        {
+          "src": "/images/optimized/logo-cambados-fa525fb546-96.webp",
+          "width": 96,
+          "bytes": 1074
+        },
+        {
+          "src": "/images/optimized/logo-cambados-fa525fb546-192.webp",
+          "width": 192,
+          "bytes": 2622
+        },
+        {
+          "src": "/images/optimized/logo-cambados-fa525fb546-350.webp",
+          "width": 350,
+          "bytes": 2386
+        }
+      ]
+    },
+    "/images/logo_capcanes.png": {
+      "width": 262,
+      "height": 262,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-capcanes-18523ab829-48.webp",
+          "width": 48,
+          "bytes": 462
+        },
+        {
+          "src": "/images/optimized/logo-capcanes-18523ab829-96.webp",
+          "width": 96,
+          "bytes": 1154
+        },
+        {
+          "src": "/images/optimized/logo-capcanes-18523ab829-192.webp",
+          "width": 192,
+          "bytes": 3116
+        },
+        {
+          "src": "/images/optimized/logo-capcanes-18523ab829-262.webp",
+          "width": 262,
+          "bytes": 3944
+        }
+      ]
+    },
+    "/images/logo_lagranja.png": {
+      "width": 539,
+      "height": 158,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-lagranja-b85fd05c43-48.webp",
+          "width": 48,
+          "bytes": 848
+        },
+        {
+          "src": "/images/optimized/logo-lagranja-b85fd05c43-96.webp",
+          "width": 96,
+          "bytes": 2260
+        },
+        {
+          "src": "/images/optimized/logo-lagranja-b85fd05c43-192.webp",
+          "width": 192,
+          "bytes": 6274
+        },
+        {
+          "src": "/images/optimized/logo-lagranja-b85fd05c43-384.webp",
+          "width": 384,
+          "bytes": 16686
+        }
+      ]
+    },
+    "/images/logo_ojos_guadiana.png": {
+      "width": 287,
+      "height": 287,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-ojos-guadiana-34c3dfa54f-48.webp",
+          "width": 48,
+          "bytes": 734
+        },
+        {
+          "src": "/images/optimized/logo-ojos-guadiana-34c3dfa54f-96.webp",
+          "width": 96,
+          "bytes": 1572
+        },
+        {
+          "src": "/images/optimized/logo-ojos-guadiana-34c3dfa54f-192.webp",
+          "width": 192,
+          "bytes": 2968
+        },
+        {
+          "src": "/images/optimized/logo-ojos-guadiana-34c3dfa54f-287.webp",
+          "width": 287,
+          "bytes": 4380
+        }
+      ]
+    },
+    "/images/logo_pescamar.png": {
+      "width": 992,
+      "height": 992,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-pescamar-8ecf2953cf-48.webp",
+          "width": 48,
+          "bytes": 1164
+        },
+        {
+          "src": "/images/optimized/logo-pescamar-8ecf2953cf-96.webp",
+          "width": 96,
+          "bytes": 2664
+        },
+        {
+          "src": "/images/optimized/logo-pescamar-8ecf2953cf-192.webp",
+          "width": 192,
+          "bytes": 6036
+        },
+        {
+          "src": "/images/optimized/logo-pescamar-8ecf2953cf-384.webp",
+          "width": 384,
+          "bytes": 13376
+        }
+      ]
+    },
+    "/images/logo_pujadosolano.png": {
+      "width": 1221,
+      "height": 1221,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-pujadosolano-5155d111f9-48.webp",
+          "width": 48,
+          "bytes": 638
+        },
+        {
+          "src": "/images/optimized/logo-pujadosolano-5155d111f9-96.webp",
+          "width": 96,
+          "bytes": 1524
+        },
+        {
+          "src": "/images/optimized/logo-pujadosolano-5155d111f9-192.webp",
+          "width": 192,
+          "bytes": 3908
+        },
+        {
+          "src": "/images/optimized/logo-pujadosolano-5155d111f9-384.webp",
+          "width": 384,
+          "bytes": 9016
+        }
+      ]
+    },
+    "/images/logo_sarasa.png": {
+      "width": 1121,
+      "height": 619,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-sarasa-0f9e1c0a72-48.webp",
+          "width": 48,
+          "bytes": 822
+        },
+        {
+          "src": "/images/optimized/logo-sarasa-0f9e1c0a72-96.webp",
+          "width": 96,
+          "bytes": 1934
+        },
+        {
+          "src": "/images/optimized/logo-sarasa-0f9e1c0a72-192.webp",
+          "width": 192,
+          "bytes": 4472
+        },
+        {
+          "src": "/images/optimized/logo-sarasa-0f9e1c0a72-384.webp",
+          "width": 384,
+          "bytes": 10072
+        }
+      ]
+    },
+    "/images/logo_tamaric.png": {
+      "width": 146,
+      "height": 112,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-tamaric-cb791b2722-48.webp",
+          "width": 48,
+          "bytes": 754
+        },
+        {
+          "src": "/images/optimized/logo-tamaric-cb791b2722-96.webp",
+          "width": 96,
+          "bytes": 1862
+        },
+        {
+          "src": "/images/optimized/logo-tamaric-cb791b2722-146.webp",
+          "width": 146,
+          "bytes": 3078
+        }
+      ]
+    },
+    "/images/logotip_cobo.png": {
+      "width": 150,
+      "height": 93,
+      "variants": [
+        {
+          "src": "/images/optimized/logotip-cobo-673e44534f-48.webp",
+          "width": 48,
+          "bytes": 1238
+        },
+        {
+          "src": "/images/optimized/logotip-cobo-673e44534f-96.webp",
+          "width": 96,
+          "bytes": 3210
+        },
+        {
+          "src": "/images/optimized/logotip-cobo-673e44534f-150.webp",
+          "width": 150,
+          "bytes": 3978
+        }
+      ]
+    },
+    "/images/masia.jpg": {
+      "width": 867,
+      "height": 1156,
+      "variants": [
+        {
+          "src": "/images/optimized/masia-36a4c18220-320.webp",
+          "width": 320,
+          "bytes": 34172
+        },
+        {
+          "src": "/images/optimized/masia-36a4c18220-640.webp",
+          "width": 640,
+          "bytes": 113428
+        },
+        {
+          "src": "/images/optimized/masia-36a4c18220-867.webp",
+          "width": 867,
+          "bytes": 189444
+        }
+      ]
+    },
+    "/images/millas-wordmark.png": {
+      "width": 160,
+      "height": 40,
+      "variants": [
+        {
+          "src": "/images/optimized/millas-wordmark-49aff3163c-48.webp",
+          "width": 48,
+          "bytes": 606
+        },
+        {
+          "src": "/images/optimized/millas-wordmark-49aff3163c-96.webp",
+          "width": 96,
+          "bytes": 1490
+        },
+        {
+          "src": "/images/optimized/millas-wordmark-49aff3163c-160.webp",
+          "width": 160,
+          "bytes": 1868
+        }
+      ]
+    },
+    "/images/moritz-mark-transparent.png": {
+      "width": 1351,
+      "height": 1164,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-mark-transparent-b80ba5f34b-48.webp",
+          "width": 48,
+          "bytes": 874
+        },
+        {
+          "src": "/images/optimized/moritz-mark-transparent-b80ba5f34b-96.webp",
+          "width": 96,
+          "bytes": 1806
+        },
+        {
+          "src": "/images/optimized/moritz-mark-transparent-b80ba5f34b-192.webp",
+          "width": 192,
+          "bytes": 3944
+        },
+        {
+          "src": "/images/optimized/moritz-mark-transparent-b80ba5f34b-384.webp",
+          "width": 384,
+          "bytes": 9566
+        }
+      ]
+    },
+    "/images/moritz-pirineus.jpg": {
+      "width": 957,
+      "height": 556,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-320.webp",
+          "width": 320,
+          "bytes": 19176
+        },
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-640.webp",
+          "width": 640,
+          "bytes": 54216
+        },
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-957.webp",
+          "width": 957,
+          "bytes": 94920
+        }
+      ]
+    },
+    "/images/moritz-selection.webp": {
+      "width": 766,
+      "height": 1280,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-selection-8da436600a-320.webp",
+          "width": 320,
+          "bytes": 16176
+        },
+        {
+          "src": "/images/optimized/moritz-selection-8da436600a-640.webp",
+          "width": 640,
+          "bytes": 40924
+        },
+        {
+          "src": "/images/optimized/moritz-selection-8da436600a-766.webp",
+          "width": 766,
+          "bytes": 53326
+        }
+      ]
+    },
+    "/images/moritz.jpg": {
+      "width": 1024,
+      "height": 768,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-6424000ca4-320.webp",
+          "width": 320,
+          "bytes": 18698
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-640.webp",
+          "width": 640,
+          "bytes": 65990
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-960.webp",
+          "width": 960,
+          "bytes": 137900
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-1024.webp",
+          "width": 1024,
+          "bytes": 154362
+        }
+      ]
+    },
+    "/images/muntanya.jpg": {
+      "width": 960,
+      "height": 1200,
+      "variants": [
+        {
+          "src": "/images/optimized/muntanya-2d270c31c3-320.webp",
+          "width": 320,
+          "bytes": 26338
+        },
+        {
+          "src": "/images/optimized/muntanya-2d270c31c3-640.webp",
+          "width": 640,
+          "bytes": 75926
+        },
+        {
+          "src": "/images/optimized/muntanya-2d270c31c3-960.webp",
+          "width": 960,
+          "bytes": 137758
+        }
+      ]
+    },
+    "/images/oficina_poblaliment.jpeg": {
+      "width": 1792,
+      "height": 2400,
+      "variants": [
+        {
+          "src": "/images/optimized/oficina-poblaliment-2e58ca44cd-320.webp",
+          "width": 320,
+          "bytes": 23130
+        },
+        {
+          "src": "/images/optimized/oficina-poblaliment-2e58ca44cd-640.webp",
+          "width": 640,
+          "bytes": 65050
+        },
+        {
+          "src": "/images/optimized/oficina-poblaliment-2e58ca44cd-960.webp",
+          "width": 960,
+          "bytes": 118174
+        },
+        {
+          "src": "/images/optimized/oficina-poblaliment-2e58ca44cd-1280.webp",
+          "width": 1280,
+          "bytes": 177126
+        },
+        {
+          "src": "/images/optimized/oficina-poblaliment-2e58ca44cd-1600.webp",
+          "width": 1600,
+          "bytes": 240018
+        }
+      ]
+    },
+    "/images/pexels-allen-cullen-2740212-5934491.jpg": {
+      "width": 5184,
+      "height": 3456,
+      "variants": [
+        {
+          "src": "/images/optimized/pexels-allen-cullen-2740212-5934491-a3c151350f-320.webp",
+          "width": 320,
+          "bytes": 18106
+        },
+        {
+          "src": "/images/optimized/pexels-allen-cullen-2740212-5934491-a3c151350f-640.webp",
+          "width": 640,
+          "bytes": 70990
+        },
+        {
+          "src": "/images/optimized/pexels-allen-cullen-2740212-5934491-a3c151350f-960.webp",
+          "width": 960,
+          "bytes": 145382
+        },
+        {
+          "src": "/images/optimized/pexels-allen-cullen-2740212-5934491-a3c151350f-1280.webp",
+          "width": 1280,
+          "bytes": 229768
+        },
+        {
+          "src": "/images/optimized/pexels-allen-cullen-2740212-5934491-a3c151350f-1600.webp",
+          "width": 1600,
+          "bytes": 313408
+        }
+      ]
+    },
+    "/images/pigal-anniversary.jpg": {
+      "width": 1024,
+      "height": 1365,
+      "variants": [
+        {
+          "src": "/images/optimized/pigal-anniversary-0e9b70698a-320.webp",
+          "width": 320,
+          "bytes": 16572
+        },
+        {
+          "src": "/images/optimized/pigal-anniversary-0e9b70698a-640.webp",
+          "width": 640,
+          "bytes": 41174
+        },
+        {
+          "src": "/images/optimized/pigal-anniversary-0e9b70698a-960.webp",
+          "width": 960,
+          "bytes": 66914
+        },
+        {
+          "src": "/images/optimized/pigal-anniversary-0e9b70698a-1024.webp",
+          "width": 1024,
+          "bytes": 73410
+        }
+      ]
+    },
+    "/images/pigal.jpg": {
+      "width": 903,
+      "height": 1155,
+      "variants": [
+        {
+          "src": "/images/optimized/pigal-cb0ec7be02-320.webp",
+          "width": 320,
+          "bytes": 13414
+        },
+        {
+          "src": "/images/optimized/pigal-cb0ec7be02-640.webp",
+          "width": 640,
+          "bytes": 43114
+        },
+        {
+          "src": "/images/optimized/pigal-cb0ec7be02-903.webp",
+          "width": 903,
+          "bytes": 68612
+        }
+      ]
+    },
+    "/images/products-selection.jpeg": {
+      "width": 1024,
+      "height": 1536,
+      "variants": [
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-320.webp",
+          "width": 320,
+          "bytes": 21570
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-640.webp",
+          "width": 640,
+          "bytes": 58712
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-960.webp",
+          "width": 960,
+          "bytes": 105008
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-1024.webp",
+          "width": 1024,
+          "bytes": 118132
+        }
+      ]
+    },
+    "/images/products-ubla.jpeg": {
+      "width": 1024,
+      "height": 1536,
+      "variants": [
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-320.webp",
+          "width": 320,
+          "bytes": 21570
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-640.webp",
+          "width": 640,
+          "bytes": 58712
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-960.webp",
+          "width": 960,
+          "bytes": 105008
+        },
+        {
+          "src": "/images/optimized/products-selection-b28bb218a3-1024.webp",
+          "width": 1024,
+          "bytes": 118132
+        }
+      ]
+    },
+    "/images/products.jpg": {
+      "width": 1024,
+      "height": 768,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-6424000ca4-320.webp",
+          "width": 320,
+          "bytes": 18698
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-640.webp",
+          "width": 640,
+          "bytes": 65990
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-960.webp",
+          "width": 960,
+          "bytes": 137900
+        },
+        {
+          "src": "/images/optimized/moritz-6424000ca4-1024.webp",
+          "width": 1024,
+          "bytes": 154362
+        }
+      ]
+    },
+    "/images/sumarroca.jpg": {
+      "width": 957,
+      "height": 556,
+      "variants": [
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-320.webp",
+          "width": 320,
+          "bytes": 19176
+        },
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-640.webp",
+          "width": 640,
+          "bytes": 54216
+        },
+        {
+          "src": "/images/optimized/moritz-pirineus-f0166f3ab6-957.webp",
+          "width": 957,
+          "bytes": 94920
+        }
+      ]
+    },
+    "/images/tamaral.jpeg": {
+      "width": 1844,
+      "height": 2304,
+      "variants": [
+        {
+          "src": "/images/optimized/tamaral-8d278e35fb-320.webp",
+          "width": 320,
+          "bytes": 14144
+        },
+        {
+          "src": "/images/optimized/tamaral-8d278e35fb-640.webp",
+          "width": 640,
+          "bytes": 43578
+        },
+        {
+          "src": "/images/optimized/tamaral-8d278e35fb-960.webp",
+          "width": 960,
+          "bytes": 82066
+        },
+        {
+          "src": "/images/optimized/tamaral-8d278e35fb-1280.webp",
+          "width": 1280,
+          "bytes": 128596
+        },
+        {
+          "src": "/images/optimized/tamaral-8d278e35fb-1600.webp",
+          "width": 1600,
+          "bytes": 177922
+        }
+      ]
+    },
+    "/images/truck-snow.jpg": {
+      "width": 1440,
+      "height": 1080,
+      "variants": [
+        {
+          "src": "/images/optimized/truck-snow-ff7f307324-320.webp",
+          "width": 320,
+          "bytes": 14266
+        },
+        {
+          "src": "/images/optimized/truck-snow-ff7f307324-640.webp",
+          "width": 640,
+          "bytes": 54526
+        },
+        {
+          "src": "/images/optimized/truck-snow-ff7f307324-960.webp",
+          "width": 960,
+          "bytes": 123112
+        },
+        {
+          "src": "/images/optimized/truck-snow-ff7f307324-1280.webp",
+          "width": 1280,
+          "bytes": 210682
+        },
+        {
+          "src": "/images/optimized/truck-snow-ff7f307324-1440.webp",
+          "width": 1440,
+          "bytes": 206984
+        }
+      ]
+    },
+    "/images/truck-sunset.jpg": {
+      "width": 2528,
+      "height": 1696,
+      "variants": [
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-320.webp",
+          "width": 320,
+          "bytes": 10068
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-640.webp",
+          "width": 640,
+          "bytes": 29444
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-960.webp",
+          "width": 960,
+          "bytes": 53042
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1280.webp",
+          "width": 1280,
+          "bytes": 81088
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-exmagsexmagsexma-9606262e52-1600.webp",
+          "width": 1600,
+          "bytes": 116152
+        }
+      ]
+    },
+    "/images/warehouse.jpg": {
+      "width": 1440,
+      "height": 1268,
+      "variants": [
+        {
+          "src": "/images/optimized/warehouse-4c1833c67a-320.webp",
+          "width": 320,
+          "bytes": 12394
+        },
+        {
+          "src": "/images/optimized/warehouse-4c1833c67a-640.webp",
+          "width": 640,
+          "bytes": 39916
+        },
+        {
+          "src": "/images/optimized/warehouse-4c1833c67a-960.webp",
+          "width": 960,
+          "bytes": 82742
+        },
+        {
+          "src": "/images/optimized/warehouse-4c1833c67a-1280.webp",
+          "width": 1280,
+          "bytes": 138278
+        },
+        {
+          "src": "/images/optimized/warehouse-4c1833c67a-1440.webp",
+          "width": 1440,
+          "bytes": 179578
+        }
+      ]
+    },
+    "/images/xlogo_trabanco.webp": {
+      "width": 300,
+      "height": 95,
+      "variants": [
+        {
+          "src": "/images/optimized/xlogo-trabanco-798765b349-48.webp",
+          "width": 48,
+          "bytes": 588
+        },
+        {
+          "src": "/images/optimized/xlogo-trabanco-798765b349-96.webp",
+          "width": 96,
+          "bytes": 1424
+        },
+        {
+          "src": "/images/optimized/xlogo-trabanco-798765b349-192.webp",
+          "width": 192,
+          "bytes": 3618
+        },
+        {
+          "src": "/images/optimized/xlogo-trabanco-798765b349-300.webp",
+          "width": 300,
+          "bytes": 5252
+        }
+      ]
+    },
+    "/media/image/?k=pages%2FfoodHero-2566ee98-5fd3-4a08-ba36-d487fef54e5b.jpg": {
+      "width": 3168,
+      "height": 1344,
+      "variants": [
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-320.webp",
+          "width": 320,
+          "bytes": 9574
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-640.webp",
+          "width": 640,
+          "bytes": 29472
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-960.webp",
+          "width": 960,
+          "bytes": 54942
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-1280.webp",
+          "width": 1280,
+          "bytes": 87026
+        },
+        {
+          "src": "/images/optimized/gemini-generated-image-bpvsh8bpvsh8bpvs-32c5e09946-1600.webp",
+          "width": 1600,
+          "bytes": 122758
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F11-mw2csn10.webp": {
+      "width": 500,
+      "height": 227,
+      "variants": [
+        {
+          "src": "/images/optimized/11-mw2csn10-6d2ffc5cab-48.webp",
+          "width": 48,
+          "bytes": 634
+        },
+        {
+          "src": "/images/optimized/11-mw2csn10-6d2ffc5cab-96.webp",
+          "width": 96,
+          "bytes": 1502
+        },
+        {
+          "src": "/images/optimized/11-mw2csn10-6d2ffc5cab-192.webp",
+          "width": 192,
+          "bytes": 3498
+        },
+        {
+          "src": "/images/optimized/11-mw2csn10-6d2ffc5cab-384.webp",
+          "width": 384,
+          "bytes": 9006
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F9-mw2cutkg.png": {
+      "width": 918,
+      "height": 556,
+      "variants": [
+        {
+          "src": "/images/optimized/9-mw2cutkg-22d6371864-48.webp",
+          "width": 48,
+          "bytes": 1198
+        },
+        {
+          "src": "/images/optimized/9-mw2cutkg-22d6371864-96.webp",
+          "width": 96,
+          "bytes": 3136
+        },
+        {
+          "src": "/images/optimized/9-mw2cutkg-22d6371864-192.webp",
+          "width": 192,
+          "bytes": 7748
+        },
+        {
+          "src": "/images/optimized/9-mw2cutkg-22d6371864-384.webp",
+          "width": 384,
+          "bytes": 18092
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F12-mw2d22yt.png": {
+      "width": 1365,
+      "height": 1152,
+      "variants": [
+        {
+          "src": "/images/optimized/12-mw2d22yt-a9544e7874-48.webp",
+          "width": 48,
+          "bytes": 900
+        },
+        {
+          "src": "/images/optimized/12-mw2d22yt-a9544e7874-96.webp",
+          "width": 96,
+          "bytes": 2366
+        },
+        {
+          "src": "/images/optimized/12-mw2d22yt-a9544e7874-192.webp",
+          "width": 192,
+          "bytes": 6406
+        },
+        {
+          "src": "/images/optimized/12-mw2d22yt-a9544e7874-384.webp",
+          "width": 384,
+          "bytes": 18492
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F59-mw2d4eny.png": {
+      "width": 1269,
+      "height": 1239,
+      "variants": [
+        {
+          "src": "/images/optimized/59-mw2d4eny-4aa8ebe816-48.webp",
+          "width": 48,
+          "bytes": 1938
+        },
+        {
+          "src": "/images/optimized/59-mw2d4eny-4aa8ebe816-96.webp",
+          "width": 96,
+          "bytes": 4746
+        },
+        {
+          "src": "/images/optimized/59-mw2d4eny-4aa8ebe816-192.webp",
+          "width": 192,
+          "bytes": 13092
+        },
+        {
+          "src": "/images/optimized/59-mw2d4eny-4aa8ebe816-384.webp",
+          "width": 384,
+          "bytes": 38024
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F60-mw2d963l.png": {
+      "width": 1476,
+      "height": 1065,
+      "variants": [
+        {
+          "src": "/images/optimized/60-mw2d963l-303c74edbc-48.webp",
+          "width": 48,
+          "bytes": 758
+        },
+        {
+          "src": "/images/optimized/60-mw2d963l-303c74edbc-96.webp",
+          "width": 96,
+          "bytes": 1604
+        },
+        {
+          "src": "/images/optimized/60-mw2d963l-303c74edbc-192.webp",
+          "width": 192,
+          "bytes": 3312
+        },
+        {
+          "src": "/images/optimized/60-mw2d963l-303c74edbc-384.webp",
+          "width": 384,
+          "bytes": 7356
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F6-mvtu5cyl.jpg": {
+      "width": 1080,
+      "height": 1080,
+      "variants": [
+        {
+          "src": "/images/optimized/6-mvtu5cyl-65f5082af2-48.webp",
+          "width": 48,
+          "bytes": 482
+        },
+        {
+          "src": "/images/optimized/6-mvtu5cyl-65f5082af2-96.webp",
+          "width": 96,
+          "bytes": 1134
+        },
+        {
+          "src": "/images/optimized/6-mvtu5cyl-65f5082af2-192.webp",
+          "width": 192,
+          "bytes": 2954
+        },
+        {
+          "src": "/images/optimized/6-mvtu5cyl-65f5082af2-384.webp",
+          "width": 384,
+          "bytes": 8838
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F10-mvtu7rk2.png": {
+      "width": 208,
+      "height": 112,
+      "variants": [
+        {
+          "src": "/images/optimized/10-mvtu7rk2-624a97bba9-48.webp",
+          "width": 48,
+          "bytes": 796
+        },
+        {
+          "src": "/images/optimized/10-mvtu7rk2-624a97bba9-96.webp",
+          "width": 96,
+          "bytes": 1902
+        },
+        {
+          "src": "/images/optimized/10-mvtu7rk2-624a97bba9-192.webp",
+          "width": 192,
+          "bytes": 4148
+        },
+        {
+          "src": "/images/optimized/10-mvtu7rk2-624a97bba9-208.webp",
+          "width": 208,
+          "bytes": 4488
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F25-mw2dffl6.png": {
+      "width": 1254,
+      "height": 1254,
+      "variants": [
+        {
+          "src": "/images/optimized/25-mw2dffl6-3122651c14-48.webp",
+          "width": 48,
+          "bytes": 2214
+        },
+        {
+          "src": "/images/optimized/25-mw2dffl6-3122651c14-96.webp",
+          "width": 96,
+          "bytes": 5636
+        },
+        {
+          "src": "/images/optimized/25-mw2dffl6-3122651c14-192.webp",
+          "width": 192,
+          "bytes": 13536
+        },
+        {
+          "src": "/images/optimized/25-mw2dffl6-3122651c14-384.webp",
+          "width": 384,
+          "bytes": 33558
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F20-mvtu6dvr.png": {
+      "width": 180,
+      "height": 127,
+      "variants": [
+        {
+          "src": "/images/optimized/20-mvtu6dvr-279f529bc3-48.webp",
+          "width": 48,
+          "bytes": 744
+        },
+        {
+          "src": "/images/optimized/20-mvtu6dvr-279f529bc3-96.webp",
+          "width": 96,
+          "bytes": 1796
+        },
+        {
+          "src": "/images/optimized/20-mvtu6dvr-279f529bc3-180.webp",
+          "width": 180,
+          "bytes": 3794
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F50-mvtud7fc.png": {
+      "width": 195,
+      "height": 84,
+      "variants": [
+        {
+          "src": "/images/optimized/50-mvtud7fc-67cb241bec-48.webp",
+          "width": 48,
+          "bytes": 832
+        },
+        {
+          "src": "/images/optimized/50-mvtud7fc-67cb241bec-96.webp",
+          "width": 96,
+          "bytes": 1736
+        },
+        {
+          "src": "/images/optimized/50-mvtud7fc-67cb241bec-192.webp",
+          "width": 192,
+          "bytes": 3136
+        },
+        {
+          "src": "/images/optimized/50-mvtud7fc-67cb241bec-195.webp",
+          "width": 195,
+          "bytes": 3262
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F51-mvv3eob9.png": {
+      "width": 351,
+      "height": 103,
+      "variants": [
+        {
+          "src": "/images/optimized/51-mvv3eob9-e314aeb142-48.webp",
+          "width": 48,
+          "bytes": 580
+        },
+        {
+          "src": "/images/optimized/51-mvv3eob9-e314aeb142-96.webp",
+          "width": 96,
+          "bytes": 1678
+        },
+        {
+          "src": "/images/optimized/51-mvv3eob9-e314aeb142-192.webp",
+          "width": 192,
+          "bytes": 4264
+        },
+        {
+          "src": "/images/optimized/51-mvv3eob9-e314aeb142-351.webp",
+          "width": 351,
+          "bytes": 5920
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F43-mw25zy2s.png": {
+      "width": 424,
+      "height": 340,
+      "variants": [
+        {
+          "src": "/images/optimized/43-mw25zy2s-18270ad992-48.webp",
+          "width": 48,
+          "bytes": 682
+        },
+        {
+          "src": "/images/optimized/43-mw25zy2s-18270ad992-96.webp",
+          "width": 96,
+          "bytes": 1772
+        },
+        {
+          "src": "/images/optimized/43-mw25zy2s-18270ad992-192.webp",
+          "width": 192,
+          "bytes": 4164
+        },
+        {
+          "src": "/images/optimized/43-mw25zy2s-18270ad992-384.webp",
+          "width": 384,
+          "bytes": 8854
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F14-mw2crma1.png": {
+      "width": 817,
+      "height": 290,
+      "variants": [
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-48.webp",
+          "width": 48,
+          "bytes": 646
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-96.webp",
+          "width": 96,
+          "bytes": 1374
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-192.webp",
+          "width": 192,
+          "bytes": 2914
+        },
+        {
+          "src": "/images/optimized/logo-penelas-0acb618055-384.webp",
+          "width": 384,
+          "bytes": 5458
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F34-mw2dk4zy.png": {
+      "width": 2030,
+      "height": 775,
+      "variants": [
+        {
+          "src": "/images/optimized/34-mw2dk4zy-5cbee3f848-48.webp",
+          "width": 48,
+          "bytes": 642
+        },
+        {
+          "src": "/images/optimized/34-mw2dk4zy-5cbee3f848-96.webp",
+          "width": 96,
+          "bytes": 1402
+        },
+        {
+          "src": "/images/optimized/34-mw2dk4zy-5cbee3f848-192.webp",
+          "width": 192,
+          "bytes": 3412
+        },
+        {
+          "src": "/images/optimized/34-mw2dk4zy-5cbee3f848-384.webp",
+          "width": 384,
+          "bytes": 8744
+        }
+      ]
+    },
+    "/media/logo/?k=logos%2F37-mw2dspji.png": {
+      "width": 1254,
+      "height": 1254,
+      "variants": [
+        {
+          "src": "/images/optimized/37-mw2dspji-c60b124df7-48.webp",
+          "width": 48,
+          "bytes": 746
+        },
+        {
+          "src": "/images/optimized/37-mw2dspji-c60b124df7-96.webp",
+          "width": 96,
+          "bytes": 1598
+        },
+        {
+          "src": "/images/optimized/37-mw2dspji-c60b124df7-192.webp",
+          "width": 192,
+          "bytes": 3438
+        },
+        {
+          "src": "/images/optimized/37-mw2dspji-c60b124df7-384.webp",
+          "width": 384,
+          "bytes": 7772
+        }
+      ]
+    }
+  },
+  "video": {
+    "mp4432": "/media-static/hero-e6458bba1b-432.mp4",
+    "mp4720": "/media-static/hero-e6458bba1b-720.mp4",
+    "poster": "/media-static/hero-e6458bba1b-poster.webp"
+  },
+  "favicon": {
+    "32": "/images/optimized/favicon-e6b4737745-32.png",
+    "96": "/images/optimized/favicon-e6b4737745-96.png",
+    "180": "/images/optimized/favicon-e6b4737745-180.png"
+  }
+}

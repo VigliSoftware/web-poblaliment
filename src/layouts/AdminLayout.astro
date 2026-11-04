@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { getPageImage } from '../data/page-images';
 import { getSiteData } from '../lib/site-data';
+import { faviconForLogo, imageSrcset } from '../lib/optimized-media';
 
 interface Props {
   title: string;
@@ -13,6 +14,7 @@ interface Props {
 const { title, active, notice, error } = Astro.props;
 const signedIn = Boolean(Astro.locals.adminUser);
 const siteLogo = getPageImage((await getSiteData()).images, 'siteLogo');
+const favicon = faviconForLogo(siteLogo);
 const links = [
   { key: 'suppliers', label: 'Proveïdors', href: '/admin/proveidors/' },
   { key: 'categories', label: 'Categories', href: '/admin/categories/' },
@@ -29,14 +31,23 @@ const links = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type={siteLogo.type} href={siteLogo.src}>
+    <link rel="icon" type={favicon.type} href={favicon.src} sizes={favicon.sizes}>
+    {favicon.apple && <link rel="apple-touch-icon" sizes="180x180" href={favicon.apple}>}
     <title>{title} · Admin Poblaliment</title>
   </head>
   <body class="admin">
     <header class="border-b rule bg-[var(--color-paper-deep)]">
       <div class="admin-frame flex flex-wrap items-center justify-between gap-4 py-4">
         <a href="/admin/" class="flex items-center gap-3 no-underline">
-          <img src="/images/logo.jpg" alt="" width="40" height="40" class="h-10 w-10 rounded-full">
+          <img
+            src={siteLogo.src}
+            srcset={imageSrcset(siteLogo.src)}
+            sizes="40px"
+            alt=""
+            width="40"
+            height="40"
+            class="h-10 w-10 rounded-full"
+          >
           <span class="text-sm font-semibold tracking-[0.14em] text-[var(--color-blue)]">
             POBLALIMENT · ADMIN
           </span>
@@ -48,7 +59,7 @@ const links = [
                 <a
                   href={link.href}
                   class:list={[
-                    'no-underline hover:text-[var(--color-orange)]',
+                    'no-underline hover:text-[var(--color-orange-ink)]',
                     active === link.key
                       ? 'font-semibold text-[var(--color-ink)]'
                       : 'text-[var(--color-ink-soft)]',

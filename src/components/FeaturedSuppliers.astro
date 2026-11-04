@@ -17,7 +17,7 @@ const sectionOf = (categoryId: string) =>
     const page = sectionOf(supplier.categoryId) === 'food' ? 'food' : 'cellar';
     return (
       <a class="featured-supplier" href={localizedPath(locale, page)}>
-        <SupplierMark supplier={supplier} />
+        <SupplierMark supplier={supplier} sizes="(max-width: 800px) 64px, 76px" />
         <span>
           <strong>{supplier.name}</strong>
           <small>{content[locale].home.featuredLabel}</small>

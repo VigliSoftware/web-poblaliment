@@ -1,17 +1,83 @@
+---
+import type { Locale } from '../lib/i18n';
+import { heroVideo } from '../lib/optimized-media';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const pause = locale === 'ca' ? 'Pausar vídeo' : 'Pausar vídeo';
+const play = locale === 'ca' ? 'Reproduir vídeo' : 'Reproducir vídeo';
+---
+
 <div class="hero-video" aria-hidden="true">
-  <video data-hero-video muted loop playsinline preload="metadata">
-    <source src="/HeroVideo.mp4" type="video/mp4">
+  <video
+    id="hero-background-video"
+    data-hero-video
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={heroVideo.poster}
+    width="1280"
+    height="720"
+  >
+    <source data-src={heroVideo.mp4432} media="(max-width: 800px)" type="video/mp4">
+    <source data-src={heroVideo.mp4720} type="video/mp4">
   </video>
 </div>
+<button
+  type="button"
+  class="hero-video-toggle"
+  data-video-toggle
+  data-pause={pause}
+  data-play={play}
+  aria-controls="hero-background-video"
+  hidden
+>
+  {pause}
+</button>
 
 <script>
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
 
 for (const video of document.querySelectorAll<HTMLVideoElement>('[data-hero-video]')) {
-  if (!reduceMotion.matches) {
-    void video.play().catch(() => {
-      // Keep the hero's ink background when a browser blocks autoplay.
-    });
-  }
+  const button = video.closest('section')?.querySelector<HTMLButtonElement>('[data-video-toggle]');
+  if (!button) continue;
+  let manuallyPaused = false;
+  const updateLabel = () => {
+    button.textContent = video.paused ? (button.dataset.play ?? '') : (button.dataset.pause ?? '');
+  };
+  const play = () =>
+    video
+      .play()
+      .then(() => {
+        button.hidden = false;
+      })
+      .catch(() => {
+        /* The poster remains when autoplay is blocked. */
+      });
+  const start = () => {
+    if (reduceMotion.matches || connection?.saveData) return;
+    for (const source of video.querySelectorAll('source')) source.src = source.dataset.src ?? '';
+    video.load();
+    void play();
+  };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+  video.addEventListener('play', updateLabel);
+  video.addEventListener('pause', updateLabel);
+  button.addEventListener('click', () => {
+    manuallyPaused = !video.paused;
+    if (manuallyPaused) video.pause();
+    else void play();
+  });
+  reduceMotion.addEventListener('change', () => {
+    if (reduceMotion.matches) video.pause();
+  });
+  new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) video.pause();
+    else if (video.currentSrc && !manuallyPaused && !reduceMotion.matches) void play();
+  }).observe(video);
 }
 </script>

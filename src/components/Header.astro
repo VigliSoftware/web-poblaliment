@@ -15,7 +15,7 @@ const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/$/, '
 const activePage =
   copy.nav.find(
     (item) => normalizePath(localizedPath(locale, item.page)) === normalizePath(currentPath),
-  )?.page ?? 'home';
+  )?.page ?? (currentPath.includes('/legal') ? 'legal' : 'home');
 ---
 
 <header class="site-header border-b rule">
@@ -23,7 +23,9 @@ const activePage =
     <a
       href={localizedPath(locale, 'home')}
       class="brand-lockup flex items-center gap-3 no-underline"
-      aria-label={locale === 'ca' ? 'Poblaliment, inici' : 'Poblaliment, inicio'}
+      aria-label={locale === 'ca'
+        ? 'Poblaliment distribució alimentària — Inici'
+        : 'Poblaliment distribución alimentaria — Inicio'}
     >
       <SiteImage
         src="/images/logo.jpg"
@@ -31,6 +33,7 @@ const activePage =
         alt="Poblaliment"
         class="h-11 w-11 rounded-full object-cover"
         loading="eager"
+        sizes="44px"
       />
       <span class="brand-wordmark">
         <span
@@ -38,6 +41,7 @@ const activePage =
         >
           POBLALIMENT
         </span>
+        {' '}
         <span
           class="brand-context hidden text-[0.62rem] font-semibold tracking-[0.12em] text-[var(--color-ink-soft)] lg:block"
         >
@@ -59,7 +63,7 @@ const activePage =
             <a
               href={localizedPath(locale, item.page)}
               class:list={[
-                'nav-link text-sm no-underline transition-colors hover:text-[var(--color-orange)]',
+                'nav-link text-sm no-underline transition-colors hover:text-[var(--color-orange-ink)]',
                 activePage === item.page
                   ? 'font-semibold text-[var(--color-ink)]'
                   : 'text-[var(--color-ink-soft)]',
@@ -76,14 +80,14 @@ const activePage =
       class="flex items-center gap-2 text-xs font-bold tracking-[0.14em]"
       aria-label={locale === 'ca' ? 'Selector d’idioma' : 'Selector de idioma'}
     >
-      <span class="text-[var(--color-green)]">{copy.localeLabel}</span>
+      <span class="text-[var(--color-green-ink)]">{copy.localeLabel}</span>
       <span class="text-[var(--color-ink-soft)]">/</span>
       <a
-        class="text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-orange)]"
+        class="text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-green-ink)]"
         href={localizedPath(otherLocale, activePage)}
         aria-label={locale === 'ca'
-          ? 'Veure aquesta pàgina en castellà'
-          : 'Ver esta página en catalán'}
+          ? 'ES — Veure aquesta pàgina en castellà'
+          : 'CA — Ver esta página en catalán'}
       >
         {copy.otherLocaleLabel}
       </a>

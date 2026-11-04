@@ -1,13 +1,15 @@
 ---
 import type { Supplier } from '../data/suppliers';
 import { faviconFor } from '../lib/site-data';
+import { imageSrcset } from '../lib/optimized-media';
 
 interface Props {
   supplier: Supplier;
   class?: string;
+  sizes?: string;
 }
 
-const { supplier, class: className = '' } = Astro.props;
+const { supplier, class: className = '', sizes = '64px' } = Astro.props;
 const initial = supplier.name.trim().charAt(0).toLocaleUpperCase('ca');
 const customBrand = ['Choví', 'Chovi'].includes(supplier.name)
   ? 'chovi'
@@ -38,6 +40,8 @@ const src = supplier.logo ?? faviconFor(supplier.website);
     <img
       class={customBrand ? 'p-2' : undefined}
       src={src}
+      srcset={imageSrcset(src)}
+      sizes={sizes}
       alt=""
       width="64"
       height="64"

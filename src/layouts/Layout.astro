@@ -5,6 +5,7 @@ import SiteAnimations from '../components/SiteAnimations.astro';
 import '../styles/global.css';
 import { getPageImage, type PageImageSlot } from '../data/page-images';
 import { getPageFromPath, type Locale, localizedPath, type PageKey } from '../lib/i18n';
+import { faviconForLogo } from '../lib/optimized-media';
 
 interface Props {
   locale: Locale;
@@ -49,6 +50,7 @@ const socialImageAlt =
             : 'Vehículo de distribución de Poblaliment en el Pirineo'
           : copy.home.gallery[0].alt;
 const siteLogo = getPageImage(Astro.locals.site.images, 'siteLogo');
+const favicon = faviconForLogo(siteLogo);
 const logoUrl = new URL(siteLogo.src, `${siteOrigin}/`).href;
 const organizationId = `${siteOrigin}/#organization`;
 const websiteId = `${siteOrigin}/#website`;
@@ -189,7 +191,8 @@ const structuredData = {
     <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content={socialImageUrl}>
     <meta name="twitter:image:alt" content={socialImageAlt}>
-    <link rel="icon" type={siteLogo.type} href={siteLogo.src}>
+    <link rel="icon" type={favicon.type} href={favicon.src} sizes={favicon.sizes}>
+    {favicon.apple && <link rel="apple-touch-icon" sizes="180x180" href={favicon.apple}>}
     <link rel="sitemap" href="/sitemap-index.xml">
     <title>{title}</title>
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}

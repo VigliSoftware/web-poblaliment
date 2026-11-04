@@ -8,7 +8,10 @@
   --color-paper-deep: #e8e1d4;
   --color-blue: #1f4771;
   --color-green: #168a62;
+  --color-green-ink: #106b4b;
   --color-orange: #df6744;
+  --color-orange-light: #ffb58d;
+  --color-orange-ink: #9e3c24;
   --font-display: "Newsreader", Georgia, serif;
   --font-sans: "DM Sans", Arial, sans-serif;
 }
@@ -214,6 +217,22 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center 90%;
+}
+
+.hero-video-toggle {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--color-paper);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.hero-video-toggle[hidden] {
+  display: none;
 }
 
 .hero-media-wrap {
@@ -449,7 +468,7 @@ a {
 }
 
 .food-rail-item:hover {
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
 }
 
 .food-rail-item strong {
@@ -606,7 +625,7 @@ a {
 
 .beer-feature-copy > a:hover,
 .novelty-feature-copy > a:hover {
-  color: var(--color-orange);
+  color: var(--color-orange-light);
 }
 
 .novelty-section {
@@ -826,7 +845,7 @@ a {
 }
 
 .supplier-directory-row > a:hover {
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
 }
 
 .supplier-jump-links {
@@ -844,7 +863,7 @@ a {
 }
 
 .supplier-jump-links a:hover {
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
 }
 
 .supplier-section .display {
@@ -852,7 +871,7 @@ a {
 }
 
 .supplier-kicker {
-  color: var(--color-orange);
+  color: var(--color-orange-light);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;

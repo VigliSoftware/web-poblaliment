@@ -17,7 +17,7 @@ const copy = Astro.locals.site.content[locale];
 
 <Layout locale={locale} title={copy.home.title} description={copy.home.description}>
   <section class="home-hero home-hero-video">
-    <HeroVideo />
+    <HeroVideo locale={locale} />
     <div class="page-frame hero-content py-12 sm:py-16 lg:py-20" data-hero-content>
       <div class="max-w-3xl">
         <h1 class="display max-w-3xl text-6xl leading-[0.91] sm:text-8xl" data-hero-animate>
@@ -38,7 +38,7 @@ const copy = Astro.locals.site.content[locale];
           </a>
           <a
             href={localizedPath(locale, 'contact')}
-            class="px-1 py-3 text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4 hover:text-[var(--color-orange)]"
+            class="px-1 py-3 text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4 hover:text-[var(--color-orange-light)]"
           >
             {copy.home.secondaryAction} <span aria-hidden="true">↗</span>
           </a>

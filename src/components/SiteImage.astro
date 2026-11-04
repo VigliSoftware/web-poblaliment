@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { getPageImage, type PageImageSlot } from '../data/page-images';
 import { imageDimensions } from '../lib/images';
+import { imageSrcset } from '../lib/optimized-media';
 
 interface Props {
   src: string;
@@ -22,13 +22,14 @@ if (!dimensions) {
 }
 ---
 
-<Image
+<img
   src={src}
+  srcset={imageSrcset(src)}
   alt={alt}
   width={dimensions.width}
   height={dimensions.height}
   loading={loading}
   decoding="async"
-  sizes={sizes}
+  sizes={sizes ?? '(min-width: 1312px) 1280px, calc(100vw - 32px)'}
   class={className}
-/>
+>

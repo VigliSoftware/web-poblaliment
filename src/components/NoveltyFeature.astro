@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../lib/i18n';
 import type { Novelty } from '../lib/novelties';
+import { imageSrcset } from '../lib/optimized-media';
 interface Props {
   novelty: Novelty;
   locale: Locale;
@@ -17,6 +18,7 @@ const copy = novelty.copy[locale];
   >
     <img
       src={novelty.image.src}
+      srcset={imageSrcset(novelty.image.src)}
       width={novelty.image.width}
       height={novelty.image.height}
       alt={copy.imageAlt}

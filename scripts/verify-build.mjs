@@ -3,9 +3,11 @@ import { spawnSync } from 'node:child_process';
 import { createHmac } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import astroConfig from '../astro.config.mjs';
 import { content } from '../src/data/content.ts';
 import { noveltyImageSlots, pageImageSlots } from '../src/data/page-images.ts';
 import { fieldLabel, listTextFields, mergeCopy, setAtPath } from '../src/lib/content-fields.ts';
+import { heroVideo } from '../src/lib/optimized-media.ts';
 
 assert.equal(fieldLabel('home.galleryCaption'), 'Galeria · Figcaption');
 assert.equal(fieldLabel('about.title'), 'Títol Google');
@@ -51,6 +53,8 @@ for (const [locale, defaults] of Object.entries(content)) {
 // output (404, robots.txt, sitemap) is read from dist/client. Preview reads .dev.vars, so
 // with a database configured the pages show the copy stored there.
 const dist = resolve('dist/client');
+assert.ok(astroConfig.site, 'Astro must configure the public site URL');
+const siteOrigin = new URL(astroConfig.site).origin;
 const port = 4411;
 // Astro runs preview as a background server; stop it however the checks end.
 /** @param {string[]} args */
@@ -92,29 +96,43 @@ async function exists(file) {
 
 await waitForPreview();
 const pages = [
-  ['index.html', 'https://www.example.com/'],
-  ['es/index.html', 'https://www.example.com/es/'],
-  ['nosaltres/index.html', 'https://www.example.com/nosaltres/'],
-  ['es/nosotros/index.html', 'https://www.example.com/es/nosotros/'],
-  ['aliments/index.html', 'https://www.example.com/aliments/'],
-  ['celler/index.html', 'https://www.example.com/celler/'],
-  ['es/alimentos/index.html', 'https://www.example.com/es/alimentos/'],
-  ['es/bodega/index.html', 'https://www.example.com/es/bodega/'],
-  ['contacte/index.html', 'https://www.example.com/contacte/'],
-  ['es/contacto/index.html', 'https://www.example.com/es/contacto/'],
-  ['legal/index.html', 'https://www.example.com/legal/'],
-  ['es/legal/index.html', 'https://www.example.com/es/legal/'],
+  ['index.html', `${siteOrigin}/`],
+  ['es/index.html', `${siteOrigin}/es/`],
+  ['nosaltres/index.html', `${siteOrigin}/nosaltres/`],
+  ['es/nosotros/index.html', `${siteOrigin}/es/nosotros/`],
+  ['aliments/index.html', `${siteOrigin}/aliments/`],
+  ['celler/index.html', `${siteOrigin}/celler/`],
+  ['es/alimentos/index.html', `${siteOrigin}/es/alimentos/`],
+  ['es/bodega/index.html', `${siteOrigin}/es/bodega/`],
+  ['contacte/index.html', `${siteOrigin}/contacte/`],
+  ['es/contacto/index.html', `${siteOrigin}/es/contacto/`],
+  ['legal/index.html', `${siteOrigin}/legal/`],
+  ['es/legal/index.html', `${siteOrigin}/es/legal/`],
 ];
 
 for (const [page, canonical] of pages) {
   const html = await render(page);
+  // The CMS can replace any bundled logo or photo. Check the delivered asset rather
+  // than requiring the original catalogue filenames to remain in every page.
+  const localImages = new Set(
+    [...html.matchAll(/<img\b[^>]*>/g)]
+      .map(([tag]) => {
+        const candidates = tag.match(/srcset="([^"]+)"/)?.[1];
+        return (
+          candidates?.split(', ')[0].split(' ')[0] ?? tag.match(/src="([^"]+)"/)?.[1]
+        )?.replaceAll('&amp;', '&');
+      })
+      .filter((src) => src?.startsWith('/')),
+  );
+  for (const src of localImages) {
+    if (!src) continue;
+    const response = await fetch(new URL(src, `http://localhost:${port}`));
+    assert.equal(response.status, 200, `${page}: image must load: ${src}`);
+    assert.match(response.headers.get('content-type') ?? '', /^image\//, src);
+  }
   const favicon = html.match(/<link rel="icon" type="image\/[^"]+" href="([^"]+)"/);
   assert.ok(favicon, `${page}: missing logo favicon`);
   assert.ok(favicon[1].startsWith('/'), `${page}: favicon must use the current origin`);
-  assert.ok(
-    html.includes(`src="${favicon[1]}"`),
-    `${page}: favicon must use the logo displayed on the page`,
-  );
   const icon = await fetch(
     new URL(favicon[1].replaceAll('&amp;', '&'), `http://localhost:${port}`),
   );
@@ -142,9 +160,12 @@ for (const [page, canonical] of pages) {
 for (const page of ['index.html', 'es/index.html']) {
   const html = await render(page);
 
-  assert.match(html, /<source src="\/HeroVideo\.mp4" type="video\/mp4">/);
+  assert.ok(html.includes(`data-src="${heroVideo.mp4720}"`));
+  assert.ok(html.includes(`data-src="${heroVideo.mp4432}"`));
   assert.match(html, /<video[^>]*data-hero-video[^>]*muted[^>]*loop[^>]*playsinline/);
-  assert.doesNotMatch(html, /<video[^>]*poster=/);
+  assert.ok(html.includes(`poster="${heroVideo.poster}"`));
+  assert.match(html, /data-video-toggle/);
+  assert.match(html, /preload="none"/);
   assert.match(html, /data-hero-content/);
   assert.match(html, /data-hero-animate/);
   assert.match(html, /service-row grid gap-4/);
@@ -209,7 +230,7 @@ const notFound = await render('404.html');
 assert.match(notFound, /name="robots" content="noindex, follow"/);
 
 const robots = await render('robots.txt');
-assert.match(robots, /Sitemap: https:\/\/www\.example\.com\/sitemap-index\.xml/);
+assert.ok(robots.includes(`Sitemap: ${siteOrigin}/sitemap-index.xml`));
 
 assert.ok(await exists('sitemap-index.xml'));
 assert.ok(await exists('sitemap-0.xml'));
@@ -258,7 +279,7 @@ for (const page of ['contacte/index.html', 'es/contacto/index.html']) {
   const details = html.match(/<aside[\s\S]*?<\/aside>/)?.[0] ?? '';
   assert.doesNotMatch(details, /<h2|mt-6/);
   assert.match(details, /<dl>/);
-  assert.match(html, /<h2 class="display text-4xl sm:text-5xl">[^<]+<\/h2>/);
+  assert.match(html, /<h1 class="display text-4xl sm:text-5xl">[^<]+<\/h1>/);
   assert.match(html, /contact-layout grid gap-10 pt-12 pb-10 md:grid-cols-/);
   assert.match(html, /md:pb-12/);
   assert.match(html, /<form[^>]*space-y-7/);
@@ -277,7 +298,6 @@ assert.match(foodCa, /Descobreix els aliments/);
 assert.match(foodCa, /food-scroll-cue-spacing/);
 assert.match(foodCa, /es im-perfect/);
 assert.match(foodCa, /Bacallà selecte Frime/);
-assert.match(foodCa, /src="\/images\/im-perfect\.jpeg"/);
 assert.doesNotMatch(foodCa, />Moritz</);
 assert.match(foodEs, /Alimentación para cada servicio/);
 assert.match(foodEs, /food-supplier-grid/);
@@ -285,23 +305,6 @@ for (const html of [foodCa, foodEs]) {
   assert.match(html, /supplier-mark--chovi/);
   assert.match(html, /supplier-mark--pons/);
   assert.match(html, /supplier-mark--lagranja/);
-  assert.match(html, /src="\/images\/berlys\.svg"/);
-  assert.match(html, /src="\/images\/olis-pons\.svg"/);
-  assert.match(html, /src="\/images\/chovi\.png"/);
-  assert.match(html, /src="\/images\/Es-imperfect_logo_800\.webp"/);
-  assert.match(html, /src="\/images\/logo_cambados\.png"/);
-  assert.match(html, /src="\/images\/logo_sarasa\.png"/);
-  assert.match(html, /src="\/images\/benfumat-wordmark\.png"/);
-  assert.match(html, /src="\/images\/chocovic-site-logo\.png"/);
-  assert.match(html, /src="\/images\/millas-wordmark\.png"/);
-  assert.match(html, /src="\/images\/logo_lagranja\.png"/);
-  assert.match(html, /src="\/images\/logo_tamaric\.png"/);
-  assert.match(html, /src="\/images\/logo_ecologica_pirineus\.svg"/);
-  assert.match(html, /src="\/images\/logotip_cobo\.png"/);
-  assert.match(html, /src="\/images\/logo-penelas\.png"/);
-  assert.match(html, /src="\/images\/logo_ojos_guadiana\.png"/);
-  assert.match(html, /src="\/images\/logo_pescamar\.png"/);
-  assert.match(html, /src="\/images\/logo_pujadosolano\.png"/);
 }
 assert.doesNotMatch(foodEs, /data-auto-rail/);
 assert.match(foodEs, /href="#novetats"/);
@@ -317,17 +320,13 @@ assert.ok(await exists('images/pexels-allen-cullen-2740212-5934491.jpg'));
 for (const html of [cellarCa, cellarEs]) {
   const hero =
     html.match(/<section class="page-frame page-intro cellar-intro[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.match(hero, /src="\/images\/pexels-allen-cullen-2740212-5934491\.jpg"/);
   assert.ok(hero.indexOf('<img') < hero.indexOf('<h1'));
   assert.match(hero, /text-center/);
   assert.match(hero, /loading="eager"/);
   assert.doesNotMatch(hero, /hero-grid|sm:pb-36/);
-  assert.match(html, /src="\/images\/xlogo_trabanco\.webp"/);
-  assert.match(html, /src="\/images\/logo_capcanes\.png"/);
 }
 assert.match(cellarCa, /Vins i escumosos/);
 assert.match(cellarCa, /Bodegas Tamaral/);
-assert.match(cellarCa, /src="\/images\/tamaral\.jpeg"/);
 assert.match(cellarCa, />La nostra cervesa\.<\/h2>/);
 assert.match(cellarCa, /moritz\/ca_ES\/images\/logo\.svg/);
 assert.match(cellarCa, /cellar-scroll-cue/);
