@@ -16,7 +16,7 @@ interface Props {
 
 const { locale, title, description, page: pageProp, noindex = false } = Astro.props;
 const page = pageProp ?? getPageFromPath(Astro.url.pathname);
-const siteOrigin = (Astro.site?.origin ?? Astro.url.origin).replace(/\/$/, '');
+const siteOrigin = (Astro.site?.origin ?? 'https://poblaliment.com').replace(/\/$/, '');
 const canonicalUrl = new URL(localizedPath(locale, page), `${siteOrigin}/`).href;
 const alternateUrls = {
   ca: new URL(localizedPath('ca', page), `${siteOrigin}/`).href,

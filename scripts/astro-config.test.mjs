@@ -45,6 +45,11 @@ test('the build environment takes precedence over the .env site URL', (t) => {
   );
 });
 
-test('local development works without .env or a public site URL', (t) => {
-  assert.equal(readSite(t), 'http://localhost:4321');
+test('the production site is the default without .env or a public site URL', (t) => {
+  assert.equal(readSite(t), 'https://poblaliment.com');
+});
+
+test('an empty public site URL falls back to the production site', (t) => {
+  assert.equal(readSite(t, undefined, ''), 'https://poblaliment.com');
+  assert.equal(readSite(t, undefined, '   '), 'https://poblaliment.com');
 });

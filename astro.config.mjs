@@ -9,7 +9,7 @@ import { defineConfig } from 'astro/config';
 // Astro does not load .env before evaluating this configuration.
 // Existing environment variables (for example, from Cloudflare Builds) take precedence.
 if (existsSync('.env')) loadEnvFile('.env');
-const site = process.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+const site = process.env.PUBLIC_SITE_URL?.trim() || 'https://poblaliment.com';
 
 // Pages render on demand so copy and suppliers edited in /admin show up without a rebuild.
 export default defineConfig({
