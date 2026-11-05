@@ -2,6 +2,7 @@
 import type { Supplier } from '../data/suppliers';
 import type { Locale } from '../lib/i18n';
 import SupplierMark from './SupplierMark.astro';
+import LinkArrow from './LinkArrow.astro';
 
 interface Props {
   locale: Locale;
@@ -28,7 +29,7 @@ const isSpanish = locale === 'es';
       >
         <SupplierMark supplier={supplier} />
         <strong>{supplier.name}</strong>
-        <span aria-hidden="true">↗</span>
+        <LinkArrow />
       </a>
     ) : (
       <div class="food-rail-item">

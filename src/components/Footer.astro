@@ -1,5 +1,6 @@
 ---
 import { type Locale, localizedPath } from '../lib/i18n';
+import LinkArrow from './LinkArrow.astro';
 
 interface Props {
   locale: Locale;
@@ -47,7 +48,7 @@ const copy = Astro.locals.site.content[locale];
       <span
         class="font-semibold text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-orange-ink)]"
       >
-        Vigli.dev <span aria-hidden="true">↗</span>
+        Vigli.dev <LinkArrow />
       </span>
     </a>
   </div>
