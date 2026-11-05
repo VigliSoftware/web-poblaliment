@@ -1,6 +1,7 @@
 ---
 import { localizedPath, type Locale } from '../lib/i18n';
 import SupplierMark from './SupplierMark.astro';
+import LinkArrow from './LinkArrow.astro';
 
 interface Props {
   locale: Locale;
@@ -22,7 +23,7 @@ const sectionOf = (categoryId: string) =>
           <strong>{supplier.name}</strong>
           <small>{content[locale].home.featuredLabel}</small>
         </span>
-        <span aria-hidden="true">↗</span>
+        <LinkArrow />
       </a>
     );
   })}

@@ -3,6 +3,7 @@ import BrandsDropdown from '../components/BrandsDropdown';
 import FeaturedSuppliers from '../components/FeaturedSuppliers.astro';
 import HeroTextAnimation from '../components/HeroTextAnimation.astro';
 import HeroVideo from '../components/HeroVideo.astro';
+import LinkArrow from '../components/LinkArrow.astro';
 import SiteImage from '../components/SiteImage.astro';
 import Layout from '../layouts/Layout.astro';
 import { type Locale, localizedPath } from '../lib/i18n';
@@ -40,7 +41,7 @@ const copy = Astro.locals.site.content[locale];
             href={localizedPath(locale, 'contact')}
             class="px-1 py-3 text-[var(--color-paper)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4 hover:text-[var(--color-orange-light)]"
           >
-            {copy.home.secondaryAction} <span aria-hidden="true">↗</span>
+            {copy.home.secondaryAction} <LinkArrow />
           </a>
         </div>
         <p
@@ -160,7 +161,7 @@ const copy = Astro.locals.site.content[locale];
           href={localizedPath(locale, 'contact')}
           class="mt-6 inline-block font-semibold text-[var(--color-blue)] underline decoration-[var(--color-orange)] decoration-2 underline-offset-4"
         >
-          {copy.home.contactAction} <span aria-hidden="true">↗</span>
+          {copy.home.contactAction} <LinkArrow />
         </a>
       </div>
     </div>

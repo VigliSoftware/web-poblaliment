@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LinkArrow from '../components/LinkArrow.astro';
 import type { Locale } from '../lib/i18n';
 
 interface Props {
@@ -51,7 +52,7 @@ const copy = Astro.locals.site.content[locale].contact;
           type="submit"
           class="bg-[var(--color-blue)] px-5 py-3 text-sm font-semibold text-[var(--color-paper)] transition-transform hover:-translate-y-1"
         >
-          {copy.fields.submit} <span aria-hidden="true">↗</span>
+          {copy.fields.submit} <LinkArrow />
         </button>
       </form>
     </div>

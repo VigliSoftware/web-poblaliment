@@ -1,5 +1,6 @@
 ---
 import NoveltyFeature from '../components/NoveltyFeature.astro';
+import LinkArrow from '../components/LinkArrow.astro';
 import { noveltyHeading, visibleNovelties } from '../lib/novelties';
 import CellarScrollCue from '../components/CellarScrollCue.astro';
 import SiteImage from '../components/SiteImage.astro';
@@ -89,7 +90,7 @@ const beerLogo = getPageImage(images, 'cellarBeerLogo');
           <h3 class="display">{supplier.name}</h3>
           {supplier.website && (
             <a href={supplier.website} target="_blank" rel="noopener noreferrer">
-              {copy.visitLabel} <span aria-hidden="true">↗</span>
+              {copy.visitLabel} <LinkArrow />
             </a>
           )}
         </article>
@@ -126,7 +127,7 @@ const beerLogo = getPageImage(images, 'cellarBeerLogo');
           <p>{copy.beerBody}</p>
           {beer.website && (
             <a href={beer.website} target="_blank" rel="noopener noreferrer">
-              {copy.beerLink} <span aria-hidden="true">↗</span>
+              {copy.beerLink} <LinkArrow />
             </a>
           )}
         </div>

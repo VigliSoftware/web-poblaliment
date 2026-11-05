@@ -2,6 +2,7 @@
 import type { Locale } from '../lib/i18n';
 import type { Novelty } from '../lib/novelties';
 import { imageSrcset } from '../lib/optimized-media';
+import LinkArrow from './LinkArrow.astro';
 interface Props {
   novelty: Novelty;
   locale: Locale;
@@ -33,7 +34,7 @@ const copy = novelty.copy[locale];
     <p class="whitespace-pre-line">{copy.body}</p>
     {copy.href && (
       <a href={copy.href} target="_blank" rel="noopener noreferrer">
-        {copy.link} <span aria-hidden="true">↗</span>
+        {copy.link} <LinkArrow />
       </a>
     )}
   </div>

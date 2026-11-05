@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LinkArrow from '../components/LinkArrow.astro';
 import { getPageImage } from '../data/page-images';
 import { getSiteData } from '../lib/site-data';
 import { faviconForLogo, imageSrcset } from '../lib/optimized-media';
@@ -71,7 +72,7 @@ const links = [
               ))}
             </nav>
             <a href="/" target="_blank" rel="noopener" class="text-[var(--color-blue)]">
-              Veure la web ↗
+              Veure la web <LinkArrow />
             </a>
             <form method="post" action="/admin/logout/">
               <button type="submit" class="admin-link">
